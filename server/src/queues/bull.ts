@@ -2,8 +2,10 @@ import { Queue, Worker, QueueEvents } from "bullmq";
 import { Redis } from "ioredis";
 import { env } from "../config/env.js";
 
-export const connection = new Redis(env.REDIS_URL, {
-  maxRetriesPerRequest: null,
+export const connection = new Redis({
+  host: env.REDIS_HOST,
+  port: Number(env.REDIS_PORT),
+  maxRetriesPerRequest: null
 });
 
 export function createQueue(name: string) {

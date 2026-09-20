@@ -1,5 +1,4 @@
 services:
-
   frontend:
     build:
       context: ./client
@@ -17,6 +16,31 @@ services:
     restart: unless-stopped
     env_file:
       - ./server/.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - pulsevow-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: pulsevow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pulsevow
+      POSTGRES_USER: pulsevow
+      POSTGRES_PASSWORD: strong_password_here
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pulsevow-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: pulsevow-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
     networks:
       - pulsevow-network
 
@@ -26,6 +50,7 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -37,3 +62,7 @@ services:
 networks:
   pulsevow-network:
     driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
