@@ -29,7 +29,7 @@ services:
     environment:
       POSTGRES_DB: pulsevow
       POSTGRES_USER: pulsevow
-      POSTGRES_PASSWORD: strong_password_here
+      POSTGRES_PASSWORD: bQhp953re
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
