@@ -1,0 +1,58 @@
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;          /* more breathing room */
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 9999;              /* always above other components */
+  opacity: 1;
+
+  /* Optimized width handling */
+  width: auto;                /* flexible sizing */
+  min-width: 200px;           /* ensure a minimum width */
+  max-width: 550px;           /* cap width for readability */
+  white-space: normal;        /* allow wrapping */
+  overflow-wrap: break-word;  /* break long words if needed */
+}
+
+/* Position variants */
+.tooltip-top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-30%);
+  margin-bottom: 6px;
+}
+
+.tooltip-bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+}
+
+.tooltip-box ul {
+  margin: 8px 0;
+  padding-left: 15px;   /* indent bullets */
+  list-style-type: disc; /* ensure bullets show */
+  text-align: left;      /* force left alignment */
+}
+
+.tooltip-box li {
+  margin-bottom: 4px;    /* spacing between items */
+}
+
+/* Responsive safeguard */
+@media (max-width: 400px) {
+  .tooltip-top,
+  .tooltip-bottom {
+    left: 0;
+    transform: none;
+    max-width: 95vw; /* fit within viewport */
+  }
+}

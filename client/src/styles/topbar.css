@@ -1,0 +1,163 @@
+
+/* ================================
+   Animated Navbar Search
+================================ */
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Search input container */
+.search-form {
+    display: flex;
+    align-items: center;
+
+    width: 0;
+    height: 36px;
+
+    opacity: 0;
+    overflow: hidden;
+
+    border: 1px solid transparent;
+    border-radius: 18px;
+
+    background: #f6f7f9;
+
+    transform: translateX(8px);
+    transition:
+        width 0.3s ease,
+        opacity 0.2s ease,
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* Expanded state */
+.search-wrapper.search-open .search-form {
+    width: 220px;
+    opacity: 1;
+    transform: translateX(0);
+
+    border-color: #e2e5e9;
+}
+
+/* Search icon inside input */
+.search-icon {
+    flex-shrink: 0;
+
+    margin-left: 12px;
+
+    font-size: 20px;
+    line-height: 1;
+
+    color: #68707a;
+}
+
+/* Input */
+.search-form input {
+    width: 100%;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    padding: 0 10px;
+
+    background: transparent;
+
+    font-size: 14px;
+    color: #17191c;
+}
+
+.search-form input::placeholder {
+    color: #9299a1;
+}
+
+/* Remove browser search clear button */
+.search-form input::-webkit-search-cancel-button {
+    display: none;
+}
+
+/* Clear query */
+.search-clear {
+    flex-shrink: 0;
+
+    width: 28px;
+    height: 28px;
+
+    margin-right: 4px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #777f88;
+
+    font-size: 18px;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.search-clear:hover {
+    background: #e8eaed;
+    color: #222;
+}
+
+/* Search button */
+.searchbtn {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    margin-left: 4px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #3e454d;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.25s ease,
+        color 0.2s ease;
+}
+
+.searchbtn:hover {
+    background: #f1f3f5;
+}
+
+.searchbtn.active {
+    background: #f1f3f5;
+
+    transform: rotate(90deg);
+}
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 768px) {
+    .search-wrapper.search-open .search-form {
+        position: absolute;
+        right: 40px;
+
+        width: 190px;
+    }
+}

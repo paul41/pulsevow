@@ -1,0 +1,104 @@
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 32px 20px;
+}
+
+.loader-fullscreen {
+  min-height: 100vh;
+}
+
+.pulse-loader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pulse-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 10px;
+
+  background: #111827;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  animation: pulseLogo 1.5s ease-in-out infinite;
+}
+
+.pulse-loader-content {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pulse-loader-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 18px;
+}
+
+.pulse-loader-line span {
+  display: block;
+  width: 4px;
+  height: 8px;
+
+  border-radius: 3px;
+  background: #111827;
+
+  animation: pulseBars 1s ease-in-out infinite;
+}
+
+.pulse-loader-line span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.pulse-loader-line span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.pulse-loader-line span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.pulse-loader-message {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+@keyframes pulseBars {
+  0%,
+  100% {
+    height: 7px;
+    opacity: 0.4;
+  }
+
+  50% {
+    height: 17px;
+    opacity: 1;
+  }
+}
+
+@keyframes pulseLogo {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}

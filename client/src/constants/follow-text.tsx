@@ -1,0 +1,1 @@
+export const FOLLOW_TEXT = "Stay connected with PulseVow and get the latest intelligence updates.";

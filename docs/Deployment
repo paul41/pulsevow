@@ -1,0 +1,4 @@
+To list all data tables: 
+SELECT tablename
+FROM pg_tables
+WHERE schemaname = 'public';

@@ -1,0 +1,1337 @@
+openapi: 3.0.0
+
+info:
+  title: PulseVow API
+  version: 1.2.0
+  description: >
+    API contract for PulseVow, an AI-first Indian news intelligence platform.
+    PulseVow transforms news articles into stories, context, timelines,
+    source comparisons, AI briefs, credibility analysis, impact signals,
+    sector intelligence and related coverage.
+
+servers:
+  - url: https://api.pulsevow.com
+    description: Production
+
+  - url: http://localhost:5000
+    description: Local development
+
+tags:
+  - name: Auth
+  - name: Stories
+  - name: Articles
+  - name: Sectors
+  - name: Briefs
+  - name: Podcasts
+  - name: Comments
+  - name: Categories
+  - name: Subscription
+  - name: Health
+
+
+# ============================================================
+# PATHS
+# ============================================================
+
+paths:
+
+  # ==========================================================
+  # HEALTH
+  # ==========================================================
+
+  /api/health:
+    get:
+      tags:
+        - Health
+      summary: API health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+
+  # ==========================================================
+  # AUTHENTICATION
+  # ==========================================================
+
+  /api/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      operationId: registerUser
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+        '409':
+          description: Email already registered
+
+
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      operationId: loginUser
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      operationId: refreshToken
+
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout current user
+      operationId: logoutUser
+      security:
+        - bearerAuth: []
+
+      responses:
+        '200':
+          description: Logout successful
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+
+  /api/auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get current authenticated user
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+
+  # ==========================================================
+  # STORIES
+  # ==========================================================
+
+  /api/stories/top:
+    get:
+      tags:
+        - Stories
+      summary: Get today's top PulseVow stories
+      description: >
+        Returns stories ranked internally using PulseVow's story-ranking
+        signals. The internal numeric Pulse Score is not exposed to clients.
+      operationId: getTopStories
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/CategorySlug'
+        - $ref: '#/components/parameters/SectorSlug'
+
+      responses:
+        '200':
+          description: Top stories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoryListResponse'
+
+
+  /api/stories:
+    get:
+      tags:
+        - Stories
+      summary: List stories
+      operationId: listStories
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/CategorySlug'
+        - $ref: '#/components/parameters/SectorSlug'
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - latest
+              - impact
+              - credibility
+              - relevance
+            default: latest
+
+      responses:
+        '200':
+          description: Stories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoryListResponse'
+
+
+  /api/stories/{id}:
+    get:
+      tags:
+        - Stories
+      summary: Get complete story intelligence
+      operationId: getStory
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      responses:
+        '200':
+          description: Story intelligence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoryDetail'
+
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+
+  /api/stories/{id}/brief:
+    get:
+      tags:
+        - Stories
+      summary: Get AI Brief for a story
+      description: >
+        Provides context-oriented intelligence rather than a simple article summary.
+      operationId: getStoryBrief
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      responses:
+        '200':
+          description: AI Brief
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIBrief'
+
+
+  /api/stories/{id}/timeline:
+    get:
+      tags:
+        - Stories
+      summary: Get story timeline and previous developments
+      operationId: getStoryTimeline
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      responses:
+        '200':
+          description: Story timeline
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimelineEvent'
+
+
+  /api/stories/{id}/articles:
+    get:
+      tags:
+        - Stories
+      summary: Get articles belonging to a story
+      operationId: getStoryArticles
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+
+      responses:
+        '200':
+          description: Articles belonging to the story
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleListResponse'
+
+
+  /api/stories/{id}/sources:
+    get:
+      tags:
+        - Stories
+      summary: Compare sources covering a story
+      operationId: getStorySources
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      responses:
+        '200':
+          description: Source comparison
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceComparison'
+
+
+  /api/stories/{id}/related:
+    get:
+      tags:
+        - Stories
+      summary: Get related stories using semantic similarity
+      operationId: getRelatedStories
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+        - $ref: '#/components/parameters/Limit'
+
+      responses:
+        '200':
+          description: Related stories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StorySummary'
+
+
+  /api/stories/{id}/analysis:
+    get:
+      tags:
+        - Stories
+      summary: Get AI analysis and intelligence signals
+      operationId: getStoryAnalysis
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      responses:
+        '200':
+          description: Story analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoryAnalysis'
+
+
+  /api/stories/{id}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Get public comments for a story
+      operationId: getStoryComments
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+
+      responses:
+        '200':
+          description: Public comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+
+
+    post:
+      tags:
+        - Comments
+      summary: Add a comment to a story
+      operationId: addStoryComment
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - $ref: '#/components/parameters/StoryId'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+
+      responses:
+        '201':
+          description: Comment submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+
+  # ==========================================================
+  # SECTORS
+  # ==========================================================
+
+  /api/sectors:
+    get:
+      tags:
+        - Sectors
+      summary: Get available sectors
+      operationId: getSectors
+
+      responses:
+        '200':
+          description: Sector list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sector'
+
+
+  /api/sectors/{slug}:
+    get:
+      tags:
+        - Sectors
+      summary: Get sector intelligence
+      operationId: getSector
+
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Sector intelligence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectorIntelligence'
+
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+
+  # ==========================================================
+  # MONTHLY BRIEFS
+  # ==========================================================
+
+  /api/briefs:
+    get:
+      tags:
+        - Briefs
+      summary: Get monthly PulseVow briefs
+      operationId: getBriefs
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - name: year
+          in: query
+          schema:
+            type: integer
+        - name: month
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+
+      responses:
+        '200':
+          description: Monthly briefs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthlyBrief'
+
+
+  /api/briefs/{id}:
+    get:
+      tags:
+        - Briefs
+      summary: Get monthly brief
+      operationId: getBrief
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Monthly brief
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonthlyBrief'
+
+
+  # ==========================================================
+  # PODCASTS
+  # ==========================================================
+
+  /api/podcasts:
+    get:
+      tags:
+        - Podcasts
+      summary: Get PulseVow podcasts
+      operationId: getPodcasts
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+
+      responses:
+        '200':
+          description: Podcast list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Podcast'
+
+
+  /api/podcasts/{id}:
+    get:
+      tags:
+        - Podcasts
+      summary: Get podcast details
+      operationId: getPodcast
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Podcast
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Podcast'
+
+
+  # ==========================================================
+  # CATEGORIES
+  # ==========================================================
+
+  /api/categories:
+    get:
+      tags:
+        - Categories
+      summary: Get all news categories
+      operationId: getCategories
+
+      responses:
+        '200':
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+
+  /api/categories/{slug}:
+    get:
+      tags:
+        - Categories
+      summary: Get category
+      operationId: getCategory
+
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+
+
+  # ==========================================================
+  # NEWSLETTER
+  # ==========================================================
+
+  /api/subscriptions:
+    post:
+      tags:
+        - Subscription
+      summary: Subscribe to PulseVow updates
+      operationId: subscribe
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+
+      responses:
+        '201':
+          description: Subscription successful
+
+
+# ============================================================
+# COMPONENTS
+# ============================================================
+
+components:
+
+  # ==========================================================
+  # SECURITY
+  # ==========================================================
+
+  securitySchemes:
+
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+  # ==========================================================
+  # PARAMETERS
+  # ==========================================================
+
+  parameters:
+
+    StoryId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+
+    CategorySlug:
+      name: category
+      in: query
+      required: false
+      schema:
+        type: string
+
+    SectorSlug:
+      name: sector
+      in: query
+      required: false
+      schema:
+        type: string
+
+
+  # ==========================================================
+  # SCHEMAS
+  # ==========================================================
+
+  schemas:
+
+    # --------------------------------------------------------
+    # AUTH
+    # --------------------------------------------------------
+
+    RegisterRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+
+        email:
+          type: string
+          format: email
+
+        password:
+          type: string
+          minLength: 8
+
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+
+        password:
+          type: string
+
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+            - MODERATOR
+        createdAt:
+          type: string
+          format: date-time
+
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        accessToken:
+          type: string
+
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+
+
+    # --------------------------------------------------------
+    # STORY
+    # --------------------------------------------------------
+
+    StorySummary:
+      type: object
+      properties:
+        id:
+          type: string
+
+        title:
+          type: string
+
+        slug:
+          type: string
+
+        category:
+          type: string
+
+        sectors:
+          type: array
+          items:
+            type: string
+
+        stakeholders:
+          type: array
+          items:
+            type: string
+
+        publishedAt:
+          type: string
+          format: date-time
+
+        articleCount:
+          type: integer
+
+        sourceCount:
+          type: integer
+
+
+    StoryDetail:
+      allOf:
+        - $ref: '#/components/schemas/StorySummary'
+
+      properties:
+
+        aiBrief:
+          $ref: '#/components/schemas/AIBrief'
+
+        analysis:
+          $ref: '#/components/schemas/StoryAnalysis'
+
+        timeline:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimelineEvent'
+
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceComparison'
+
+        relatedStories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorySummary'
+
+
+    StoryListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorySummary'
+
+        nextCursor:
+          type: string
+          nullable: true
+
+
+    # --------------------------------------------------------
+    # AI BRIEF
+    # --------------------------------------------------------
+
+    AIBrief:
+      type: object
+      properties:
+
+        whatHappened:
+          type: string
+
+        whyItMatters:
+          type: string
+
+        whoIsAffected:
+          type: string
+
+        whatChanges:
+          type: string
+
+        inPlainEnglish:
+          type: string
+
+
+    # --------------------------------------------------------
+    # ANALYSIS
+    # --------------------------------------------------------
+
+    StoryAnalysis:
+      type: object
+      properties:
+
+        sentiment:
+          type: string
+          enum:
+            - positive
+            - neutral
+            - negative
+            - mixed
+
+        impact:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        credibility:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        bias:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        sensationalism:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        neutrality:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 100
+
+        headlineTone:
+          type: string
+          enum:
+            - calm
+            - balanced
+            - sensational
+
+        analyzedAt:
+          type: string
+          format: date-time
+
+
+    # --------------------------------------------------------
+    # TIMELINE
+    # --------------------------------------------------------
+
+    TimelineEvent:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        date:
+          type: string
+          format: date-time
+
+        title:
+          type: string
+
+        description:
+          type: string
+
+        importance:
+          type: number
+          minimum: 0
+          maximum: 100
+
+
+    # --------------------------------------------------------
+    # ARTICLES
+    # --------------------------------------------------------
+
+    Article:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        title:
+          type: string
+
+        description:
+          type: string
+          nullable: true
+
+        url:
+          type: string
+          format: uri
+
+        publishedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+        source:
+          $ref: '#/components/schemas/Source'
+
+        analysis:
+          $ref: '#/components/schemas/StoryAnalysis'
+
+
+    ArticleListResponse:
+      type: object
+      properties:
+
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+
+        nextCursor:
+          type: string
+          nullable: true
+
+
+    # --------------------------------------------------------
+    # SOURCES
+    # --------------------------------------------------------
+
+    Source:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        name:
+          type: string
+
+        logo:
+          type: string
+          nullable: true
+
+        url:
+          type: string
+          format: uri
+
+        trustScore:
+          type: number
+          minimum: 0
+          maximum: 100
+
+
+    SourceComparison:
+      type: object
+      properties:
+
+        source:
+          $ref: '#/components/schemas/Source'
+
+        headline:
+          type: string
+
+        relationship:
+          type: string
+          enum:
+            - agrees
+            - differs
+            - adds_context
+
+        articleUrl:
+          type: string
+          format: uri
+
+        publishedAt:
+          type: string
+          format: date-time
+
+
+    # --------------------------------------------------------
+    # SECTOR
+    # --------------------------------------------------------
+
+    Sector:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        name:
+          type: string
+
+        slug:
+          type: string
+
+
+    SectorIntelligence:
+      type: object
+      properties:
+
+        sector:
+          $ref: '#/components/schemas/Sector'
+
+        summary:
+          type: string
+
+        topStories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorySummary'
+
+        affectedStakeholders:
+          type: array
+          items:
+            type: string
+
+        recentDevelopments:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimelineEvent'
+
+
+    # --------------------------------------------------------
+    # MONTHLY BRIEF
+    # --------------------------------------------------------
+
+    MonthlyBrief:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        title:
+          type: string
+
+        month:
+          type: integer
+
+        year:
+          type: integer
+
+        summary:
+          type: string
+
+        topStories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorySummary'
+
+        podcast:
+          $ref: '#/components/schemas/Podcast'
+
+
+    # --------------------------------------------------------
+    # PODCAST
+    # --------------------------------------------------------
+
+    Podcast:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        title:
+          type: string
+
+        description:
+          type: string
+
+        audioUrl:
+          type: string
+          format: uri
+
+        durationSeconds:
+          type: integer
+
+        publishedAt:
+          type: string
+          format: date-time
+
+
+    # --------------------------------------------------------
+    # COMMENTS
+    # --------------------------------------------------------
+
+    CreateCommentRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+
+
+    Comment:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        text:
+          type: string
+
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+            username:
+              type: string
+
+        createdAt:
+          type: string
+          format: date-time
+
+        status:
+          type: string
+          enum:
+            - visible
+            - pending
+
+
+    # --------------------------------------------------------
+    # CATEGORY
+    # --------------------------------------------------------
+
+    Category:
+      type: object
+      properties:
+
+        id:
+          type: string
+
+        name:
+          type: string
+
+        slug:
+          type: string
+
+
+    # --------------------------------------------------------
+    # SUBSCRIPTION
+    # --------------------------------------------------------
+
+    SubscriptionRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+
+
+    # --------------------------------------------------------
+    # HEALTH
+    # --------------------------------------------------------
+
+    HealthResponse:
+      type: object
+      properties:
+
+        status:
+          type: string
+          example: ok
+
+        timestamp:
+          type: string
+          format: date-time
+
+
+    # --------------------------------------------------------
+    # ERROR
+    # --------------------------------------------------------
+
+    Error:
+      type: object
+      properties:
+
+        code:
+          type: string
+
+        message:
+          type: string
+
+        details:
+          type: object
+          additionalProperties: true
+
+
+  # ==========================================================
+  # STANDARD RESPONSES
+  # ==========================================================
+
+  responses:
+
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+
+    Unauthorized:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

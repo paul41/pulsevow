@@ -1,0 +1,528 @@
+
+Authentication
+│
+├── users
+├── sessions
+└── user_preferences
+
+News
+│
+├── news_sources
+├── news_articles
+├── article_images
+├── article_topics
+└── topics
+
+Event Intelligence
+│
+├── news_events
+├── event_articles
+├── event_timeline
+├── event_ai_insights
+├── event_entities
+├── event_metrics
+
+AI
+│
+├── ai_search_cache
+├── article_embeddings
+├── ai_prompts
+├── ai_processing_jobs
+└── ai_model_usage
+
+Community
+│
+├── comments
+├── comment_likes
+├── article_likes
+├── bookmarks
+├── reading_history
+└── shares
+
+Search
+│
+├── search_history
+├── trending_searches
+└── saved_searches
+
+Notifications
+│
+├── event_subscriptions
+├── notifications
+└── notification_settings
+
+Analytics
+│
+├── article_views
+├── event_views
+└── user_activity
+
+
+Features to add---
+Freemium = Access to basic news and summaries
+            What changed today?
+            AI Daily Brief
+
+            Top section.
+
+            Good Morning Paul
+
+            Here's your 5-minute brief
+
+            ✓ Economy
+
+            ✓ Technology
+
+            ✓ Sports
+
+            ✓ AI
+
+            ✓ Your Watchlist
+          Why trending = 
+          AI detects:
+
+          Fintech layoffs increasing
+
+          Reason:
+
+          18 companies announced layoffs this week.
+
+          Confidence:
+
+          91%
+------------------------------------------------------
+
+Premium = Ask Questions About Any Event
+          Why does it matters to me?
+
+
+Why trending?
+
+Trending because
+
+↑ Mentioned 2400% more today
+
+↑ Google searches
+
+↑ Twitter discussion
+
+↑ Reddit discussion
+
+↑ Institutional buying
+
+↑ Government announcement
+
+
+EVERY CARD SHOULD HAVE
+What happened?
+
+Why?
+
+Who is affected?
+
+Risk Level
+
+Timeline
+
+Prediction
+
+Confidence
+
+
+News Sources
+      │
+      ▼
+ Ingestion Service
+      │
+      ▼
+Queue (BullMQ/Kafka)
+      │
+      ▼
+AI Processing
+ ├─ Summary
+ ├─ Sentiment
+ ├─ Impact
+ ├─ Credibility
+ ├─ Timeline
+ └─ Embeddings
+      │
+      ▼
+PostgreSQL + Redis
+      │
+      ▼
+Frontend
+
+modules/
+--------------------FOLDER AI (later) -----------------
+ai/
+
+    summary.service.ts
+
+    sentiment.service.ts
+
+    credibility.service.ts
+
+    impact.service.ts
+
+    timeline.service.ts
+
+    embedding.service.ts
+
+    prompt.service.ts
+
+-----------DB------------------
+User
+ ├── Bookmark
+ ├── Comment
+ ├── Like
+ ├── ReadingHistory
+ ├── SearchHistory
+ ├── UserPreference
+ └── Notification
+
+Source
+ └── Article
+
+Category
+ └── Article
+
+Article
+ ├── ArticleAnalysis
+ ├── TimelineEvent
+ ├── Trend
+ ├── Embedding
+ ├── Bookmark
+ ├── Comment
+ ├── Like
+ ├── ArticleTag
+ └── RelatedArticle
+
+Tag
+ └── ArticleTag
+
+
+| Parent   | Child            | Relation                              |
+| -------- | ---------------- | ------------------------------------- |
+| Source   | Article          | One-to-Many                           |
+| Category | Article          | One-to-Many                           |
+| Article  | ArticleAnalysis  | One-to-One                            |
+| Article  | TimelineEvent    | One-to-Many                           |
+| Article  | Trend            | One-to-One                            |
+| Article  | ArticleEmbedding | One-to-One                            |
+| Article  | Comment          | One-to-Many                           |
+| Article  | Bookmark         | One-to-Many                           |
+| Article  | Like             | One-to-Many                           |
+| Article  | ArticleTag       | One-to-Many                           |
+| Tag      | ArticleTag       | One-to-Many                           |
+| User     | Bookmark         | One-to-Many                           |
+| User     | Comment          | One-to-Many                           |
+| User     | Like             | One-to-Many                           |
+| User     | ReadingHistory   | One-to-Many                           |
+| User     | SearchHistory    | One-to-Many                           |
+| User     | Notification     | One-to-Many                           |
+| User     | UserPreference   | One-to-One                            |
+| Article  | RelatedArticle   | Many-to-Many (through junction table) |
+
+
+Schema supports:
+
+✅ RSS ingestion
+✅ AI summaries
+✅ Sentiment analysis
+✅ Credibility scoring
+✅ Impact scoring
+✅ Timelines
+✅ Trending
+✅ Comments
+✅ Nested replies
+✅ Likes
+✅ Bookmarks
+✅ Search history
+✅ Reading history
+✅ Notifications
+✅ Tagging
+✅ Sources
+✅ Categories
+
+                           User
+                             │
+        ┌────────────┬────────┼────────────┬───────────────┐
+        │            │        │            │               │
+        ▼            ▼        ▼            ▼               ▼
+   Bookmark      Comment    Like    ReadingHistory   SearchHistory
+        │            │        │
+        │            │        │
+        └──────┬─────┴────────┘
+               │
+               ▼
+            Article
+               │
+     ┌─────────┼──────────────┬──────────────┬────────────┐
+     │         │              │              │            │
+     ▼         ▼              ▼              ▼            ▼
+ Source    Category    ArticleAnalysis   TimelineEvent   Trend
+     │
+     │
+     ▼
+ ArticleTag
+     ▲
+     │
+    Tag
+
+User
+ │
+ ▼
+Notification
+
+User
+ │
+ ▼
+UserPreference
+
+
+| Parent   | Child           | Relationship                       |
+| -------- | --------------- | ---------------------------------- |
+| Source   | Article         | **1 → Many**                       |
+| Category | Article         | **1 → Many**                       |
+| Article  | ArticleAnalysis | **1 → 1**                          |
+| Article  | Trend           | **1 → 1**                          |
+| Article  | TimelineEvent   | **1 → Many**                       |
+| Article  | Bookmark        | **1 → Many**                       |
+| User     | Bookmark        | **1 → Many**                       |
+| Article  | Comment         | **1 → Many**                       |
+| User     | Comment         | **1 → Many**                       |
+| Comment  | Comment         | **1 → Many (Self Relation)**       |
+| User     | Like            | **1 → Many**                       |
+| Article  | Like            | **1 → Many**                       |
+| Comment  | Like            | **1 → Many**                       |
+| User     | ReadingHistory  | **1 → Many**                       |
+| Article  | ReadingHistory  | **1 → Many**                       |
+| User     | SearchHistory   | **1 → Many**                       |
+| User     | Notification    | **1 → Many**                       |
+| User     | UserPreference  | **1 → 1**                          |
+| Article  | Tag             | **Many ↔ Many** (via `ArticleTag`) |
+
+
+                    RSS Sources
+                         │
+                         ▼
+                 Ingestion Service
+                         │
+                         ▼
+                     PostgreSQL
+                         │
+                         ▼
+                  AI Processing Queue
+                         │
+         ┌───────────────┼────────────────┐
+         ▼               ▼                ▼
+     Summary       Sentiment       Timeline
+         ▼               ▼                ▼
+          ─────────► ArticleAnalysis ◄─────
+                         │
+                         ▼
+                      REST APIs
+                         │
+                         ▼
+                      React App
+                         │
+       ┌─────────────────┼─────────────────────┐
+       ▼                 ▼                     ▼
+   Homepage          Search              Article Page
+       │                 │                     │
+       └───────────── User Actions ────────────┘
+                         │
+        ┌────────────────┼─────────────────┐
+        ▼                ▼                 ▼
+   Bookmark        Reading History      Comment
+                         │
+                         ▼
+                Recommendation Engine
+                         │
+                         ▼
+                Personalized Homepage
+
+                  PulseVow
+
+RSS/API/Scraper
+       ↓
+  Normalization
+       ↓
+  Deduplication
+       ↓
+ PostgreSQL
+       ↓
+    BullMQ
+       ↓
+ AI Workers
+       ↓
+ArticleAnalysis
+       ↓
+  Embeddings
+       ↓
+   pgvector
+       ↓
+ REST API
+       ↓
+   React
+
+NEWS
+{
+  title: "AI Regulation Bill Passed",
+  sources: ["BBC", "Reuters"],
+  sentiment: "Positive",
+  impact: ["Tech Companies", "Startups"],
+  prediction: "Increase in compliance costs",
+  timeline: "Ongoing/Breaking/Retrospective",
+  geography: "Global",
+  confidence/reliability badge: 0.87,
+  stakeholders: ["Government", "Industry Leaders"],
+  urgency: "High",
+  trend: ["AI Governance", "Data Privacy"]
+}
+
+ User
+ │
+ ├── Bookmark
+ ├── ReadingHistory
+ ├── SearchHistory
+ ├── Notification
+ ├── RefreshToken
+ └── AIConversation
+         │
+         └── AIMessage
+
+Source
+ │
+ ├── SourceMetric
+ └── Article
+        │
+        ├── ArticleAnalysis
+        ├── CoverageComparison
+        ├── ArticleTag
+        └── Event
+              │
+              ├── EventAnalysis
+              ├── EventTimeline
+              ├── ConsensusFact
+              ├── Contradiction
+              ├── MissingPerspective
+              ├── EventComment
+              ├── EventTag
+              └── Embedding
+
+
+                 Scheduler / Cron
+                        │
+                        ▼
+             IngestionService (Orchestrator)
+                        │
+        ┌───────────────┼────────────────┐
+        ▼               ▼                ▼
+   RssService      ApiService      ScraperService
+        │               │                │
+        └───────────────┼────────────────┘
+                        ▼
+              Raw Feed Items (Common DTO)
+                        ▼
+               NormalizerService
+                        ▼
+            DuplicateDetectionService
+                        ▼
+                AIProcessingService
+                        ▼
+               ArticleRepository
+                        ▼
+                  PostgreSQL
+
+
+
+
+
+
+*************************** STATUS CODE *********************
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+DRAFT=Article has been ingested and normalized.
+AI processing (summary, sentiment, tags, etc.) is still pending or incomplete.
+Not visible to users.
+
+PUBLISHED=AI processing completed successfully.
+Article is visible in the app.          
+
+ARCHIVED=Article is old or intentionally removed from active feeds.
+Still searchable if desired, but not shown in trending or latest sections.
+
+RSS Feed
+    │
+    ▼
+Create Article (DRAFT)
+    │
+    ▼
+AI Processing
+    │
+    ├── Success ─────────► PUBLISHED
+    │
+    └── Failure ─────────► Remain DRAFT (or log the error separately)
+    │
+    ▼
+After 6 months
+    │
+    ▼
+ARCHIVED
+
+--------------DONE----------------
+
+RSS:
+Fetched {
+  '?xml': { version: '1.0', encoding: 'UTF-8' },
+  rss: {
+    channel: {
+      'atom:link': [Object],
+      language: 'en-us',
+      ttl: 60,
+      title: 'US Top News and Analysis',
+      feed_asset: [Object],
+      lastBuildDate: 'Sun, 02 Aug 2026 11:30 GMT',
+      pubDate: 'Sun, 02 Aug 2026 11:30 GMT',
+      link: 'https://www.cnbc.com/us-top-news-and-analysis/',
+      description: 'CNBC is the world leader in business news and real-time financial market coverage. Find fast, actionable information.',
+      item: [Array]
+    },
+    'xmlns:metadata': 'http://search.cnbc.com/rss/2.0/modules/siteContentMetadata',
+    version: '2.0',
+    'xmlns:atom': 'http://www.w3.org/2005/Atom',
+    'xmlns:content': 'http://purl.org/rss/1.0/modules/content/'
+  }
+}
+
+
+----------------------NEXT STEP------------------------
+
+Article
+   │
+   ▼
+Extract Tags
+   │
+   ▼
+Slugify
+   │
+   ▼
+Find existing tag
+   │
+   ├── exists
+   │      │
+   │      ▼
+   │ attach
+   │
+   └── doesn't exist
+          │
+          ▼
+      create tag
+          │
+          ▼
+      attach

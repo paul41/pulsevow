@@ -1,0 +1,1 @@
+docker run -d --name pulsevow-redis -p 6379:6379 redis:8-alpine
