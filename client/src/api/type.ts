@@ -5,3 +5,22 @@ export interface NewsStory {
   category: string;
   publishedAt: string;
 }
+
+export interface AuthUser {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+}
+
+export interface LoginResponse {
+  user: AuthUser;
+}
+
+export interface CurrentUserResponse {
+  user: AuthUser;
+}
+
+export interface RegisterResponse {
+  user: AuthUser;
+}

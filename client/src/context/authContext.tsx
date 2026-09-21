@@ -1,55 +1,105 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useAuthApi } from "../api/authApi";
 import {
-  getToken,
-  setToken,
-  clearToken,
-  setUserNameKey,
+  getUser,
+  setUser,
+  clearUser,
 } from "../utils/tokenStorage";
 import type { AuthContextType } from "./type";
+import type { AuthUser } from "../api/type";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<any>(null);
-  const [token, setAuthToken] = useState<string | null>(getToken());
+  const [user, setAuthUser] = useState<AuthUser | null>(
+    () => getUser()
+  );
+  const [loading, setLoading] = useState(true);
 
   const authApi = useAuthApi();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     authApi.refreshToken().catch(() => logoutUser());
-  //   }
-  // }, [token]);
+  /**
+   * Restore authentication state when the application starts.
+   *
+   * The browser automatically sends the HttpOnly
+   * access_token / refresh_token cookies.
+   */
+  useEffect(() => {
+    const initializeAuth = async () => {
+      try {
+        const data = await authApi.getCurrentUser();
 
-  const loginUser = async (email: string, password: string) => {
+        if (data?.user) {
+          setAuthUser(data.user);
+          setUser(data.user);
+        } else {
+          clearUser();
+          setAuthUser(null);
+        }
+      } catch {
+        clearUser();
+        setAuthUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
+  }, []);
+
+  const loginUser = async (
+    email: string,
+    password: string,
+  ) => {
     const data = await authApi.login(email, password);
 
-    if (!data) {
-      return;
+    if (!data?.user) {
+      return false;
     }
 
+    setAuthUser(data.user);
     setUser(data.user);
-
-    setToken(data.accessToken);
-    setAuthToken(data.accessToken);
-
-    setUserNameKey(data.user.id, data.user.username);
+    return true;
   };
 
-  const logoutUser = () => {
-    setUser(null);
-    setAuthToken(null);
-    clearToken();
+  const logoutUser = async () => {
+    try {
+      await authApi.logout();
+    } finally {
+      clearUser();
+      setAuthUser(null);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loginUser, logoutUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        loginUser,
+        logoutUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext)!;
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error(
+      "useAuth must be used within an AuthProvider",
+    );
+  }
+
+  return context;
+};

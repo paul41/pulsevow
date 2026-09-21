@@ -1,15 +1,6 @@
 import { useState } from "react";
 import api from "./api-client";
-
-interface LoginResponse {
-    user: {
-        id: string;
-        username: string;
-        email: string;
-        role: string;
-    };
-    accessToken: string;
-}
+import type { LoginResponse, CurrentUserResponse, RegisterResponse } from "./type";
 
 export const useAuthApi = () => {
     const [loading, setLoading] = useState(false);
@@ -17,9 +8,8 @@ export const useAuthApi = () => {
 
     const login = async (
         email: string,
-        password: string
+        password: string,
     ): Promise<LoginResponse | null> => {
-
         try {
             setLoading(true);
             setError(null);
@@ -29,13 +19,11 @@ export const useAuthApi = () => {
                 {
                     email,
                     password,
-                }
+                },
             );
 
             return response.data;
-
         } catch (err) {
-
             const message =
                 err instanceof Error
                     ? err.message
@@ -44,13 +32,65 @@ export const useAuthApi = () => {
             setError(message);
 
             return null;
-
         } finally {
             setLoading(false);
         }
     };
 
-    const logout = async () => {
+    const register = async (
+        name: string,
+        email: string,
+        password: string,
+    ): Promise<RegisterResponse | null> => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const response = await api.post<RegisterResponse>(
+                "/auth/register",
+                {
+                    name,
+                    email,
+                    password,
+                },
+            );
+
+            return response.data;
+        } catch (err) {
+            const message =
+                err instanceof Error
+                    ? err.message
+                    : "Unable to create your account.";
+
+            setError(message);
+
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getCurrentUser = async (): Promise<CurrentUserResponse | null> => {
+        try {
+            setError(null);
+
+            const response =
+                await api.get<CurrentUserResponse>("/auth/me");
+
+            return response.data;
+        } catch (err) {
+            const message =
+                err instanceof Error
+                    ? err.message
+                    : "Unable to restore session.";
+
+            setError(message);
+
+            return null;
+        }
+    };
+
+    const logout = async (): Promise<boolean> => {
         try {
             setLoading(true);
             setError(null);
@@ -58,9 +98,7 @@ export const useAuthApi = () => {
             await api.post("/auth/logout");
 
             return true;
-
         } catch (err) {
-
             const message =
                 err instanceof Error
                     ? err.message
@@ -69,7 +107,6 @@ export const useAuthApi = () => {
             setError(message);
 
             return false;
-
         } finally {
             setLoading(false);
         }
@@ -77,14 +114,12 @@ export const useAuthApi = () => {
 
     const refreshToken = async () => {
         try {
-            const response = await api.post(
-                "/auth/refresh"
-            );
+            setError(null);
+
+            const response = await api.post("/auth/refresh");
 
             return response.data;
-
         } catch (err) {
-
             const message =
                 err instanceof Error
                     ? err.message
@@ -98,6 +133,8 @@ export const useAuthApi = () => {
 
     return {
         login,
+        register,
+        getCurrentUser,
         logout,
         refreshToken,
         loading,

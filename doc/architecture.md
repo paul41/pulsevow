@@ -479,3 +479,30 @@ PHASE 11
 Testing + Docker + deployment
 
 The most important architectural milestone is Phase 5. Once NewsStory and clustering are working, the rest of PulseVow becomes much easier because the product's fundamental unit is no longer an individual article—it is an intelligent story assembled from multiple sources.
+
+
+
+LOGIN---------------------------------------
+
+Login
+  ↓
+Backend validates email/password
+  ↓
+Create access JWT (15 min) ────────┐
+Create refresh token (30 days)     │
+  ↓                                │
+Set HttpOnly cookies               │
+  ↓                                │
+Browser stores them                │
+                                   │
+API request ──→ access_token ──→ verify with PUBLIC KEY
+                                   │
+                         expired? ─┘
+                              ↓
+                    POST /auth/refresh
+                              ↓
+                    refresh_token cookie
+                              ↓
+                 validate refresh token
+                              ↓
+                 issue new access_token

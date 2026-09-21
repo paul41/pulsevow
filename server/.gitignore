@@ -12,6 +12,9 @@ src/generated/prisma/
 # Build output
 dist/
 
+keys/
+*.pem
+
 # Logs
 *.log
 npm-debug.log*

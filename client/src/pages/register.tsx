@@ -1,187 +1,218 @@
 import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthApi } from "../api/authApi";
+import { useAuth } from "../context/authContext";
 import "../styles/pulsevow.css";
 
 export default function Register() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+  const authApi = useAuthApi();
+  const { loginUser } = useAuth();
 
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const submit = async (event: FormEvent) => {
-        event.preventDefault();
-        setError("");
+  const [error, setError] = useState("");
 
-        if (!name || !email || !password || !confirmPassword) {
-            return setError("Please fill in all fields.");
-        }
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setError("");
 
-        if (password.length < 8) {
-            return setError(
-                "Password must be at least 8 characters long."
-            );
-        }
+    if (!name || !email || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
-        if (password !== confirmPassword) {
-            return setError("Passwords do not match.");
-        }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
 
-        setLoading(true);
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-        try {
-            // Replace this block with your existing authApi.register() call.
-            await new Promise((resolve) => setTimeout(resolve, 450));
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedName = name.trim();
 
-            localStorage.setItem("pulsevow.authenticated", "true");
-            localStorage.setItem("pulsevow.user.name", name);
-            localStorage.setItem("pulsevow.user.email", email);
+    try {
+      const data = await authApi.register(
+        normalizedName,
+        normalizedEmail,
+        password,
+      );
 
-            navigate("/");
-        } catch {
-            setError(
-                "Unable to create your account. Please try again."
-            );
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!data?.user) {
+        setError(
+          authApi.error ||
+            "Unable to create your account. Please try again.",
+        );
+        return;
+      }
 
-    return (
-        <div className="auth-page">
-            <div className="auth-shell">
-                <Link className="auth-brand" to="/">
-                    <span className="auth-mark">P</span>
+      /*
+       * If /auth/register creates the session and sets the
+       * HttpOnly access_token + refresh_token cookies,
+       * we can immediately store the authenticated user.
+       */
+      const success = await loginUser(
+        normalizedEmail,
+        password,
+      );
 
-                    <span>
-                        <strong>PulseVow</strong>
-                        <small>Indian news intelligence</small>
-                    </span>
-                </Link>
+      if (!success) {
+        setError(
+          "Account created successfully. Please sign in.",
+        );
+        navigate("/login");
+        return;
+      }
 
-                <div className="auth-card">
-                    <div className="auth-heading">
-                        <span className="auth-kicker">
-                            JOIN PULSEVOW
-                        </span>
+      navigate("/");
+    } catch {
+      setError(
+        "Unable to create your account. Please try again.",
+      );
+    }
+  };
 
-                        <h1>
-                            Stay informed.
-                            <br />
-                            Understand what matters.
-                        </h1>
+  const loading = authApi.loading;
 
-                        <p>
-                            Create your profile and personalize your
-                            PulseVow intelligence feed.
-                        </p>
-                    </div>
+  return (
+    <div className="auth-page">
+      <div className="auth-shell">
+        <Link className="auth-brand" to="/">
+          <span className="auth-mark">P</span>
 
-                    <form onSubmit={submit} className="auth-form">
-                        <label>
-                            Full name
+          <span>
+            <strong>PulseVow</strong>
+            <small>Indian news intelligence</small>
+          </span>
+        </Link>
 
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) =>
-                                    setName(e.target.value)
-                                }
-                                placeholder="Your name"
-                                autoComplete="name"
-                            />
-                        </label>
+        <div className="auth-card">
+          <div className="auth-heading">
+            <span className="auth-kicker">
+              JOIN PULSEVOW
+            </span>
 
-                        <label>
-                            Email address
+            <h1>
+              Stay informed.
+              <br />
+              Understand what matters.
+            </h1>
 
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) =>
-                                    setEmail(e.target.value)
-                                }
-                                placeholder="you@example.com"
-                                autoComplete="email"
-                            />
-                        </label>
+            <p>
+              Create your profile and personalize your
+              PulseVow intelligence feed.
+            </p>
+          </div>
 
-                        <label>
-                            Password
+          <form onSubmit={submit} className="auth-form">
+            <label>
+              Full name
 
-                            <div className="password-field">
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                    placeholder="Create a password"
-                                    autoComplete="new-password"
-                                />
-                            </div>
-                        </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                autoComplete="name"
+                disabled={loading}
+              />
+            </label>
 
-                        <label>
-                            Confirm password
+            <label>
+              Email address
 
-                            <div className="password-field">
-                                <input
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) =>
-                                        setConfirmPassword(
-                                            e.target.value
-                                        )
-                                    }
-                                    placeholder="Confirm your password"
-                                    autoComplete="new-password"
-                                />
-                            </div>
-                        </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                autoComplete="email"
+                disabled={loading}
+              />
+            </label>
 
-                        {error && (
-                            <div className="auth-error">
-                                {error}
-                            </div>
-                        )}
+            <label>
+              Password
 
-                        <button
-                            className="auth-submit"
-                            disabled={loading}
-                        >
-                            {loading
-                                ? "Creating account…"
-                                : "Create account"}
-                        </button>
-                    </form>
+              <div className="password-field">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
+                  placeholder="Create a password"
+                  autoComplete="new-password"
+                  disabled={loading}
+                />
+              </div>
+            </label>
 
-                    <div className="auth-divider">
-                        <span>or</span>
-                    </div>
+            <label>
+              Confirm password
 
-                    <button
-                        className="social-login"
-                        type="button"
-                    >
-                        Continue with Google
-                    </button>
+              <div className="password-field">
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) =>
+                    setConfirmPassword(e.target.value)
+                  }
+                  placeholder="Confirm your password"
+                  autoComplete="new-password"
+                  disabled={loading}
+                />
+              </div>
+            </label>
 
-                    <p className="auth-footer-text">
-                        Already have a PulseVow account?{" "}
-                        <Link to="/login">Sign in</Link>
-                    </p>
-                </div>
+            {error && (
+              <div className="auth-error">
+                {error}
+              </div>
+            )}
 
-                <p className="auth-legal">
-                    AI-powered summaries, credibility analysis,
-                    impact scoring and personalized recommendations.
-                </p>
-            </div>
+            <button
+              type="submit"
+              className="auth-submit"
+              disabled={loading}
+            >
+              {loading
+                ? "Creating account…"
+                : "Create account"}
+            </button>
+          </form>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <button
+            className="social-login"
+            type="button"
+            disabled={loading}
+          >
+            Continue with Google
+          </button>
+
+          <p className="auth-footer-text">
+            Already have a PulseVow account?{" "}
+            <Link to="/login">Sign in</Link>
+          </p>
         </div>
-    );
+
+        <p className="auth-legal">
+          AI-powered summaries, credibility analysis,
+          impact scoring and personalized recommendations.
+        </p>
+      </div>
+    </div>
+  );
 }

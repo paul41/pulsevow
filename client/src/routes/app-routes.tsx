@@ -5,11 +5,7 @@ import Register from "../pages/register";
 import HomePage from "../pages/home";
 import EventInsightPage from "../pages/insights";
 import  Profile  from "../pages/profile";
-
 import { ProtectedRoute } from "./protected-routes";
-
-// New PulseVow pages
-// import SectorIntelligencePage from "../pages/sector-intelligence";
 import MonthlyBriefPage from "../pages/monthly-brief";
 import { NotFound } from "../components/common/NotFound";
 
@@ -44,7 +40,6 @@ export default function AppRoutes() {
                 element={<EventInsightPage />}
             />
 
-            {/* Optional: support direct story URLs later */}
             <Route
                 path="/pulse-insights/:storyId"
                 element={<EventInsightPage />}
@@ -76,7 +71,6 @@ export default function AppRoutes() {
                     </ProtectedRoute>
                 }
             />
-
 
             {/* =========================
                 FALLBACK

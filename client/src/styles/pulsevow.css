@@ -1049,9 +1049,14 @@ ul.next-list {
   font-size: 11px;
   line-height: 1.3;
   font-weight: 600;
-  letter-spacing: 0.07em;
+  /* letter-spacing: 0.07em; */
   text-transform: uppercase;
   margin-bottom: 12px;
+}
+
+.footer-title p {
+  font-size: 11px;
+  margin-bottom: 10px
 }
 
 .footer-contact p {

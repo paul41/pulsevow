@@ -1,6 +1,13 @@
-export interface AuthContextType{
-    user: any;
-    token: string | null;
-    loginUser: (email: string, password: string) => Promise<void>;
-    logoutUser: () => void;
+import type { AuthUser } from "../api/type";
+
+export interface AuthContextType {
+  user: AuthUser | null;
+  loading: boolean;
+
+  loginUser: (
+    email: string,
+    password: string,
+  ) => Promise<boolean>;
+
+  logoutUser: () => Promise<void>;
 }
