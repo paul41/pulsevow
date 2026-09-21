@@ -57,7 +57,6 @@ export function Recommendations() {
   return (
     <Block
       title="You may also want to know"
-      hint="Stories connected to this story and your interests"
     >
       <div className="recommended-grid">
         {items.map((x) => (
