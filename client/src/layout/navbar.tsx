@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../styles/topbar.css";
 
@@ -9,12 +9,17 @@ type Props = {
     onPodcastClick: () => void;
 };
 
-export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
+export function Navbar({
+    language,
+    onLanguageChange,
+    onPodcastClick,
+}: Props) {
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+
     const navigate = useNavigate();
-    let { user } = useAuth();
-    //user = {name: "John Doe", email: "john.doe@example.com"};
+    const { user } = useAuth();
+
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -43,9 +48,14 @@ export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
 
         const query = searchQuery.trim();
 
-        if (!query) return;
+        if (!query) {
+            return;
+        }
 
         console.log("Searching for:", query);
+
+        // Later:
+        // navigate(`/search?q=${encodeURIComponent(query)}`);
     };
 
     const closeSearch = () => {
@@ -53,91 +63,121 @@ export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
         setSearchQuery("");
     };
 
+    const getUserInitials = () => {
+        if (!user) {
+            return "PV";
+        }
+
+        const name = user.username?.trim();
+
+        if (!name) {
+            return "PV";
+        }
+
+        const parts = name.split(/\s+/);
+
+        if (parts.length === 1) {
+            return parts[0].slice(0, 2).toUpperCase();
+        }
+
+        return parts
+            .slice(0, 2)
+            .map((part) => part[0])
+            .join("")
+            .toUpperCase();
+    };
+
     return (
         <header className="topnav">
-            <a className="brand" href="#top">
+            <Link className="brand" to="/">
                 <div className="mark">P</div>
+
                 <div>
                     <span className="name">PulseVow</span>
                     <span className="tag">
                         Indian news intelligence
                     </span>
                 </div>
-            </a>
+            </Link>
 
             <nav className="sections">
-                {/* Weather icon link */}
                 <a href="#weather">
-                    <i className="fas fa-cloud-sun"></i> Bangalore 25.2°C
+                    <i className="fas fa-cloud-sun"></i>
+                    {" "}Bangalore 25.2°C
                 </a>
+
                 <div className="dropdown">
-                    <button className="dropbtn">India</button>
-                    {/* <div className="dropdown-content">
-                        <a href="#politics-india">Politics</a>
-                        <a href="#economy-india">Economy</a>
-                        <a href="#tech-india">Technology</a>
-                        <a href="#sports-india">Sports</a>
-                        <a href="#culture-india">Entertainment</a>
-                        <a href="#health-india">Health</a>
-                        <a href="#health-india">Culture</a>
-                        <a href="#health-india">West Bengal</a>
-                        <a href="#health-india">Maharashtra</a>
-                        <a href="#health-india">Delhi</a>
-                    </div> */}
+                    <button
+                        type="button"
+                        className="dropbtn"
+                    >
+                        India
+                    </button>
                 </div>
 
                 <div className="dropdown">
-                    <button className="dropbtn">World</button>
-                    {/* <div className="dropdown-content">
-                        <a href="#global-politics">Global Politics</a>
-                        <a href="#global-economy">Global Economy</a>
-                        <a href="#science">Science</a>
-                        <a href="#climate">Climate</a>
-                        <a href="#conflicts">Conflicts</a>
-                        <a href="#sports-world">International Sports</a>
-                        <a href="#health-india">US</a>
-                        <a href="#health-india">UK</a>
-                        <a href="#health-india">Middle East</a>
-                    </div> */}
+                    <button
+                        type="button"
+                        className="dropbtn"
+                    >
+                        World
+                    </button>
                 </div>
 
                 <div className="dropdown">
-                    <button className="dropbtn">Category</button>
+                    <button
+                        type="button"
+                        className="dropbtn"
+                    >
+                        Category
+                    </button>
+
                     <div className="dropdown-content">
                         <a href="#politics">Politics</a>
                         <a href="#economy">Economy</a>
                         <a href="#tech">Technology</a>
-                        <a href="#sports">Entertainment</a>
+                        <a href="#entertainment">
+                            Entertainment
+                        </a>
                         <a href="#sports">Sports</a>
-                        <a href="#sports">Health</a>
+                        <a href="#health">Health</a>
                     </div>
                 </div>
 
-                <a href="#podcast" onClick={onPodcastClick}>
-                    <i className="fas fa-headphones"></i> Pulse 5
+                <a
+                    href="#podcast"
+                    onClick={onPodcastClick}
+                >
+                    <i className="fas fa-headphones"></i>
+                    {" "}Pulse 5
                 </a>
+
                 <a href="#sectors">
-                    Sectors <span className="pro-badge">PRO</span>
+                    Sectors{" "}
+                    <span className="pro-badge">PRO</span>
                 </a>
             </nav>
+
             <div className="nav-right">
-                {/* Animated search */}
                 <div
-                    className={`search-wrapper ${searchOpen ? "search-open" : ""
-                        }`}
+                    className={`search-wrapper ${
+                        searchOpen ? "search-open" : ""
+                    }`}
                 >
                     <form
                         className="search-form"
                         onSubmit={handleSearch}
                     >
-                        <span className="search-icon">⌕</span>
+                        <span className="search-icon">
+                            ⌕
+                        </span>
 
                         <input
                             ref={searchInputRef}
                             type="search"
                             value={searchQuery}
-                            onChange={(e) =>
-                                setSearchQuery(e.target.value)
+                            onChange={(event) =>
+                                setSearchQuery(event.target.value)
                             }
                             placeholder="Search news..."
                             aria-label="Search news"
@@ -160,8 +200,9 @@ export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
 
                     <button
                         type="button"
-                        className={`searchbtn ${searchOpen ? "active" : ""
-                            }`}
+                        className={`searchbtn ${
+                            searchOpen ? "active" : ""
+                        }`}
                         aria-label={
                             searchOpen
                                 ? "Close search"
@@ -183,8 +224,8 @@ export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
                 <select
                     className="lang"
                     value={language}
-                    onChange={(e) =>
-                        onLanguageChange(e.target.value)
+                    onChange={(event) =>
+                        onLanguageChange(event.target.value)
                     }
                     aria-label="Select language"
                 >
@@ -196,26 +237,26 @@ export function Navbar({ language, onLanguageChange, onPodcastClick }: Props) {
                     <option>मराठी</option>
                     <option>ಕನ್ನಡ</option>
                 </select>
+
                 {user ? (
                     <button
                         type="button"
                         className="avatar"
                         title="View profile"
-                        onClick={() => navigate("/my-profile")}
+                        aria-label="View profile"
+                        onClick={() =>
+                            navigate("/my-profile")
+                        }
                     >
-                        {user.name
-                            ? user.name
-                                .split(" ")
-                                .map((part: string) => part[0])
-                                .join("")
-                                .slice(0, 2)
-                                .toUpperCase()
-                            : "PV"}
+                        {getUserInitials()}
                     </button>
                 ) : (
-                    <a href="/login" className="login-btn">
+                    <Link
+                        to="/login"
+                        className="login-btn"
+                    >
                         Login
-                    </a>
+                    </Link>
                 )}
             </div>
         </header>
