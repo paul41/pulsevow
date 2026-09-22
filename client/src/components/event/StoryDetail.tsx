@@ -26,7 +26,7 @@ export function StoryDetail({ story, onToast }: Props) {
           <h1 className="story-title headline-font">{story.title}</h1>
           {/* <p className="story-dek">{story.dek}</p> */}
           <div className="story-actions">
-            <a className="action primary" href="#ask">Ask about this story</a>
+            <a className="action primary" href="#brief">NEWS Brief</a>
             <a className="action" href="#sources">Compare sources</a>
             <a className="action" href="#timeline">Story so far</a>
           </div>

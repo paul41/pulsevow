@@ -554,7 +554,7 @@ section.block {
 }
 
 .summary {
-  margin-top: 16px;
+  margin-bottom: 15px;
   padding: 14px 16px;
   border-left: 3px solid var(--gold-deep);
   background: rgba(245, 158, 11, 0.06);

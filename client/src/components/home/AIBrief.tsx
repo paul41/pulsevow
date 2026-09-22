@@ -9,8 +9,11 @@ interface AIBriefProps {
 
 export function AIBrief({ items }: AIBriefProps) {
   return (
-    <Block title="AI Brief" hint="Context, not just a rewrite">
+    <Block title="AI Brief" hint="Context, not just a rewrite" id="brief">
       <div className="brief-card">
+        <div className="summary">
+          <p>{items[4]?.[1]}</p>
+        </div>
         <div className="brief-grid">
           {items.slice(0, -1).map(([title, text]: string[]) => (
             <div key={title}>
@@ -18,10 +21,6 @@ export function AIBrief({ items }: AIBriefProps) {
               <p>{text}</p>
             </div>
           ))}
-        </div>
-        <div className="summary">
-          <span className="summary-label">Summary: </span>
-          <p>{items[4]?.[1]}</p>
         </div>
       </div>
     </Block>

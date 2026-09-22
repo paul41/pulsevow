@@ -37,23 +37,23 @@ export default function Home() {
     setSelectedStory(story);
 
     // Scroll ONLY because the user selected a story.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const el = document.getElementById('story-detail');
+    // requestAnimationFrame(() => {
+    //   requestAnimationFrame(() => {
+    //     const el = document.getElementById('story-detail');
 
-        if (!el) return;
+    //     if (!el) return;
 
-        const y =
-          el.getBoundingClientRect().top +
-          window.scrollY -
-          80;
+    //     const y =
+    //       el.getBoundingClientRect().top +
+    //       window.scrollY -
+    //       80;
 
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth',
-        });
-      });
-    });
+    //     window.scrollTo({
+    //       top: y,
+    //       behavior: 'smooth',
+    //     });
+    //   });
+    // });
   };
 
   return (
