@@ -1,4 +1,4 @@
-import prisma  from "../../config/prisma.js";
+import prisma from "../../config/prisma.js";
 import type { Prisma, User } from "@prisma/client";
 
 export class AuthRepository {
@@ -61,6 +61,71 @@ export class AuthRepository {
       },
       data: {
         //refreshToken: null,
+      },
+    });
+  }
+
+  async createRefreshToken(data: {
+    userId: string;
+    tokenHash: string;
+    expiresAt: Date;
+  }) {
+    return prisma.refreshToken.create({
+      data,
+    });
+  }
+
+  async findRefreshToken(
+    userId: string,
+    tokenHash: string,
+  ) {
+    return prisma.refreshToken.findFirst({
+      where: {
+        userId,
+        tokenHash,
+      },
+    });
+  }
+
+  async revokeRefreshToken(
+    userId: string,
+    tokenHash: string,
+  ) {
+    return prisma.refreshToken.updateMany({
+      where: {
+        userId,
+        tokenHash,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: new Date(),
+      },
+    });
+  }
+
+  async revokeAllRefreshTokens(
+    userId: string,
+  ) {
+    return prisma.refreshToken.updateMany({
+      where: {
+        userId,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: new Date(),
+      },
+    });
+  }
+
+  async updateLastLogin(
+    userId: string,
+  ) {
+    return prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        lastLoginAt: new Date(),
       },
     });
   }

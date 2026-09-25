@@ -1,12 +1,12 @@
 import { Queue, Worker, QueueEvents } from "bullmq";
-import { Redis } from "ioredis";
 import { env } from "../config/env.js";
 
-export const connection = new Redis({
+const connection = {
   host: env.REDIS_HOST,
   port: Number(env.REDIS_PORT),
-  maxRetriesPerRequest: null
-});
+};
+
+export { connection };
 
 export function createQueue(name: string) {
   return new Queue(name, {
@@ -25,7 +25,7 @@ export function createQueue(name: string) {
 
 export function createWorker(
   name: string,
-  processor: ConstructorParameters<typeof Worker>[1]
+  processor: ConstructorParameters<typeof Worker>[1],
 ) {
   return new Worker(name, processor, {
     connection,
