@@ -1,4 +1,4 @@
-import {FOLLOW_TEXT} from "../../constants/follow-text";
+import {FOLLOW_TEXT} from "../../constants/follow-text.js";
 
 export function FollowUs() {
   const socials: { label: string; href: string }[] = [

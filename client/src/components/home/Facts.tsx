@@ -1,5 +1,5 @@
 import { Block } from "../common/Block";
-import { CONFIRMED, INTERPRETATION } from "../../constants/facts-text";
+import { CONFIRMED, INTERPRETATION } from "../../constants/facts-text.js";
 
 interface FactsProps {
   confirmed: string[];

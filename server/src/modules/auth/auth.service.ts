@@ -1,10 +1,12 @@
-import bcrypt from "bcrypt";
-
+import {
+  hashPassword,
+  verifyPassword,
+} from "../../utils/password.js";
 import { AuthRepository } from "./auth.repository.js";
 import {
   signToken,
   verifyToken,
-} from "./jwt.service.js";
+} from "../../utils/jwt.js";
 
 import {
   hashRefreshToken,
@@ -41,10 +43,7 @@ export class AuthService {
     }
 
     const passwordHash =
-      await bcrypt.hash(
-        dto.password,
-        12,
-      );
+      await hashPassword(dto.password);
 
     const user =
       await this.authRepository.create({
@@ -53,19 +52,19 @@ export class AuthService {
         passwordHash,
       });
 
-    const accessToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "access",
-      });
+    const accessToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "access",
+    });
 
-    const refreshToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "refresh",
-      });
+    const refreshToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "refresh",
+    });
 
     await this.authRepository.createRefreshToken({
       userId: user.id,
@@ -101,30 +100,28 @@ export class AuthService {
     }
 
     const isValidPassword =
-      await bcrypt.compare(
-        dto.password,
+      await verifyPassword(
         user.passwordHash,
+        dto.password
       );
 
     if (!isValidPassword) {
-      throw new Error(
-        "Invalid email or password.",
-      );
+      throw new Error("Invalid email or password.");
     }
 
-    const accessToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "access",
-      });
+    const accessToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "access",
+    });
 
-    const refreshToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "refresh",
-      });
+    const refreshToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "refresh",
+    });
 
     await this.authRepository.createRefreshToken({
       userId: user.id,
@@ -261,19 +258,18 @@ export class AuthService {
       tokenHash,
     );
 
-    const accessToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "access",
-      });
-
-    const refreshToken =
-      await signToken({
-        sub: user.id,
-        email: user.email,
-        type: "refresh",
-      });
+    const accessToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "access",
+    });
+    const refreshToken = await signToken({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      type: "refresh",
+    });
 
     await this.authRepository.createRefreshToken({
       userId: user.id,

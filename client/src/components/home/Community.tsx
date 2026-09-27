@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ASK_PULSEVOW, ASK_PULSEVOW_DESC } from "../../constants/ask-text";
+import { ASK_PULSEVOW, ASK_PULSEVOW_DESC } from "../../constants/ask-text.js";
 
 interface AskPulseVowProps {
   onToast: (message: string) => void;

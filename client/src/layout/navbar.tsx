@@ -122,6 +122,16 @@ export function Navbar({
                     >
                         World
                     </button>
+                    {/* <div className="dropdown-content">
+                        <a href="#politics">UK</a>
+                        <a href="#economy">USA</a>
+                        <a href="#tech">Germany</a>
+                        <a href="#entertainment">
+                            Russia
+                        </a>
+                        <a href="#sports">Qatar</a>
+                        <a href="#health">Afganistan</a>
+                    </div> */}
                 </div>
 
                 <div className="dropdown">

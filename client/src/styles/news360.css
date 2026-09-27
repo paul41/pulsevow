@@ -1,0 +1,165 @@
+.news-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.news-card {
+  display: flex;
+  gap: 1.25rem;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1.25rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.news-card:hover {
+  border-color: #d1d5db;
+}
+
+.news-card-image {
+  width: 260px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.news-card-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 0.45rem;
+}
+
+.news-category {
+  font-weight: 600;
+  color: #496faf;
+}
+
+.news-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: #f1f5f9;
+  color: #496faf;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.news-card-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #151b2e;
+  margin: 0.4rem 0 0.5rem;
+}
+
+.news-card-description {
+  color: #4b5563;
+  font-family: "Source Serif 4", serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+}
+
+.read-more {
+  width: fit-content;
+  color: #496faf;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+  .news-card {
+    gap: 1rem;
+  }
+
+  .news-card-image {
+    width: 200px;
+    height: 130px;
+  }
+
+  .news-card-title {
+    font-size: 1.1rem;
+  }
+
+  .news-card-description {
+    font-size: 0.95rem;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+  .news-feed {
+    gap: 1rem;
+  }
+
+  .news-card {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+  }
+
+  .news-card-image {
+    width: 100%;
+    height: 190px;
+    border-radius: 10px;
+  }
+
+  .news-card-meta {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  .news-tag {
+    margin-left: 0;
+  }
+
+  .news-card-title {
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+
+  .news-card-description {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+}
+
+
+/* Small phones */
+@media (max-width: 380px) {
+  .news-card-image {
+    height: 165px;
+  }
+
+  .news-card-title {
+    font-size: 1rem;
+  }
+}

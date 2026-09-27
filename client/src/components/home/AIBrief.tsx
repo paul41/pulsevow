@@ -9,7 +9,7 @@ interface AIBriefProps {
 
 export function AIBrief({ items }: AIBriefProps) {
   return (
-    <Block title="AI Brief" hint="Context, not just a rewrite" id="brief">
+    <Block title="" hint="Context, not just a rewrite" id="brief">
       <div className="brief-card">
         <div className="summary">
           <p>{items[4]?.[1]}</p>

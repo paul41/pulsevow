@@ -93,6 +93,9 @@ select {
   font: inherit
 }
 
+.pv-main{
+  max-width: 95%;
+}
 .topnav {
   display: flex;
   align-items: center;
@@ -767,7 +770,7 @@ ul.next-list {
 .sidebar-card h3 {
   font-size: 13px;
   font-weight: 700;
-  margin-bottom: 11px;
+  margin-bottom: 3px;
   color: var(--ink-soft)
 }
 

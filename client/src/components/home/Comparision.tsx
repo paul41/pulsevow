@@ -1,6 +1,6 @@
 import { Block } from "../common/Block";
 import type { Source } from "../event/data";
-import { SOURCE_TEXT } from "../../constants/source-text";
+import { SOURCE_TEXT } from "../../constants/source-text.js";
 
 interface SourceComparisonProps {
   sources: Source[];

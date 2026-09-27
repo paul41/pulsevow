@@ -1,74 +1,84 @@
-import type { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import type { JwtPayload } from "jsonwebtoken";
+import type {
+  Request,
+  Response,
+  NextFunction,
+} from "express";
 
-import { env } from "../config/env.js";
-import type { UserRole } from "@prisma/client";
+import { verifyToken } from "../utils/jwt.js";
 
-interface AuthJwtPayload extends JwtPayload {
-  id: string;
-  email: string;
-  role: UserRole;
-}
-
-export const authenticate = (
+export const authenticate = async (
   req: Request,
   res: Response,
   next: NextFunction
-): void => {
+): Promise<void> => {
   try {
-    const authorization = req.headers.authorization;
+    /**
+     * Access token is stored in an
+     * HTTP-only cookie.
+     */
+    const accessToken =
+      req.cookies?.access_token;
 
-    if (!authorization) {
+    if (!accessToken) {
       res.status(401).json({
         success: false,
-        message: "Authorization header is missing.",
+        message: "Authentication required.",
       });
       return;
     }
 
-    const [scheme, token] = authorization.split(" ");
+    /**
+     * Verify:
+     * - RS256 signature
+     * - issuer
+     * - audience
+     * - expiration
+     */
+    const payload =
+      await verifyToken(accessToken);
 
-    if (scheme !== "Bearer" || !token) {
+    /**
+     * Only access tokens can authenticate
+     * normal API requests.
+     */
+    if (payload.type !== "access") {
       res.status(401).json({
         success: false,
-        message: "Invalid authorization header.",
+        message: "Invalid access token.",
       });
       return;
     }
 
-    const decoded = jwt.verify(
-      token,
-      env.JWT_SECRET
-    ) as AuthJwtPayload;
+    if (!payload.sub || !payload.email) {
+      res.status(401).json({
+        success: false,
+        message: "Invalid access token payload.",
+      });
+      return;
+    }
 
+    /**
+     * Attach authenticated user
+     * to Express request.
+     */
     req.user = {
-      id: decoded.id,
-      email: decoded.email,
-      role: decoded.role,
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role,
     };
 
     next();
   } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
-      res.status(401).json({
-        success: false,
-        message: "Token has expired.",
-      });
-      return;
-    }
-
-    if (error instanceof jwt.JsonWebTokenError) {
-      res.status(401).json({
-        success: false,
-        message: "Invalid token.",
-      });
-      return;
-    }
-
-    res.status(500).json({
+    /**
+     * jose throws errors such as:
+     * JWTExpired
+     * JWTClaimValidationFailed
+     * JWSSignatureVerificationFailed
+     * etc.
+     */
+    res.status(401).json({
       success: false,
-      message: "Authentication failed.",
+      message: "Invalid or expired access token.",
     });
   }
 };

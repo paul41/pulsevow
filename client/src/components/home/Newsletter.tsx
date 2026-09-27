@@ -1,6 +1,6 @@
 // components/common/Newsletter.tsx
 import { useState } from "react";
-import { NEWSLETTER_HEADINGS, NEWSLETTER_DESCRIPTION, SIDEBAR_NOTE } from "../../constants/newsletter-text";
+import { NEWSLETTER_HEADINGS, NEWSLETTER_DESCRIPTION, SIDEBAR_NOTE } from "../../constants/newsletter-text.js";
 
 interface NewsletterProps {
   onToast: (message: string) => void;

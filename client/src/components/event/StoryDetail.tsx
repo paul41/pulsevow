@@ -5,9 +5,10 @@ import { SourceComparison } from '../home/Comparision';
 import { Facts } from '../home/Facts';
 import { Recommendations } from '../home/Recommendation';
 import { AskPulseVow } from '../home/Community';
-import { RelatedArticles } from '../home/Related';
 import { Newsletter } from '../home/Newsletter';
 import { FollowUs } from '../home/Social';
+import { Recent } from '../home/Recent';
+import { News360 } from '../home/News360';
 
 type Props = { story: any; onToast: (message: string) => void };
 
@@ -27,8 +28,8 @@ export function StoryDetail({ story, onToast }: Props) {
           {/* <p className="story-dek">{story.dek}</p> */}
           <div className="story-actions">
             <a className="action primary" href="#brief">NEWS Brief</a>
-            <a className="action" href="#sources">Compare sources</a>
             <a className="action" href="#timeline">Story so far</a>
+            <a className="action" href="#sources">Compare sources</a>
           </div>
         </header>
 
@@ -47,14 +48,20 @@ export function StoryDetail({ story, onToast }: Props) {
         <Timeline items={story.timeline} />
         <SourceComparison sources={story.sources} />
         <Facts confirmed={story.confirmed} interpretation={story.interpretation} />
+        <a href="#ask" className='block-title' style={{backgroundColor:"#e387bd",cursor:"pointer"}}>
+          <span><h3>Have a question about this story? Discuss it in forum.</h3></span>
+        </a>
+        
+        <News360 />
         <Recommendations />
       </article>
 
       <aside>
         <AskPulseVow onToast={onToast} />
+        <Recent />
         <Newsletter onToast={onToast} />
         <FollowUs />
-        <RelatedArticles />
+        {/* <RelatedArticles /> */}
         <Advertisement />
       </aside>
     </div>

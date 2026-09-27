@@ -1,7 +1,7 @@
 // components/common/Recommendations.tsx
 import { Block } from "../common/Block";
-
-interface RecommendationItem {
+import "../../styles/news360.css"
+interface News360 {
   image: string;
   tag: string;
   cat: string;
@@ -12,8 +12,8 @@ interface RecommendationItem {
   cta: string;
 }
 
-export function Recommendations() {
-  const items: RecommendationItem[] = [
+export function News360() {
+  const items: News360[] = [
     {
       image:
         "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&q=80",
@@ -56,8 +56,9 @@ export function Recommendations() {
 
   return (
     <Block
-      title="Most Read"
+      title="Pulse 360"
     >
+      {/* //You may also want to know */}
       <div className="recommended-grid">
         {items.map((x) => (
           <article className="recommended-card" key={x.title}>
