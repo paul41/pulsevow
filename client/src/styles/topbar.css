@@ -157,7 +157,5 @@
     .search-wrapper.search-open .search-form {
         position: absolute;
         right: 40px;
-
-        width: 190px;
     }
 }

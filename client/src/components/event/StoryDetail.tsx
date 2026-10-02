@@ -48,11 +48,13 @@ export function StoryDetail({ story, onToast }: Props) {
         <Timeline items={story.timeline} />
         <SourceComparison sources={story.sources} />
         <Facts confirmed={story.confirmed} interpretation={story.interpretation} />
-        <a href="#ask" className='block-title' style={{backgroundColor:"#e387bd",cursor:"pointer"}}>
-          <span><h3>Have a question about this story? Discuss it in forum.</h3></span>
+        <a href="#ask" className="forum-cta"> 
+          Have a question about this story? 
+          <span>Discuss it in forum →</span>
         </a>
-        
-        <News360 />
+        <section className="news360-section">
+          <News360 />
+        </section>
         <Recommendations />
       </article>
 

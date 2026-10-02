@@ -1,5 +1,5 @@
 import { Block } from "../common/Block";
-import { CONFIRMED, INTERPRETATION } from "../../constants/facts-text.js";
+import { VERIFIED, INTERPRETATION } from "../../constants/facts-text.js";
 
 interface FactsProps {
   confirmed: string[];
@@ -8,10 +8,10 @@ interface FactsProps {
 
 export function Facts({ confirmed, interpretation }: FactsProps) {
   return (
-    <Block title="What is confirmed" hint="Separate facts from interpretation">
+    <Block title="What we know">
       <div className="fact-grid">
         <div className="fact-box">
-          <h3>{CONFIRMED}</h3>
+          <h3>{VERIFIED}</h3>
           <ul>
             {confirmed.map((x) => (
               <li key={x}>{x}</li>

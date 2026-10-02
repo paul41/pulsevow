@@ -29,7 +29,7 @@ export function Recent() {
 
   return (
     <div className="sidebar-card">
-      <h3>Recent News</h3>
+      <h3>Based on your Interest</h3>
       <div className="related-list">
         {articles.map(({ image, title, text }) => (
           <a className="related-item" href="#story" key={title}>

@@ -25,7 +25,7 @@ export function PulseCarousel({
     <section id="today" className="pulse-shell">
       <div className="section-head">
         <div>
-          <h2>Pulse Now</h2>
+          <h2>NEWS Pulse</h2>
         </div>
 
         <div className="carousel-controls">

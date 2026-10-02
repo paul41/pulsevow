@@ -1,2 +1,2 @@
-export const CONFIRMED="Confirmed"
+export const VERIFIED="Verified Facts"
 export const INTERPRETATION="Interpretation"
