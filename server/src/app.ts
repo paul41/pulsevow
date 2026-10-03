@@ -21,5 +21,5 @@ app.get("/api/health", async (_, res) => {
   });
 });
 /** App routes */
-app.use(BASE_API_PATH, authRouter);
+app.use(`${BASE_API_PATH}/auth`, authRouter);
 export default app;

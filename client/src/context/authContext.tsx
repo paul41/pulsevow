@@ -15,12 +15,13 @@ import type { AuthUser } from "../api/type";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   const [user, setAuthUser] = useState<AuthUser | null>(
-    () => getUser()
+    () => getUser(),
   );
+
   const [loading, setLoading] = useState(true);
 
   const authApi = useAuthApi();
@@ -34,11 +35,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const data = await authApi.getCurrentUser();
+        const response = await authApi.getCurrentUser();
 
-        if (data?.user) {
-          setAuthUser(data.user);
-          setUser(data.user);
+        const currentUser = response?.data?.user;
+
+        if (currentUser) {
+          setAuthUser(currentUser);
+          setUser(currentUser);
         } else {
           clearUser();
           setAuthUser(null);
@@ -54,18 +57,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     initializeAuth();
   }, []);
 
+  const setAuthenticatedUser = (authenticatedUser: AuthUser) => {
+    setAuthUser(authenticatedUser);
+    setUser(authenticatedUser);
+  };
+
   const loginUser = async (
     email: string,
     password: string,
   ) => {
-    const data = await authApi.login(email, password);
+    const response = await authApi.login(
+      email,
+      password,
+    );
 
-    if (!data?.user) {
+    const loggedInUser = response?.data?.user;
+
+    if (!loggedInUser) {
       return false;
     }
 
-    setAuthUser(data.user);
-    setUser(data.user);
+    setAuthenticatedUser(loggedInUser);
+
     return true;
   };
 
@@ -84,6 +97,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         user,
         loading,
         loginUser,
+        setAuthenticatedUser,
         logoutUser,
       }}
     >

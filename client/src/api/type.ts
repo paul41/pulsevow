@@ -8,19 +8,32 @@ export interface NewsStory {
 
 export interface AuthUser {
   id: string;
-  username: string;
+  name: string;
   email: string;
   role: string;
+  avatar?: string | null;
+  isEmailVerified?: boolean;
 }
 
 export interface LoginResponse {
-  user: AuthUser;
+  success: boolean;
+  message: string;
+  data: {
+    user: AuthUser;
+  };
 }
 
 export interface CurrentUserResponse {
-  user: AuthUser;
+  success: boolean;
+  data: {
+    user: AuthUser;
+  };
 }
 
 export interface RegisterResponse {
-  user: AuthUser;
+  success: boolean;
+  message: string;
+  data: {
+    user: AuthUser;
+  };
 }

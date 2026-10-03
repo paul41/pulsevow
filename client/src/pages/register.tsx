@@ -8,7 +8,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const authApi = useAuthApi();
-  const { loginUser } = useAuth();
+  const { setAuthenticatedUser } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -40,37 +40,22 @@ export default function Register() {
     const normalizedName = name.trim();
 
     try {
-      const data = await authApi.register(
+      const response = await authApi.register(
         normalizedName,
         normalizedEmail,
         password,
       );
+      const registeredUser = response?.data?.user;
 
-      if (!data?.user) {
+      if (!registeredUser) {
         setError(
           authApi.error ||
-            "Unable to create your account. Please try again.",
+          "Unable to create your account. Please try again.",
         );
         return;
       }
 
-      /*
-       * If /auth/register creates the session and sets the
-       * HttpOnly access_token + refresh_token cookies,
-       * we can immediately store the authenticated user.
-       */
-      const success = await loginUser(
-        normalizedEmail,
-        password,
-      );
-
-      if (!success) {
-        setError(
-          "Account created successfully. Please sign in.",
-        );
-        navigate("/login");
-        return;
-      }
+      setAuthenticatedUser(registeredUser);
 
       navigate("/");
     } catch {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "./api-client";
 import type { LoginResponse, CurrentUserResponse, RegisterResponse } from "./type";
+import {API_ROUTES} from "../../config/apiRoutes"
 
 export const useAuthApi = () => {
     const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ export const useAuthApi = () => {
             setError(null);
 
             const response = await api.post<LoginResponse>(
-                "/auth/login",
+                API_ROUTES.LOGIN,
                 {
                     email,
                     password,
@@ -47,7 +48,7 @@ export const useAuthApi = () => {
             setError(null);
 
             const response = await api.post<RegisterResponse>(
-                "/auth/register",
+                API_ROUTES.REGISTER,
                 {
                     name,
                     email,
@@ -75,7 +76,7 @@ export const useAuthApi = () => {
             setError(null);
 
             const response =
-                await api.get<CurrentUserResponse>("/auth/me");
+                await api.get<CurrentUserResponse>(API_ROUTES.PROFILE);
 
             return response.data;
         } catch (err) {
@@ -95,7 +96,7 @@ export const useAuthApi = () => {
             setLoading(true);
             setError(null);
 
-            await api.post("/auth/logout");
+            await api.post(API_ROUTES.LOGOUT);
 
             return true;
         } catch (err) {
@@ -116,7 +117,7 @@ export const useAuthApi = () => {
         try {
             setError(null);
 
-            const response = await api.post("/auth/refresh");
+            const response = await api.post(API_ROUTES.REFRESH_TOKEN);
 
             return response.data;
         } catch (err) {

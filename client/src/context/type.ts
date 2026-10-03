@@ -9,5 +9,7 @@ export interface AuthContextType {
     password: string,
   ) => Promise<boolean>;
 
+  setAuthenticatedUser: (user: AuthUser) => void;
+
   logoutUser: () => Promise<void>;
 }

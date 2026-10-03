@@ -15,6 +15,10 @@ build
 .env.*
 !.env.example
 
+# Keys
+#keys/
+#*.pem
+
 # Logs
 *.log
 npm-debug.log*

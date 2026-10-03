@@ -1,6 +1,7 @@
 import { Block } from "../common/Block";
 import "../../styles/news360.css";
 interface News360 {
+    id:string;
     image: string;
     tag: string;
     cat: string;
@@ -13,6 +14,7 @@ interface News360 {
 export function News360() {
     const items: News360[] = [
         {
+            id:"001",
             image: "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&q=80",
             tag: "For you",
             cat: "Markets",
@@ -23,6 +25,7 @@ export function News360() {
             cta: "Understand this story",
         },
         {
+            id:"002",
             image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80",
             tag: "Related",
             cat: "Economy",
@@ -33,6 +36,7 @@ export function News360() {
             cta: "Explore the context",
         },
         {
+            id:"003",
             image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80",
             tag: "Based on your interests",
             cat: "Real Estate",
@@ -43,6 +47,7 @@ export function News360() {
             cta: "See what changed",
         },
         {
+            id:"004",
             image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
             tag: "Worth knowing",
             cat: "Business",
@@ -53,6 +58,7 @@ export function News360() {
             cta: "See the impact",
         },
         {
+            id:"005",
             image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=180&h=130&fit=crop",
             tag: "Worth knowing",
             cat: "Business",
@@ -63,6 +69,7 @@ export function News360() {
             cta: "See the impact",
         },
         {
+            id:"006",
             image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=180&h=130&fit=crop",
             tag: "Worth knowing",
             cat: "Business",
@@ -79,7 +86,7 @@ export function News360() {
             <div className="pulse360-grid">
                 {" "}
                 {items.map((x) => (
-                    <article className="pulse360-card" key={x.title}>
+                    <article className="pulse360-card" key={x.id}>
                         {" "}
                         <div className="pulse360-image">
                             {" "}

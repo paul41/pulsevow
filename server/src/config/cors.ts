@@ -3,9 +3,11 @@ import cors, {
 } from "cors";
 
 const allowedOrigins = [
+  "http://localhost",
   "http://localhost:5173",
   "https://pulsevow.com",
   "https://www.pulsevow.com",
+  "https://api.pulsevow.com",
 ];
 
 const corsOptions: CorsOptions = {

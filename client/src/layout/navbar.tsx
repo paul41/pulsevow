@@ -19,7 +19,8 @@ export function Navbar({
 
     const navigate = useNavigate();
     const { user } = useAuth();
-
+    console.log("U: ", user);
+    
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -52,8 +53,6 @@ export function Navbar({
             return;
         }
 
-        console.log("Searching for:", query);
-
         // Later:
         // navigate(`/search?q=${encodeURIComponent(query)}`);
     };
@@ -68,7 +67,7 @@ export function Navbar({
             return "PV";
         }
 
-        const name = user.username?.trim();
+        const name = user.name?.trim();
 
         if (!name) {
             return "PV";
@@ -237,6 +236,7 @@ export function Navbar({
                     onChange={(event) =>
                         onLanguageChange(event.target.value)
                     }
+                    name="language"
                     aria-label="Select language"
                 >
                     <option>English</option>
