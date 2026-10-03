@@ -16,8 +16,8 @@ build
 !.env.example
 
 # Keys
-#keys/
-#*.pem
+keys/
+*.pem
 
 # Logs
 *.log

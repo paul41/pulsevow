@@ -16,6 +16,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./server/.env
+    volumes:
+      - ./server/keys:/server/keys:ro
     depends_on:
       - postgres
       - redis
@@ -68,3 +70,4 @@ networks:
 volumes:
   postgres_data:
   redis_data:
+  
