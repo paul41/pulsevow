@@ -27,7 +27,6 @@ RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/keys ./keys
 
 RUN npx prisma generate
 
