@@ -49,7 +49,6 @@ export default function Register() {
 
       if (!registeredUser) {
         setError(
-          authApi.error ||
           "Unable to create your account. Please try again.",
         );
         return;
@@ -58,9 +57,11 @@ export default function Register() {
       setAuthenticatedUser(registeredUser);
 
       navigate("/");
-    } catch {
+    } catch (error) {
       setError(
-        "Unable to create your account. Please try again.",
+        error instanceof Error
+          ? error.message
+          : "Unable to create your account. Please try again.",
       );
     }
   };

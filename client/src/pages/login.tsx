@@ -1,4 +1,4 @@
-import {  useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../styles/pulsevow.css";
@@ -22,12 +22,17 @@ export default function Login() {
     }
 
     try {
-      await loginUser(email, password);
+      await loginUser(
+        email.trim().toLowerCase(),
+        password,
+      );
 
       navigate("/");
-    } catch {
+    } catch (error) {
       setError(
-        "Unable to sign in. Please check your credentials.",
+        error instanceof Error
+          ? error.message
+          : "Unable to sign in. Please check your credentials.",
       );
     }
   };
@@ -67,7 +72,9 @@ export default function Login() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 placeholder="you@example.com"
                 autoComplete="email"
                 disabled={loading}
@@ -125,7 +132,9 @@ export default function Login() {
               className="auth-submit"
               disabled={loading}
             >
-              {loading ? "Signing in…" : "Sign in"}
+              {loading
+                ? "Signing in…"
+                : "Sign in"}
             </button>
           </form>
 

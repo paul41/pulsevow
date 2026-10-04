@@ -3,7 +3,7 @@ import axios, {
     type AxiosInstance,
 } from "axios";
 
-import { ApiError } from "../utils/app-error";
+import { AppError } from "../utils/app-error";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || '/api/v1';
@@ -24,7 +24,7 @@ api.interceptors.response.use(
     (error: AxiosError<{ message?: string; code?: string }>) => {
         if (!error.response) {
             return Promise.reject(
-                new ApiError(
+                new AppError(
                     "Unable to connect to PulseVow. Please check your internet connection.",
                     0,
                     "NETWORK_ERROR"
@@ -43,7 +43,7 @@ api.interceptors.response.use(
             getDefaultErrorCode(status);
 
         return Promise.reject(
-            new ApiError(
+            new AppError(
                 message,
                 status,
                 code
