@@ -15,3 +15,5 @@ docker exec -it pulsevow-backend npx prisma migrate dev --name add_user_preferen
 
 To login to DB
 docker exec -it pulsevow-postgres psql -U pulsevow -d pulsevow
+
+Added ruleset to git repo
