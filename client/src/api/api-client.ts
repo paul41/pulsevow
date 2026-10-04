@@ -3,7 +3,7 @@ import axios, {
     type AxiosInstance,
 } from "axios";
 
-import { ApiError } from "./api-error";
+import { ApiError } from "../utils/app-error";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || '/api/v1';

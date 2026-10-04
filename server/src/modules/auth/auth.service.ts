@@ -2,7 +2,9 @@ import {
   hashPassword,
   verifyPassword,
 } from "../../utils/password.js";
+
 import { AuthRepository } from "./auth.repository.js";
+
 import {
   signToken,
   verifyToken,
@@ -16,6 +18,8 @@ import type {
   LoginDto,
   RegisterDto,
 } from "./auth.types.js";
+
+import { ApiError } from "../../utils/api-error.js";
 
 export class AuthService {
   private authRepository =
@@ -37,8 +41,10 @@ export class AuthService {
       );
 
     if (existingUser) {
-      throw new Error(
+      throw new ApiError(
         "Email already registered.",
+        409,
+        "EMAIL_ALREADY_REGISTERED",
       );
     }
 
@@ -94,19 +100,25 @@ export class AuthService {
       );
 
     if (!user) {
-      throw new Error(
+      throw new ApiError(
         "Invalid email or password.",
+        401,
+        "INVALID_CREDENTIALS",
       );
     }
 
     const isValidPassword =
       await verifyPassword(
         user.passwordHash,
-        dto.password
+        dto.password,
       );
 
     if (!isValidPassword) {
-      throw new Error("Invalid email or password.");
+      throw new ApiError(
+        "Invalid email or password.",
+        401,
+        "INVALID_CREDENTIALS",
+      );
     }
 
     const accessToken = await signToken({
@@ -175,8 +187,10 @@ export class AuthService {
       );
 
     if (!user) {
-      throw new Error(
+      throw new ApiError(
         "User not found.",
+        404,
+        "USER_NOT_FOUND",
       );
     }
 
@@ -190,8 +204,10 @@ export class AuthService {
     token: string,
   ) {
     if (!token) {
-      throw new Error(
+      throw new ApiError(
         "Refresh token missing.",
+        401,
+        "REFRESH_TOKEN_MISSING",
       );
     }
 
@@ -201,14 +217,18 @@ export class AuthService {
     if (
       payload.type !== "refresh"
     ) {
-      throw new Error(
+      throw new ApiError(
         "Invalid refresh token.",
+        401,
+        "INVALID_REFRESH_TOKEN",
       );
     }
 
     if (!payload.sub) {
-      throw new Error(
+      throw new ApiError(
         "Invalid refresh token.",
+        401,
+        "INVALID_REFRESH_TOKEN",
       );
     }
 
@@ -222,8 +242,10 @@ export class AuthService {
       );
 
     if (!storedToken) {
-      throw new Error(
+      throw new ApiError(
         "Refresh token is invalid or revoked.",
+        401,
+        "INVALID_REFRESH_TOKEN",
       );
     }
 
@@ -231,8 +253,10 @@ export class AuthService {
       storedToken.revokedAt ||
       storedToken.expiresAt < new Date()
     ) {
-      throw new Error(
+      throw new ApiError(
         "Refresh token is expired or revoked.",
+        401,
+        "REFRESH_TOKEN_EXPIRED",
       );
     }
 
@@ -242,8 +266,10 @@ export class AuthService {
       );
 
     if (!user) {
-      throw new Error(
+      throw new ApiError(
         "User not found.",
+        404,
+        "USER_NOT_FOUND",
       );
     }
 
@@ -264,6 +290,7 @@ export class AuthService {
       role: user.role,
       type: "access",
     });
+
     const refreshToken = await signToken({
       sub: user.id,
       email: user.email,

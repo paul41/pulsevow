@@ -175,10 +175,6 @@ export default function Profile() {
 
       <main className="profile-main">
         <div className="profile-intro">
-          <span className="auth-kicker">
-            YOUR PULSE
-          </span>
-
           <h1>Your profile</h1>
 
           <p>
