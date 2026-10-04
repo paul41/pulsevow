@@ -6,7 +6,7 @@ import axios, {
 import { AppError } from "../utils/app-error";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || '/api/v1';
+    import.meta.env.VITE_API_BASE_URL || "/api/v1";
 
 const api: AxiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -17,9 +17,7 @@ const api: AxiosInstance = axios.create({
 });
 
 api.interceptors.response.use(
-    (response) => {
-        return response;
-    },
+    (response) => response,
 
     (error: AxiosError<{ message?: string; code?: string }>) => {
         if (!error.response) {
@@ -27,57 +25,49 @@ api.interceptors.response.use(
                 new AppError(
                     "Unable to connect to PulseVow. Please check your internet connection.",
                     0,
-                    "NETWORK_ERROR"
-                )
+                    "NETWORK_ERROR",
+                ),
             );
         }
 
         const status = error.response.status;
 
         const message =
-            error.response.data?.message ||
+            error.response.data?.message ??
             getDefaultErrorMessage(status);
 
         const code =
-            error.response.data?.code ||
+            error.response.data?.code ??
             getDefaultErrorCode(status);
 
         return Promise.reject(
             new AppError(
                 message,
                 status,
-                code
-            )
+                code,
+            ),
         );
-    }
+    },
 );
 
 function getDefaultErrorMessage(status: number): string {
     switch (status) {
         case 400:
             return "Invalid request.";
-
         case 401:
             return "Your session has expired. Please sign in again.";
-
         case 403:
             return "You do not have permission to perform this action.";
-
         case 404:
             return "The requested information was not found.";
-
         case 409:
             return "This information already exists.";
-
         case 429:
             return "Too many requests. Please try again later.";
-
         case 500:
             return "Something went wrong on our server.";
-
         case 503:
             return "PulseVow is temporarily unavailable.";
-
         default:
             return "Something went wrong. Please try again.";
     }
@@ -87,28 +77,20 @@ function getDefaultErrorCode(status: number): string {
     switch (status) {
         case 400:
             return "BAD_REQUEST";
-
         case 401:
             return "UNAUTHORIZED";
-
         case 403:
             return "FORBIDDEN";
-
         case 404:
             return "NOT_FOUND";
-
         case 409:
             return "CONFLICT";
-
         case 429:
             return "RATE_LIMITED";
-
         case 500:
             return "INTERNAL_ERROR";
-
         case 503:
             return "SERVICE_UNAVAILABLE";
-
         default:
             return "API_ERROR";
     }

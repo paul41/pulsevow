@@ -9,7 +9,7 @@ export class AppError extends Error {
     ) {
         super(message);
 
-        this.name = "ApiError";
+        this.name = "AppError";
         this.status = status;
         this.code = code;
     }

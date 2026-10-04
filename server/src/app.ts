@@ -5,6 +5,7 @@ import { BASE_API_PATH } from "./constants/api.js";
 import compression from "compression";
 import corsMiddleware from "./config/cors.js";
 import cookieParser from "cookie-parser";
+import { errorHandler } from "./middlewares/error-handler.middleware.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(compression());
 app.use(corsMiddleware);
+app.use(errorHandler);
 
 app.get("/api/health", async (_, res) => {
   await prisma.$queryRaw`SELECT 1`;
