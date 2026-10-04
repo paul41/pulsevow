@@ -13,7 +13,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(compression());
 app.use(corsMiddleware);
-app.use(errorHandler);
 
 app.get("/api/health", async (_, res) => {
   await prisma.$queryRaw`SELECT 1`;
@@ -22,6 +21,9 @@ app.get("/api/health", async (_, res) => {
     database: "Connected"
   });
 });
+
 /** App routes */
 app.use(`${BASE_API_PATH}/auth`, authRouter);
+app.use(errorHandler);
+
 export default app;
