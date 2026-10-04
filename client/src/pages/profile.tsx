@@ -160,7 +160,7 @@ export default function Profile() {
             className="profile-nav-home"
             to="/"
           >
-            🏠
+            Back to PulseVow
           </Link>
 
           <div
