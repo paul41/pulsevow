@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch src/server.ts",
+    "worker": "cross-env NODE_ENV=development tsx watch src/workers/index.ts",
     "build": "cross-env NODE_ENV=production tsc",
     "start:prod": "cross-env NODE_ENV=production node dist/server.js",
     "staging": "cross-env NODE_ENV=staging node dist/server.js",
