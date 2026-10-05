@@ -24,14 +24,31 @@ services:
     networks:
       - pulsevow-network
 
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pulsevow-worker
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server/keys:/server/keys:ro
+    depends_on:
+      - postgres
+      - redis
+    command: ["node", "dist/workers/index.js"]
+    networks:
+      - pulsevow-network
+
   postgres:
     image: pgvector/pgvector:pg16
     container_name: pulsevow-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: pulsevow
-      POSTGRES_USER: pulsevow
-      POSTGRES_PASSWORD: bQhp953re
+      POSTGRES_DB: ${POSTGRES_DB:-pulsevow}
+      POSTGRES_USER: ${POSTGRES_USER:-pulsevow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bQhp953re}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

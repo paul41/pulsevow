@@ -1,6 +1,7 @@
 import { Prisma, ArticleStatus } from "@prisma/client";
 import type { Article } from "@prisma/client";
 import prisma from "../../config/prisma.js";
+import type { ArticleListOptions } from "./article.types.js";
 
 export class ArticleRepository {
   /**
@@ -120,6 +121,169 @@ export class ArticleRepository {
       },
     });
   }
+
+  async findPublishedArticles(options: ArticleListOptions) {
+    const { page, limit, categorySlug } = options;
+
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.ArticleWhereInput = {
+      status: "DRAFT",
+      ...(categorySlug
+        ? {
+          category: {
+            slug: categorySlug,
+          },
+        }
+        : {}),
+    };
+
+    const [articles, total] = await Promise.all([
+      prisma.article.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          publishedAt: "desc",
+        },
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          imageUrl: true,
+          author: true,
+          publishedAt: true,
+
+          source: {
+            select: {
+              id: true,
+              name: true,
+              country: true,
+              logo: true,
+            },
+          },
+
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      }),
+
+      prisma.article.count({
+        where,
+      }),
+    ]);
+
+    return {
+      articles,
+      total,
+    };
+  }
+
+  async findPublishedArticleBySlug(slug: string) {
+    return prisma.article.findFirst({
+      where: {
+        slug,
+        status: "PUBLISHED",
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        imageUrl: true,
+        author: true,
+        url: true,
+        publishedAt: true,
+        createdAt: true,
+
+        source: {
+          select: {
+            id: true,
+            name: true,
+            logoUrl: true,
+            trustScore: true,
+          },
+        },
+
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+
+        analysis: true,
+      },
+    });
+  }
+
+  async findPublishedArticlesByCategory(
+    categorySlug: string,
+    page: number,
+    limit: number
+  ) {
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.ArticleWhereInput = {
+      status: "PUBLISHED",
+      category: {
+        slug: categorySlug,
+      },
+    };
+
+    const [articles, total] = await Promise.all([
+      prisma.article.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          publishedAt: "desc",
+        },
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          imageUrl: true,
+          author: true,
+          publishedAt: true,
+
+          source: {
+            select: {
+              id: true,
+              name: true,
+              logoUrl: true,
+            },
+          },
+
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      }),
+
+      prisma.article.count({
+        where,
+      }),
+    ]);
+
+    return {
+      articles,
+      total,
+    };
+  }
+
   /**
    * Find articles by category
    */

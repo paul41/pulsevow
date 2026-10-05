@@ -1,6 +1,7 @@
 import express from "express";
 import prisma from "./config/prisma.js";
 import authRouter from "./modules/auth/index.js"
+import {articleRouter} from "./modules/article/index.js";
 import { BASE_API_PATH } from "./constants/api.js";
 import compression from "compression";
 import corsMiddleware from "./config/cors.js";
@@ -24,6 +25,10 @@ app.get("/api/health", async (_, res) => {
 
 /** App routes */
 app.use(`${BASE_API_PATH}/auth`, authRouter);
+app.use(
+  `${BASE_API_PATH}/articles`,
+  articleRouter
+);
 app.use(errorHandler);
 
 export default app;

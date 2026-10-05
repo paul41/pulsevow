@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import type { NormalizedArticle } from "../ingestion/types.js";
 import { ArticleRepository } from "../article/article.repository.js";
+import type { GetArticlesOptions } from "./article.types.js";
 
 export class ArticleService {
     
@@ -30,6 +31,56 @@ export class ArticleService {
             },
         };
     }
+
+    async getArticles(options: GetArticlesOptions = {}) {
+        const page = Math.max(
+        1,
+        Number(options.page) || 1
+        );
+
+        const limit = Math.min(
+        50,
+        Math.max(
+            1,
+            Number(options.limit) || 20
+        )
+        );
+
+        return this.articleRepository.findPublishedArticles({
+            page,
+            limit,
+           ...(options.categorySlug
+            ? { categorySlug: options.categorySlug }
+            : {})
+        });
+    }
+
+    async getArticleBySlug(slug: string) {
+        return this.articleRepository.findPublishedArticleBySlug(
+        slug
+        );
+    }
+
+    async getArticlesByCategory(
+        categorySlug: string,
+        page = 1,
+        limit = 20
+    ) {
+        page = Math.max(1, Number(page) || 1);
+
+        limit = Math.min(
+        50,
+        Math.max(1, Number(limit) || 20)
+        );
+
+        return this.articleRepository.findPublishedArticlesByCategory(
+        categorySlug,
+        page,
+        limit
+        );
+    }
+
+
     async archiveExpiredArticles(): Promise<void> { 
         const count = await this.articleRepository.archiveExpiredArticles();
         console.log(`${count} articles archived.`); 

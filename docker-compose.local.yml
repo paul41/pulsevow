@@ -26,7 +26,9 @@ services:
 
     env_file:
       - ./server/.env
-
+    volumes:
+    - ./server/keys:/server/keys:ro
+    
     depends_on:
       - postgres
       - redis
@@ -34,7 +36,22 @@ services:
     networks:
       - pulsevow-network
 
-
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pulsevow-worker
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server/keys:/server/keys:ro
+    depends_on:
+      - postgres
+      - redis
+    command: ["node", "dist/workers/index.js"]
+    networks:
+      - pulsevow-network
   postgres:
 
     image: pgvector/pgvector:pg16
