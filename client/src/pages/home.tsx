@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { mockNewsResponse } from '../components/event/data';
+//import { mockNewsResponse } from '../components/event/data';
 import { PodcastDock } from '../layout/PodcastDock';
 import { Navbar } from '../layout/navbar';
 import { Footer } from '../layout/footer';
@@ -28,9 +28,8 @@ export default function Home() {
 
     const fetchStories = async () => {
       try {
-        const response = mockNewsResponse;
-        //await getTopStories();
-        console.log('Fetched stories:', response.data); // Debugging line to check the fetched stories
+        const response = await getTopStories();
+        //mockNewsResponse;
         // Assumes getTopStories() returns { data: PulseStory[] }.
         const fetchedStories = response.data;
 
