@@ -128,7 +128,7 @@ export class ArticleRepository {
     const skip = (page - 1) * limit;
 
     const where: Prisma.ArticleWhereInput = {
-      status: "DRAFT",
+      status: "DRAFT", //should be "PUBLISHED" but for testing we are using "DRAFT"
       ...(categorySlug
         ? {
           category: {
@@ -151,6 +151,7 @@ export class ArticleRepository {
           title: true,
           slug: true,
           description: true,
+          url: true,
           imageUrl: true,
           author: true,
           publishedAt: true,
