@@ -1,11 +1,12 @@
+
 import { useRef } from 'react';
-import type { PulseStory } from '../event/data';
 import { NewsCard } from '../card/News';
 import Arrow from '../common/Arrow';
+import type { NewsArticle } from '../../api/type';
 
 type PulseCarouselProps = {
-  stories: PulseStory[];
-  onStorySelect: (story: PulseStory) => void;
+  stories: NewsArticle[];
+  onStorySelect: (story: NewsArticle) => void;
 };
 
 export function PulseCarousel({
@@ -15,7 +16,9 @@ export function PulseCarousel({
   const ref = useRef<HTMLDivElement>(null);
 
   const move = (direction: number) => {
-    ref.current?.scrollBy({
+    if (!ref.current) return;
+
+    ref.current.scrollBy({
       left: ref.current.clientWidth * direction,
       behavior: 'smooth',
     });
@@ -25,11 +28,12 @@ export function PulseCarousel({
     <section id="today" className="pulse-shell">
       <div className="section-head">
         <div>
-          <h2>NEWS Pulse</h2>
+          <h2>Today's Pulse</h2>
         </div>
 
         <div className="carousel-controls">
           <button
+            type="button"
             className="carousel-btn"
             onClick={() => move(-1)}
             aria-label="Previous stories"
@@ -38,6 +42,7 @@ export function PulseCarousel({
           </button>
 
           <button
+            type="button"
             className="carousel-btn"
             onClick={() => move(1)}
             aria-label="Next stories"
