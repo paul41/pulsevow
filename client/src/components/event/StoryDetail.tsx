@@ -2,18 +2,36 @@ import Advertisement from '../common/Advertisement';
 import { AIBrief } from '../home/AIBrief';
 import { Timeline } from '../home/Timeline';
 import { SourceComparison } from '../home/Comparision';
-import { Facts } from '../home/Facts';
-import { Recommendations } from '../home/Recommendation';
+// import { Recommendations } from '../home/Recommendation';
 import { AskPulseVow } from '../home/Community';
 import { Newsletter } from '../home/Newsletter';
 import { FollowUs } from '../home/Social';
-import { Recent } from '../home/Recent';
-import { News360 } from '../home/News360';
+//import { Recent } from '../home/Recent';
+import { RelatedArticles } from '../home/Related';
+
 
 type Props = { story: any; onToast: (message: string) => void };
 
 export function StoryDetail({ story, onToast }: Props) {
-  console.log(story)
+  //console.log(story)
+  // requestAnimationFrame(() => {
+  //   requestAnimationFrame(() => {
+  //     const el = document.getElementById('world');
+
+  //     if (!el) return;
+
+  //     const y =
+  //       el.getBoundingClientRect().top +
+  //       window.scrollY -
+  //       80;
+
+  //     window.scrollTo({
+  //       top: y,
+  //       behavior: 'smooth',
+  //     });
+  //   });
+  // });
+  
   return (
     <div className="storygrid" id="story">
       <article>
@@ -34,7 +52,7 @@ export function StoryDetail({ story, onToast }: Props) {
         </header>
 
         <figure className="hero-figure">
-          <img src={story.heroImage} alt={story.heroAlt} />
+          <img src={story.imageUrl} alt={story.heroAlt} />
           <figcaption>
             <span>Representative image of the Reserve Bank of India.</span>
             <a href="https://www.rbi.org.in" target="_blank" rel="noreferrer">
@@ -42,28 +60,30 @@ export function StoryDetail({ story, onToast }: Props) {
             </a>
           </figcaption>
         </figure>
+        {/* <div className="story-intro">
+          <p>
+            {story.description}
+          </p>
+        </div> */}
 
         {/* <Affected items={story.affected} /> */}
-        <AIBrief items={story.brief} />
+        <AIBrief item={story.description} />
         <Timeline items={story.timeline} />
-        <SourceComparison sources={story.sources} />
-        <Facts confirmed={story.confirmed} interpretation={story.interpretation} />
+        <SourceComparison sources={story.source} />
+        {/* <Facts confirmed={story.confirmed} interpretation={story.interpretation} /> */}
         <a href="#ask" className="forum-cta"> 
           Have a question about this story? 
           <span>Discuss it in forum →</span>
         </a>
-        <section className="news360-section">
-          <News360 />
-        </section>
-        <Recommendations />
+        
       </article>
 
       <aside>
         <AskPulseVow onToast={onToast} />
-        <Recent />
+        <RelatedArticles />
+        {/* <Recent /> */}
         <Newsletter onToast={onToast} />
         <FollowUs />
-        {/* <RelatedArticles /> */}
         <Advertisement />
       </aside>
     </div>

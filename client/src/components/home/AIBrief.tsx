@@ -1,25 +1,34 @@
 import { Block } from "../common/Block";
 
-type BriefItem = [string, string];
-
 interface AIBriefProps {
-  items: BriefItem[];
+  item: any; // Adjust the type based on the actual structure of the items prop
 }
 
 
-export function AIBrief({ items }: AIBriefProps) {
+export function AIBrief({ item }: AIBriefProps) {
+  const brief = [
+    ['What happened?', item],
+    ['Why does it matter?', 'The decision can influence the cost of credit, bank liquidity and interest-sensitive sectors, although the effect on consumers depends on how lenders pass through the change.'],
+    ['Who is affected?', 'Borrowers and credit-sensitive businesses could benefit from easier financing, while banks, depositors and investors may see different effects.'],
+    ['What happens next?', "Markets will watch bank lending-rate decisions, upcoming inflation data and the RBI's next policy communication."]
+  ]
+    
+  console.log("AIBrief items:", item); // Debugging line to check the items prop
   return (
     <Block id="brief" title="Brief">
       <div className="brief-card">
         <div className="summary">
-          <p>{items[4]?.[1]}</p>
+          
+          {/* <p>{item}</p> */}
         </div>
-        <div className="brief-grid"> {items.slice(0, -1).map(([title, text]: BriefItem) => (
-          <div key={title}>
+        <div className="brief-grid"> {
+        brief && Array.isArray(brief) ? brief.map(([title, text], index) => (
+          <div key={index}>
             <h3>{title}</h3>
             <p>{text}</p>
           </div>
-        ))}
+        )) : <p>AI brief is coming soon!</p>
+        }
         </div>
       </div>
     </Block>

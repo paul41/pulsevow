@@ -1,274 +1,278 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import "../styles/topbar.css";
+import "../styles/navbar.css";
 
 type Props = {
-    language: string;
-    onLanguageChange: (value: string) => void;
-    onPodcastClick: () => void;
+  language: string;
+  onLanguageChange: (value: string) => void;
+  onPodcastClick: () => void;
 };
 
+const categories = [
+  { label: "Politics", value: "politics" },
+  { label: "Economy", value: "economy" },
+  { label: "Technology", value: "tech" },
+  { label: "Entertainment", value: "entertainment" },
+  { label: "Sports", value: "sports" },
+  { label: "Health", value: "health" },
+];
+
 export function Navbar({
-    language,
-    onLanguageChange,
-    onPodcastClick,
+  language,
+  onLanguageChange,
+  onPodcastClick,
 }: Props) {
-    const [searchOpen, setSearchOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryOpen, setCategoryOpen] = useState(false);
 
-    const navigate = useNavigate();
-    const { user } = useAuth();
-    console.log("U: ", user);
-    
-    const searchInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-    useEffect(() => {
-        if (searchOpen) {
-            searchInputRef.current?.focus();
-        }
-    }, [searchOpen]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
-                setSearchOpen(false);
-                setSearchQuery("");
-            }
-        };
+  useEffect(() => {
+    if (searchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [searchOpen]);
 
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, []);
-
-    const handleSearch = (event: React.FormEvent) => {
-        event.preventDefault();
-
-        const query = searchQuery.trim();
-
-        if (!query) {
-            return;
-        }
-
-        // Later:
-        // navigate(`/search?q=${encodeURIComponent(query)}`);
-    };
-
-    const closeSearch = () => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setSearchOpen(false);
         setSearchQuery("");
+        setCategoryOpen(false);
+      }
     };
 
-    const getUserInitials = () => {
-        if (!user) {
-            return "PV";
-        }
-
-        const name = user.name?.trim();
-
-        if (!name) {
-            return "PV";
-        }
-
-        const parts = name.split(/\s+/);
-
-        if (parts.length === 1) {
-            return parts[0].slice(0, 2).toUpperCase();
-        }
-
-        return parts
-            .slice(0, 2)
-            .map((part) => part[0])
-            .join("")
-            .toUpperCase();
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        categoryRef.current &&
+        !categoryRef.current.contains(event.target as Node)
+      ) {
+        setCategoryOpen(false);
+      }
     };
 
-    return (
-        <header className="topnav">
-            <Link className="brand" to="/">
-                <div className="mark">P</div>
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
 
-                <div>
-                    <span className="name">PulseVow</span>
-                    <span className="tag">
-                        Indian news intelligence
-                    </span>
-                </div>
-            </Link>
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, []);
 
-            <nav className="sections">
-                <a href="#weather">
-                    <i className="fas fa-cloud-sun"></i>
-                    {" "}Bangalore 25.2°C
-                </a>
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchQuery("");
+  };
 
-                <div className="dropdown">
-                    <button
-                        type="button"
-                        className="dropbtn"
-                    >
-                        India
-                    </button>
-                </div>
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-                <div className="dropdown">
-                    <button
-                        type="button"
-                        className="dropbtn"
-                    >
-                        World
-                    </button>
-                    {/* <div className="dropdown-content">
-                        <a href="#politics">UK</a>
-                        <a href="#economy">USA</a>
-                        <a href="#tech">Germany</a>
-                        <a href="#entertainment">
-                            Russia
-                        </a>
-                        <a href="#sports">Qatar</a>
-                        <a href="#health">Afganistan</a>
-                    </div> */}
-                </div>
+    const query = searchQuery.trim();
 
-                <div className="dropdown">
-                    <button
-                        type="button"
-                        className="dropbtn"
-                    >
-                        Category
-                    </button>
+    if (!query) {
+      searchInputRef.current?.focus();
+      return;
+    }
 
-                    <div className="dropdown-content">
-                        <a href="#politics">Politics</a>
-                        <a href="#economy">Economy</a>
-                        <a href="#tech">Technology</a>
-                        <a href="#entertainment">
-                            Entertainment
-                        </a>
-                        <a href="#sports">Sports</a>
-                        <a href="#health">Health</a>
-                    </div>
-                </div>
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+    closeSearch();
+  };
 
-                <a
-                    href="#podcast"
-                    onClick={onPodcastClick}
+  const getUserInitials = () => {
+    const name = user?.name?.trim();
+
+    if (!name) return "PV";
+
+    return name
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase();
+  };
+
+  return (
+    <header className="topnav">
+      <Link
+        className="brand"
+        to="/"
+        aria-label="PulseVow home"
+      >
+        <div className="mark" aria-hidden="true">P</div>
+
+        <div className="brand-copy">
+          <span className="name">PulseVow</span>
+          <span className="tag">Beyond News. Intel Insight.</span>
+        </div>
+      </Link>
+
+      <nav className="sections" aria-label="Main navigation">
+        <Link to="/?region=india" className="nav-item">
+          India
+        </Link>
+
+        <a href="#world" className="nav-item">
+          World
+        </a>
+
+        <Link to="/?feed=for-you" className="nav-item nav-for-you">
+          <span aria-hidden="true">✦</span> For You
+        </Link>
+
+        <div
+          className="dropdown-category nav-item"
+          ref={categoryRef}
+        >
+          <button
+            type="button"
+            className="dropbtn"
+            aria-expanded={categoryOpen}
+            aria-haspopup="true"
+            onClick={() => setCategoryOpen((open) => !open)}
+          >
+            Categories
+            <span className="dropdown-chevron" aria-hidden="true">
+              ▾
+            </span>
+          </button>
+
+          {categoryOpen && (
+            <div className="dropdown-content-category">
+              {categories.map((category) => (
+                <Link
+                  key={category.value}
+                  to={`/search?category=${encodeURIComponent(
+                    category.value
+                  )}`}
+                  onClick={() => setCategoryOpen(false)}
                 >
-                    <i className="fas fa-headphones"></i>
-                    {" "}Pulse 5
-                </a>
-
-                <a href="#sectors">
-                    Sectors{" "}
-                    <span className="pro-badge">PRO</span>
-                </a>
-            </nav>
-
-            <div className="nav-right">
-                <div
-                    className={`search-wrapper ${
-                        searchOpen ? "search-open" : ""
-                    }`}
-                >
-                    <form
-                        className="search-form"
-                        onSubmit={handleSearch}
-                    >
-                        <span className="search-icon">
-                            ⌕
-                        </span>
-
-                        <input
-                            ref={searchInputRef}
-                            type="search"
-                            value={searchQuery}
-                            onChange={(event) =>
-                                setSearchQuery(event.target.value)
-                            }
-                            placeholder="Search news..."
-                            aria-label="Search news"
-                        />
-
-                        {searchQuery && (
-                            <button
-                                type="button"
-                                className="search-clear"
-                                aria-label="Clear search"
-                                onClick={() => {
-                                    setSearchQuery("");
-                                    searchInputRef.current?.focus();
-                                }}
-                            >
-                                ×
-                            </button>
-                        )}
-                    </form>
-
-                    <button
-                        type="button"
-                        className={`searchbtn ${
-                            searchOpen ? "active" : ""
-                        }`}
-                        aria-label={
-                            searchOpen
-                                ? "Close search"
-                                : "Open search"
-                        }
-                        aria-expanded={searchOpen}
-                        onClick={() => {
-                            if (searchOpen) {
-                                closeSearch();
-                            } else {
-                                setSearchOpen(true);
-                            }
-                        }}
-                    >
-                        {searchOpen ? "×" : "⌕"}
-                    </button>
-                </div>
-
-                <select
-                    className="lang"
-                    value={language}
-                    onChange={(event) =>
-                        onLanguageChange(event.target.value)
-                    }
-                    name="language"
-                    aria-label="Select language"
-                >
-                    <option>English</option>
-                    <option>हिन्दी</option>
-                    <option>বাংলা</option>
-                    <option>தமிழ்</option>
-                    <option>తెలుగు</option>
-                    <option>मराठी</option>
-                    <option>ಕನ್ನಡ</option>
-                </select>
-
-                {user ? (
-                    <button
-                        type="button"
-                        className="avatar"
-                        title="View profile"
-                        aria-label="View profile"
-                        onClick={() =>
-                            navigate("/my-profile")
-                        }
-                    >
-                        {getUserInitials()}
-                    </button>
-                ) : (
-                    <Link
-                        to="/login"
-                        className="login-btn"
-                    >
-                        Login
-                    </Link>
-                )}
+                  {category.label}
+                </Link>
+              ))}
             </div>
-        </header>
-    );
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="nav-item nav-action"
+          onClick={onPodcastClick}
+        >
+          <i className="fas fa-headphones" aria-hidden="true" />
+          <span>Pulse 5</span>
+        </button>
+
+        <Link
+          to="/sector-intelligence"
+          className="nav-item nav-sectors"
+        >
+          Sectors <span className="pro-badge">PRO</span>
+        </Link>
+      </nav>
+
+      <div className="nav-right">
+        <div
+          className={`search-wrapper ${
+            searchOpen ? "search-open" : ""
+          }`}
+        >
+          {searchOpen && (
+            <form
+              className="search-form"
+              role="search"
+              onSubmit={handleSearch}
+            >
+              <span className="search-icon" aria-hidden="true">
+                ⌕
+              </span>
+
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(event) =>
+                  setSearchQuery(event.target.value)
+                }
+                placeholder="Search news..."
+                aria-label="Search news"
+              />
+
+              {searchQuery && (
+                <button
+                  type="button"
+                  className="search-clear"
+                  aria-label="Clear search"
+                  onClick={() => {
+                    setSearchQuery("");
+                    searchInputRef.current?.focus();
+                  }}
+                >
+                  ×
+                </button>
+              )}
+            </form>
+          )}
+
+          <button
+            type="button"
+            className={`searchbtn ${
+              searchOpen ? "active" : ""
+            }`}
+            aria-label={searchOpen ? "Close search" : "Open search"}
+            aria-expanded={searchOpen}
+            onClick={() => {
+              if (searchOpen) {
+                closeSearch();
+              } else {
+                setSearchOpen(true);
+              }
+            }}
+          >
+            {searchOpen ? "×" : "⌕"}
+          </button>
+        </div>
+
+        <select
+          className="lang"
+          value={language}
+          onChange={(event) =>
+            onLanguageChange(event.target.value)
+          }
+          name="language"
+          aria-label="Select language"
+        >
+          <option value="English">English</option>
+          <option value="हिन्दी">हिन्दी</option>
+          <option value="বাংলা">বাংলা</option>
+          <option value="தமிழ்">தமிழ்</option>
+          <option value="తెలుగు">తెలుగు</option>
+          <option value="मराठी">मराठी</option>
+          <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
+        </select>
+
+        {user ? (
+          <button
+            type="button"
+            className="avatar"
+            title="View profile"
+            aria-label="View profile"
+            onClick={() => navigate("/my-profile")}
+          >
+            {getUserInitials()}
+          </button>
+        ) : (
+          <Link to="/login" className="login-btn">
+            Login
+          </Link>
+        )}
+      </div>
+    </header>
+  );
 }

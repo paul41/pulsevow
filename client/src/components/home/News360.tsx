@@ -1,122 +1,101 @@
 import { Block } from "../common/Block";
+import type { NewsArticle } from "../../api/type";
 import "../../styles/news360.css";
-interface News360 {
-    id:string;
-    image: string;
-    tag: string;
-    cat: string;
-    time: string;
-    title: string;
-    text: string;
-    tags: string[];
-    cta: string;
+
+interface News360Props {
+    items: NewsArticle[];
 }
-export function News360() {
-    const items: News360[] = [
-        {
-            id:"001",
-            image: "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&q=80",
-            tag: "For you",
-            cat: "Markets",
-            time: "32 min ago",
-            title: "Indian banks and markets react to the RBI's latest policy move",
-            text: "Here's how the policy decision is beginning to affect banks, investors and interest-sensitive sectors.",
-            tags: ["Banking", "Markets", "Investors"],
-            cta: "Understand this story",
-        },
-        {
-            id:"002",
-            image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80",
-            tag: "Related",
-            cat: "Economy",
-            time: "1 hr ago",
-            title: "What falling inflation could mean for India's economy",
-            text: "The latest inflation data provides important context behind the RBI’s policy decision.",
-            tags: ["Inflation", "Economy", "RBI"],
-            cta: "Explore the context",
-        },
-        {
-            id:"003",
-            image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80",
-            tag: "Based on your interests",
-            cat: "Real Estate",
-            time: "2 hrs ago",
-            title: "Home loan borrowers could see changes as banks reassess rates",
-            text: "The policy change could have implications for borrowers, housing demand and financing costs.",
-            tags: ["Home Loans", "Housing", "Borrowers"],
-            cta: "See what changed",
-        },
-        {
-            id:"004",
-            image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-            tag: "Worth knowing",
-            cat: "Business",
-            time: "3 hrs ago",
-            title: "What businesses should watch as borrowing conditions change",
-            text: "Changing financing conditions can influence investment, expansion and business confidence.",
-            tags: ["Business", "Credit", "Growth"],
-            cta: "See the impact",
-        },
-        {
-            id:"005",
-            image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=180&h=130&fit=crop",
-            tag: "Worth knowing",
-            cat: "Business",
-            time: "3 hrs ago",
-            title: "What businesses should watch as borrowing conditions change",
-            text: "Changing financing conditions can influence investment, expansion and business confidence.",
-            tags: ["Business", "Credit", "Growth"],
-            cta: "See the impact",
-        },
-        {
-            id:"006",
-            image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=180&h=130&fit=crop",
-            tag: "Worth knowing",
-            cat: "Business",
-            time: "3 hrs ago",
-            title: "What businesses should watch as borrowing conditions change",
-            text: "Changing financing conditions can influence investment, expansion and business confidence.",
-            tags: ["Business", "Credit", "Growth"],
-            cta: "See the impact",
-        },
-    ];
+
+function getTimeAgo(publishedAt: string): string {
+    const publishedTime = new Date(publishedAt).getTime();
+
+    if (Number.isNaN(publishedTime)) return "Recently";
+
+    const diffMs = Math.max(0, Date.now() - publishedTime);
+    const minutes = Math.floor(diffMs / 60000);
+
+    if (minutes < 1) return "Just now";
+    if (minutes < 60) return `${minutes} min ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days} day${days > 1 ? "s" : ""} ago`;
+
+    return new Date(publishedAt).toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+}
+
+export function News360({ items }: News360Props) {
     return (
         <Block title="Pulse 360">
-            {" "}
             <div className="pulse360-grid">
-                {" "}
-                {items.map((x) => (
-                    <article className="pulse360-card" key={x.id}>
-                        {" "}
+                {items.map((article) => (
+                    <article className="pulse360-card" key={article.id}>
                         <div className="pulse360-image">
-                            {" "}
-                            <img src={x.image} alt="" />{" "}
+                            {article.imageUrl ? (
+                                <img
+                                    src={article.imageUrl}
+                                    alt={article.title}
+                                    loading="lazy"
+                                />
+                            )
+                                :
+                                (
+                                    <div style={{position: "relative", width: "100%", height: "100%", backgroundColor: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                        <span>No image available</span>
+                                    </div>
+                                )
+                            }
                             <span className="pulse360-badge">
-                                ✦ {x.tag}
-                            </span>{" "}
-                        </div>{" "}
+                                ✦ {article.source?.name}
+                            </span>
+                        </div>
+
                         <div className="pulse360-content">
-                            {" "}
                             <div className="pulse360-meta">
-                                {" "}
-                                <span>{x.cat}</span> <span>•</span>{" "}
-                                <span>{x.time}</span>{" "}
-                            </div>{" "}
-                            <h3>{x.title}</h3> <p>{x.text}</p>{" "}
+                                <span>{article.category?.name ?? "World News"}</span>
+                                <span>•</span>
+                                <span>{getTimeAgo(article.publishedAt)}</span>
+                            </div>
+
+                            <h3>{article.title}</h3>
+
+                            <p>
+                                {article.description?.trim() ||
+                                    "Read the latest coverage and context around this developing story."}
+                            </p>
+
                             <div className="pulse360-tags">
-                                {" "}
-                                {x.tags.map((t) => (
-                                    <span key={t}>{t}</span>
-                                ))}{" "}
-                            </div>{" "}
-                            <a href="#story" className="pulse360-link">
-                                {" "}
-                                {x.cta} →{" "}
-                            </a>{" "}
-                        </div>{" "}
+                                <span>{article.source.name}</span>
+                                <span>{article.source.country}</span>
+                            </div>
+
+                            <a
+                                href={article.url || "#"}
+                                className="pulse360-link"
+                                aria-label={`Understand this story: ${article.title}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Understand this story →
+                            </a>
+                        </div>
                     </article>
-                ))}{" "}
-            </div>{" "}
+                ))}
+            </div>
+
+            {items.length === 0 && (
+                <p className="pulse360-empty">
+                    No world news articles are available right now.
+                </p>
+            )}
         </Block>
+
+
     );
 }
