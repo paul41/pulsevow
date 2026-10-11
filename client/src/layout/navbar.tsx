@@ -113,22 +113,60 @@ export function Navbar({
         </div>
       </Link>
 
-      <nav className="sections" aria-label="Main navigation">
-        <Link to="/?region=india" className="nav-item">
+
+      <nav
+        className="sections"
+        aria-label="Main navigation"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
+          flexWrap: "nowrap",
+          minWidth: 0,
+          position: "relative",
+        }}
+      >
+        <Link
+          to="/?region=india"
+          className="nav-item"
+          style={{ flexShrink: 0, whiteSpace: "nowrap" }}
+        >
           India
         </Link>
 
-        <a href="#world" className="nav-item">
+        <a
+          href="#world"
+          className="nav-item"
+          style={{ flexShrink: 0, whiteSpace: "nowrap" }}
+        >
           World
         </a>
 
-        <Link to="/?feed=for-you" className="nav-item nav-for-you">
-          <span aria-hidden="true">✦</span> For You
+        <Link
+          to="/?feed=for-you"
+          className="nav-item nav-for-you"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+            marginRight: "4px",
+          }}
+        >
+          <span aria-hidden="true">✦</span>
+          For You
         </Link>
 
         <div
           className="dropdown-category nav-item"
           ref={categoryRef}
+          style={{
+            position: "relative",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+            marginLeft: "2px",
+          }}
         >
           <button
             type="button"
@@ -136,6 +174,12 @@ export function Navbar({
             aria-expanded={categoryOpen}
             aria-haspopup="true"
             onClick={() => setCategoryOpen((open) => !open)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "7px",
+              whiteSpace: "nowrap",
+            }}
           >
             Categories
             <span className="dropdown-chevron" aria-hidden="true">
@@ -144,7 +188,16 @@ export function Navbar({
           </button>
 
           {categoryOpen && (
-            <div className="dropdown-content-category">
+            <div
+              className="dropdown-content-category"
+              style={{
+                position: "absolute",
+                top: "calc(100% + 8px)",
+                left: 0,
+                zIndex: 1000,
+                minWidth: "180px",
+              }}
+            >
               {categories.map((category) => (
                 <Link
                   key={category.value}
@@ -164,6 +217,13 @@ export function Navbar({
           type="button"
           className="nav-item nav-action"
           onClick={onPodcastClick}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "7px",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+          }}
         >
           <i className="fas fa-headphones" aria-hidden="true" />
           <span>Pulse 5</span>
@@ -172,16 +232,24 @@ export function Navbar({
         <Link
           to="/sector-intelligence"
           className="nav-item nav-sectors"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+          }}
         >
-          Sectors <span className="pro-badge">PRO</span>
+          Sectors
+          <span className="pro-badge">PRO</span>
         </Link>
       </nav>
 
+
       <div className="nav-right">
         <div
-          className={`search-wrapper ${
-            searchOpen ? "search-open" : ""
-          }`}
+          className={`search-wrapper ${searchOpen ? "search-open" : ""
+            }`}
         >
           {searchOpen && (
             <form
@@ -195,7 +263,6 @@ export function Navbar({
 
               <input
                 ref={searchInputRef}
-                type="search"
                 value={searchQuery}
                 onChange={(event) =>
                   setSearchQuery(event.target.value)
@@ -222,9 +289,8 @@ export function Navbar({
 
           <button
             type="button"
-            className={`searchbtn ${
-              searchOpen ? "active" : ""
-            }`}
+            className={`searchbtn ${searchOpen ? "active" : ""
+              }`}
             aria-label={searchOpen ? "Close search" : "Open search"}
             aria-expanded={searchOpen}
             onClick={() => {

@@ -29,6 +29,8 @@ export default function Home() {
     const fetchStories = async () => {
       try {
         const response = await getTopStories();
+        //mockNewsResponse
+        //await getTopStories();
         //mockNewsResponse;
         // Assumes getTopStories() returns { data: PulseStory[] }.
         const fetchedStories = response.data;
@@ -120,7 +122,6 @@ export default function Home() {
         <section className="news360-section" id="world">
           <News360 items={worldNews} />
         </section>
-
         <Recommendations />
       </main>
 

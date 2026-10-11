@@ -36,14 +36,7 @@ export function StoryDetail({ story, onToast }: Props) {
     <div className="storygrid" id="story">
       <article>
         <header className="story-header">
-          <div className="eyebrow-row">
-            <span className="impact-badge">High impact</span>
-            <span className="meta">
-              Banking · Markets · 41 sources tracked · updated 12 min ago
-            </span>
-          </div>
           <h1 className="story-title headline-font">{story.title}</h1>
-          {/* <p className="story-dek">{story.dek}</p> */}
           <div className="story-actions">
             <a className="action primary" href="#brief">NEWS Brief</a>
             <a className="action" href="#timeline">Story so far</a>
@@ -52,20 +45,15 @@ export function StoryDetail({ story, onToast }: Props) {
         </header>
 
         <figure className="hero-figure">
-          <img src={story.imageUrl} alt={story.heroAlt} />
+          <img src={story.imageUrl} alt={story.source?.name} />
           <figcaption>
-            <span>Representative image of the Reserve Bank of India.</span>
-            <a href="https://www.rbi.org.in" target="_blank" rel="noreferrer">
-              Official RBI website ↗
+            <span>Representative image of {story.source?.name}</span>
+            <a href={story.url} target="_blank" rel="noreferrer">
+              Official {story.source?.name} website ↗
             </a>
           </figcaption>
         </figure>
-        {/* <div className="story-intro">
-          <p>
-            {story.description}
-          </p>
-        </div> */}
-
+        
         {/* <Affected items={story.affected} /> */}
         <AIBrief item={story.description} />
         <Timeline items={story.timeline} />
