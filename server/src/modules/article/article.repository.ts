@@ -2,8 +2,11 @@ import { Prisma, ArticleStatus } from "@prisma/client";
 import type { Article } from "@prisma/client";
 import prisma from "../../config/prisma.js";
 import type { ArticleListOptions } from "./article.types.js";
+import { SourceRepository } from "../source/source.repository.js";
 
 export class ArticleRepository {
+  private readonly sourceRepository = new SourceRepository();
+
   /**
    * Create a new article
    */
@@ -33,25 +36,6 @@ export class ArticleRepository {
     });
   }
 
-  /**
-   * Find article by slug
-   */
-  async findBySlug(slug: string): Promise<Article | null> {
-    return prisma.article.findUnique({
-      where: { slug },
-      include: {
-        source: true,
-        category: true,
-        analysis: true,
-        timeline: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-      },
-    });
-  }
 
   async findByContentHash(hash: string) {
     return prisma.article.findUnique({
@@ -71,6 +55,61 @@ export class ArticleRepository {
     });
   }
 
+  async findArticlesByCountry(
+    country?: string,
+    excludeCountry?: string,
+    limit = 20
+  ): Promise<any[]> {
+    const sourceIds = await this.sourceRepository.findByCountry(
+      country,
+      limit,
+      0,
+      excludeCountry
+    );
+
+    if (sourceIds.length === 0) {
+      return [];
+    }
+
+    return prisma.article.findMany({
+      where: {
+        sourceId: {
+          in: sourceIds,
+        },
+      },
+      select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          url: true,
+          imageUrl: true,
+          author: true,
+          publishedAt: true,
+
+          source: {
+            select: {
+              id: true,
+              name: true,
+              country: true,
+              logo: true,
+            },
+          },
+
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      take: limit,
+      orderBy: {
+        publishedAt: "desc",
+      },
+    });
+  }
   /**
    * Check whether article already exists
    */

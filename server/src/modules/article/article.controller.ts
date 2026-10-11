@@ -7,11 +7,10 @@ import type {
 import { ArticleService } from "./article.service.js";
 
 export class ArticleController {
-  private readonly articleService =
-    new ArticleService();
+  private readonly articleService = new ArticleService();
 
   /**
-   * GET /api/articles
+   * GET /api/v1/articles
    *
    * Query params:
    * ?page=1
@@ -24,40 +23,38 @@ export class ArticleController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const page = Number(req.query.page) || 1;
-      const limit = Number(req.query.limit) || 20;
+      const page = Math.max(
+        1,
+        Number(req.query.page) || 1
+      );
+
+      const limit = Math.min(
+        50,
+        Math.max(1, Number(req.query.limit) || 20)
+      );
 
       const categorySlug =
         typeof req.query.category === "string"
           ? req.query.category
           : undefined;
 
-      const result =
-        await this.articleService.getArticles({
-          page,
-          limit,
-          ...(categorySlug
-            ? { categorySlug }
-            : {})
-        });
+      const result = await this.articleService.getArticles({
+        page,
+        limit,
+        ...(categorySlug ? { categorySlug } : {}),
+      });
 
-      const totalPages = Math.ceil(
-        result.total / Math.min(limit, 50)
-      );
+      const totalPages = Math.ceil(result.total / limit);
 
       res.status(200).json({
         success: true,
         data: result.articles,
         pagination: {
-          page: Math.max(1, page),
-          limit: Math.min(
-            Math.max(1, limit),
-            50
-          ),
+          page,
+          limit,
           total: result.total,
           totalPages,
-          hasNextPage:
-            Math.max(1, page) < totalPages,
+          hasNextPage: page < totalPages,
         },
       });
     } catch (error) {
@@ -66,104 +63,50 @@ export class ArticleController {
   }
 
   /**
-   * GET /api/articles/:slug
+   * GET /api/v1/articles/country/:country
+   *
+   * Query params:
+   * ?excludeCountry=India
+   * ?limit=20
    */
-//   async getArticleBySlug(
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-//   ): Promise<void> {
-//     try {
-//       const { slug } = req.params;
+  async getArticlesByCountry(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const countryParam = req.params.country;
+      console.log("TTTTTTTT",req.params);
+      const country = Array.isArray(countryParam)
+        ? countryParam[0]
+        : countryParam;
 
-//       if (!slug) {
-//         res.status(400).json({
-//           success: false,
-//           message: "Article slug is required",
-//         });
+      const normalizedCountry = country?.trim() || undefined;
 
-//         return;
-//       }
+      const excludeCountry =
+        typeof req.query.excludeCountry === "string"
+          ? req.query.excludeCountry.trim() || undefined
+          : undefined;
 
-//       const article =
-//         await this.articleService.getArticleBySlug(
-//           slug
-//         );
+      const limit = Math.min(
+        50,
+        Math.max(1, Number(req.query.limit) || 20)
+      );
 
-//       if (!article) {
-//         res.status(404).json({
-//           success: false,
-//           message: "Article not found",
-//         });
+      const articles =
+        await this.articleService.getArticlesByCountry(
+          normalizedCountry,
+          excludeCountry,
+          limit
+        );
 
-//         return;
-//       }
-
-//       res.status(200).json({
-//         success: true,
-//         data: article,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-
-  /**
-   * GET /api/articles/category/:categorySlug
-   */
-//   async getArticlesByCategory(
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-//   ): Promise<void> {
-//     try {
-//       const { categorySlug } = req.params;
-
-//       if (!categorySlug) {
-//         res.status(400).json({
-//           success: false,
-//           message: "Category is required",
-//         });
-
-//         return;
-//       }
-
-//       const page =
-//         Number(req.query.page) || 1;
-
-//       const limit =
-//         Number(req.query.limit) || 20;
-
-//       const result =
-//         await this.articleService.getArticlesByCategory(
-//           categorySlug,
-//           page,
-//           limit
-//         );
-
-//       const safeLimit = Math.min(
-//         Math.max(1, limit),
-//         50
-//       );
-
-//       const totalPages = Math.ceil(
-//         result.total / safeLimit
-//       );
-
-//       res.status(200).json({
-//         success: true,
-//         data: result.articles,
-//         pagination: {
-//           page: Math.max(1, page),
-//           limit: safeLimit,
-//           total: result.total,
-//           totalPages,
-//           hasNextPage:
-//             Math.max(1, page) < totalPages,
-//         },
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
+      res.status(200).json({
+        success: true,
+        data: articles,
+        count: articles.length,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

@@ -31,6 +31,7 @@ function getTimeAgo(publishedAt: string): string {
 }
 
 export function News360({ items }: News360Props) {
+    console.log("News360 items:", items);
     return (
         <Block title="Pulse 360">
             <div className="pulse360-grid">
