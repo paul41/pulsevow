@@ -47,8 +47,11 @@ export function StoryDetail({ story, onToast }: Props) {
         <figure className="hero-figure">
           <img src={story.imageUrl} alt={story.source?.name} />
           <figcaption>
-            <span>Representative image of {story.source?.name}</span>
-            <a href={story.url} target="_blank" rel="noreferrer">
+            <span style={{ flex: "1 1 180px", minWidth: 0 }}>Representative image of {story.source?.name}</span>
+            <a href={story.url} target="_blank" rel="noreferrer" style={{
+              flex: "0 1 auto",
+              whiteSpace: "nowrap",
+            }}>
               Official {story.source?.name} website ↗
             </a>
           </figcaption>

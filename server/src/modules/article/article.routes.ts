@@ -21,6 +21,14 @@ router.get(
     articleController
   )
 );
+router.get(
+  "/country",
+  articleController.getArticlesByCountry.bind(articleController)
+);
+router.get(
+  "/country/:country",
+  articleController.getArticlesByCountry.bind(articleController)
+);
 
 /**
  * GET /api/articles/category/:categorySlug

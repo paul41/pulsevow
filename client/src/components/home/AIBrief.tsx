@@ -18,33 +18,40 @@ export function AIBrief({ item }: AIBriefProps) {
     <Block id="brief" title="Brief Analysis">
       <div className="brief-card">
         <div className="summary">
-          <div className="summary-top">
-            <span className="impact-badge">
-              <span className="impact-dot" /> High impact </span>
-            <div className="summary-context">
-              <span className="context-label">COVERAGE</span>
-              <div className="summary-meta">
-                <span className="meta-category">Banking</span>
-                <span className="meta-separator">/</span>
-                <span className="meta-category">Markets</span>
-              </div>
+          <div className="summary-cell">
+            <span className="cell-label">Impact</span>
+            <div className="cell-value impact-value">
+              <span className="impact-meter" aria-hidden="true">
+                <i className="on" />
+                <i className="on" />
+                <i className="on" />
+              </span>
+              High
             </div>
-            <div className="summary-divider" />
-            <div className="summary-sources">
-              <span className="sources-icon">↗</span>
-              <div>
-                <strong>41</strong>
-                <span className="sources-label">sources tracked</span>
-              </div>
-            </div>
-            <span className="summary-updated">
-              <span className="live-dot" />
-              Updated 12 min ago
-            </span>
           </div>
-          {/* <div className="summary-details"> 
-            
-          </div> */}
+
+          <div className="summary-cell">
+            <span className="cell-label">Coverage</span>
+            <div className="chips">
+              <span className="chip">Banking</span>
+              <span className="chip">Markets</span>
+            </div>
+          </div>
+
+          <div className="summary-cell">
+            <span className="cell-label">Sources</span>
+            <div className="cell-value">
+              <strong>41</strong> tracked
+            </div>
+          </div>
+
+          <div className="summary-cell">
+            <span className="cell-label">Updated</span>
+            <div className="cell-value">
+              <span className="live-dot" />
+              12 min ago
+            </div>
+          </div>
         </div>
         <div className="brief-grid"> {
           brief && Array.isArray(brief) ? brief.map(([title, text], index) => (

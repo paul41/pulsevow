@@ -8,7 +8,7 @@ import { StoryDetail } from '../components/event/StoryDetail';
 import { Toast } from '../components/common/Toast';
 import { News360 } from '../components/home/News360';
 import { Recommendations } from '../components/home/Recommendation';
-import { getTopStories } from '../api/newsApi';
+import { getCountryStories, getTopStories } from '../api/newsApi';
 import type { PulseStory } from '../api/type';
 
 import '../styles/pulsevow.css';
@@ -22,6 +22,7 @@ export default function Home() {
   const [stories, setStories] = useState<PulseStory[]>([]);
   const [selectedStory, setSelectedStory] =
     useState<PulseStory | null>(null);
+  const [worldNews, setWorldNews] = useState<PulseStory[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -29,8 +30,6 @@ export default function Home() {
     const fetchStories = async () => {
       try {
         const response = await getTopStories();
-        //mockNewsResponse
-        //await getTopStories();
         //mockNewsResponse;
         // Assumes getTopStories() returns { data: PulseStory[] }.
         const fetchedStories = response.data;
@@ -47,6 +46,22 @@ export default function Home() {
         }
       }
     };
+    const fetchWorldNews = async () => {
+    try {
+      const response = await getCountryStories(undefined, {
+        excludeCountry: "India",
+        limit: 20,
+      });
+
+      if (!cancelled) {
+        setWorldNews(response.data as PulseStory[]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch world news:", error);
+    }
+  };
+
+    void fetchWorldNews();
 
     void fetchStories();
 
@@ -54,15 +69,6 @@ export default function Home() {
       cancelled = true;
     };
   }, []);
-
-  const worldNews = useMemo<PulseStory[]>(
-    () =>
-      stories.filter(
-        (story) =>
-          story.source.country?.trim().toLowerCase() !== 'india'
-      ),
-    [stories]
-  );
 
   const showToast = (message: string) => {
     setToast(message);
