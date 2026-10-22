@@ -1,14 +1,5 @@
 import { Link } from "react-router-dom";
-
-type MonthlyBrief = {
-    month: string;
-    year: number;
-    description: string;
-    stories: number;
-    sectors: number;
-    podcastDuration: string;
-    status: "Latest" | "Archive";
-};
+import type { MonthlyBrief } from "./type";
 
 const monthlyBriefs: MonthlyBrief[] = [
     {

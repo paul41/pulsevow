@@ -1,10 +1,6 @@
 import { Block } from "../common/Block";
-import type { NewsSource } from "../../api/type";
 import { SOURCE_TEXT } from "../../constants/source-text.js";
-
-interface SourceComparisonProps {
-  sources: NewsSource[];
-}
+import type { SourceComparisonProps } from "./types.js";
 
 const defaultSources = [
   {

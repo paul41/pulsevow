@@ -2,12 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../styles/navbar.css";
-
-type Props = {
-  language: string;
-  onLanguageChange: (value: string) => void;
-  onPodcastClick: () => void;
-};
+import type { Props } from "./type";
 
 const categories = [
   { label: "Politics", value: "politics" },

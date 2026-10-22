@@ -55,10 +55,6 @@ export default function Login() {
               WELCOME BACK
             </span>
 
-            <h1>
-              Understand the news, not just read it.
-            </h1>
-
             <p>
               Sign in to personalize your PulseVow
               intelligence feed.

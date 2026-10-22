@@ -1,17 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
-//import { mockNewsResponse } from '../components/event/data';
+import { mockNewsResponse } from '../components/event/data';
 import { PodcastDock } from '../layout/PodcastDock';
 import { Navbar } from '../layout/navbar';
 import { Footer } from '../layout/footer';
 import { PulseCarousel } from '../components/home/PulseCarousel';
 import { StoryDetail } from '../components/event/StoryDetail';
 import { Toast } from '../components/common/Toast';
-import { News360 } from '../components/home/News360';
+//import { News360 } from '../components/home/News360';
 import { Recommendations } from '../components/home/Recommendation';
-import { getCountryStories, getTopStories } from '../api/newsApi';
+//import { getCountryStories, getTopStories } from '../api/newsApi';
 import type { PulseStory } from '../api/type';
 
 import '../styles/pulsevow.css';
+import { getCountryStories } from '../api/newsApi';
 
 export default function Home() {
   const [toast, setToast] = useState('');
@@ -29,7 +30,7 @@ export default function Home() {
 
     const fetchStories = async () => {
       try {
-        const response = await getTopStories();
+        const response = await mockNewsResponse;
         //mockNewsResponse;
         // Assumes getTopStories() returns { data: PulseStory[] }.
         const fetchedStories = response.data;
@@ -125,9 +126,9 @@ export default function Home() {
           )}
         </div>
 
-        <section className="news360-section" id="world">
+        {/* <section className="news360-section" id="world">
           <News360 items={worldNews} />
-        </section>
+        </section> */}
         <Recommendations />
       </main>
 

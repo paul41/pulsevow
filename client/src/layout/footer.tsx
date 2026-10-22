@@ -16,12 +16,12 @@ export function Footer({ year }: { year: number }) {
         <div className="footer-grid">
           {/* Contact Section */}
           <div>
-            <h5 className="footer-title">Get In Touch</h5>
+            <h5 className="footer-title"><b>Get In Touch</b></h5>
             <p>✉ support@pulsevow.com</p>
             <p>◉ www.pulsevow.com</p>
             <p>◷ AI Monitoring News 24×7</p>
 
-            <h6 className="footer-title footer-social-title">Follow Us</h6>
+            <h6 className="footer-title footer-social-title"><b>Follow Us</b></h6>
             <div className="footer-social">
               {["𝕏", "f", "in", "◎", "▶"].map((x) => (
                 <a href="#top" key={x}>
@@ -33,7 +33,7 @@ export function Footer({ year }: { year: number }) {
 
           {/* Features Section */}
           <div>
-            <h5 className="footer-title">AI Features</h5>
+            <h5 className="footer-title"><b>AI Features</b></h5>
             <div className="footer-links">
               {[
                 "AI-Powered News Briefs & Insights",
@@ -52,7 +52,7 @@ export function Footer({ year }: { year: number }) {
 
           {/* Topics Section */}
           <div>
-            <h5 className="footer-title">Explore Topics</h5>
+            <h5 className="footer-title"><b>Explore Topics</b></h5>
             <div className="footer-topics">
               {[
                 "Politics",

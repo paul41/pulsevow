@@ -1,9 +1,5 @@
 import { Block } from "../common/Block";
-
-interface AIBriefProps {
-  item: any; // Adjust the type based on the actual structure of the items prop
-}
-
+import type { AIBriefProps } from "./types";
 
 export function AIBrief({ item }: AIBriefProps) {
   const brief = [
@@ -66,4 +62,3 @@ export function AIBrief({ item }: AIBriefProps) {
     </Block>
   );
 }
-
