@@ -11,7 +11,7 @@ export interface DuplicateCheckResult {
 export class DeduplicatorService {
   constructor(
     private readonly articleRepository = new ArticleRepository()
-  ) {}
+  ) { }
 
   /**
    * Checks whether articles already exist.
@@ -143,21 +143,42 @@ export class DeduplicatorService {
   /**
    * Generates a deterministic hash based on article content.
    */
-  generateContentHash(
-    article: NormalizedArticle
-  ): string {
+
+  generateContentHash(article: NormalizedArticle): string {
+    const normalize = (value: unknown): string => {
+      if (typeof value === "string") {
+        return value.trim().toLowerCase();
+      }
+
+      if (typeof value === "number" || typeof value === "boolean") {
+        return String(value).toLowerCase();
+      }
+
+      if (value && typeof value === "object") {
+        const record = value as Record<string, unknown>;
+
+        // Handles RSS author objects such as { "#text": "TOI World Desk" }
+        const text = record["#text"] ?? record["name"] ?? record["value"];
+
+        if (typeof text === "string") {
+          return text.trim().toLowerCase();
+        }
+
+        return "";
+      }
+
+      return "";
+    };
+
     const payload = [
-      article.title,
-      article.description ?? "",
-      article.author ?? "",
-    ]
-      .map((value) =>
-        value?.trim().toLowerCase()
-      )
-      .join("|");
+      normalize(article.title) || "NEWS_PULSE",
+      normalize(article.description),
+      normalize(article.author),
+    ].join("|");
 
     return createHash("sha256")
       .update(payload)
       .digest("hex");
   }
+
 }

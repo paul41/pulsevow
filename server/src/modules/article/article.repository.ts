@@ -10,10 +10,20 @@ export class ArticleRepository {
   /**
    * Create a new article
    */
-  async create(data: Prisma.ArticleCreateInput): Promise<Article> {
-    return prisma.article.create({
-      data,
-    });
+  async create(data: Prisma.ArticleCreateInput): Promise<Article | null> {
+    try {
+      return await prisma.article.create({ data });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002"
+      ) {
+        console.warn(`Duplicate article skipped: ${data.slug}`);
+        return null;
+      }
+
+      throw error;
+    }
   }
 
   /**
@@ -78,32 +88,32 @@ export class ArticleRepository {
         },
       },
       select: {
-          id: true,
-          title: true,
-          slug: true,
-          description: true,
-          url: true,
-          imageUrl: true,
-          author: true,
-          publishedAt: true,
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        url: true,
+        imageUrl: true,
+        author: true,
+        publishedAt: true,
 
-          source: {
-            select: {
-              id: true,
-              name: true,
-              country: true,
-              logo: true,
-            },
-          },
-
-          category: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-            },
+        source: {
+          select: {
+            id: true,
+            name: true,
+            country: true,
+            logo: true,
           },
         },
+
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+      },
       take: limit,
       orderBy: {
         publishedAt: "desc",

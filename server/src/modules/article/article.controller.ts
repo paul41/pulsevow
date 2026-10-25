@@ -77,6 +77,7 @@ export class ArticleController {
     try {
       const countryParam = req.params.country;
       console.log("TTTTTTTT",req.params);
+      console.log("Exclude Country",req.query);
       const country = Array.isArray(countryParam)
         ? countryParam[0]
         : countryParam;

@@ -47,7 +47,7 @@ export interface NormalizedArticle {
 
   slug: string;
 
-  description?: string;
+  description?: string | null;
 
   content?: string;
 
@@ -55,7 +55,7 @@ export interface NormalizedArticle {
 
   imageUrl?: string | null;
 
-  author?: string;
+  author?: string | undefined;
 
   publishedAt: Date;
 
