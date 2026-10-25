@@ -1,0 +1,1 @@
+export type Props = { story: any; onToast: (message: string) => void };

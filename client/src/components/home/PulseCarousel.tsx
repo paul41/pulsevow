@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { NewsCard } from '../card/News';
 import Arrow from '../common/Arrow';

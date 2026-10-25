@@ -105,7 +105,6 @@ export class IngestionService {
         await this.rssService.fetchFeed(source);
 
       const articles = feedItems.flat();
-
       console.info(
         `Fetched ${articles.length} articles from ${source.name}`
       );
@@ -123,8 +122,7 @@ export class IngestionService {
         await this.processBatch(batch);
 
         console.info(
-          `Processed batch ${
-            Math.floor(i / this.articleBatchSize) + 1
+          `Processed batch ${Math.floor(i / this.articleBatchSize) + 1
           } (${batch.length} articles) from ${source.name}`
         );
       }
@@ -199,7 +197,7 @@ export class IngestionService {
 
     console.info(
       `${newArticles.length} new articles found ` +
-        `out of ${feeds.length}`
+      `out of ${feeds.length}`
     );
 
     /**
@@ -281,6 +279,7 @@ export class IngestionService {
    *      ↓
    * Enqueue AI
    */
+
   private async createArticle(
     article: any
   ): Promise<void> {
@@ -289,24 +288,26 @@ export class IngestionService {
        * 1. Map normalized article to DB model.
        */
       const articleDoc =
-        this.articleService.articleMapper(
-          article
-        );
+        this.articleService.articleMapper(article);
 
       /**
        * 2. Create article in PostgreSQL.
        */
       const created =
-        await this.articleRepo.create(
-          articleDoc
+        await this.articleRepo.create(articleDoc);
+
+      /**
+       * Skip further processing if the article already exists.
+       */
+      if (!created) {
+        console.info(
+          `Skipping duplicate article: ${article.title}`
         );
+        return;
+      }
 
       /**
        * 3. Enrich description BEFORE AI processing.
-       *
-       * p-limit still controls concurrency, but we
-       * await the task so the embedding worker cannot
-       * start before enrichment is complete.
        */
       if (!articleDoc.description && article.url) {
         console.log(
@@ -324,9 +325,7 @@ export class IngestionService {
           if (description) {
             await this.articleRepo.update(
               created.id,
-              {
-                description,
-              }
+              { description }
             );
 
             console.info(
@@ -334,12 +333,6 @@ export class IngestionService {
             );
           }
         } catch (error) {
-          /**
-           * Enrichment is best-effort.
-           *
-           * The article can still continue to AI
-           * processing without a description.
-           */
           console.error(
             `Failed to enrich description for ${article.url}`,
             error
@@ -356,12 +349,9 @@ export class IngestionService {
       );
 
       /**
-       * 5. Enqueue AI processing only after
-       * article preprocessing is complete.
+       * 5. Enqueue AI processing after preprocessing.
        */
-      await enqueueArticleEmbedding(
-        created.id
-      );
+      await enqueueArticleEmbedding(created.id);
 
       console.info(
         `AI processing queued for article ${created.id}`
@@ -372,13 +362,11 @@ export class IngestionService {
         error
       );
 
-      /**
-       * Re-throw so Promise.allSettled() can correctly
-       * identify this article as rejected.
-       */
+      // Re-throw so Promise.allSettled() identifies failures.
       throw error;
     }
   }
+
 
   /**
    * Useful for monitoring the embedding queue.

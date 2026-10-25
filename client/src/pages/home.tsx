@@ -10,8 +10,8 @@ import { News360 } from '../components/home/News360';
 import { Recommendations } from '../components/home/Recommendation';
 import { getCountryStories, getTopStories } from '../api/newsApi';
 import type { PulseStory } from '../api/type';
-
 import '../styles/pulsevow.css';
+
 
 export default function Home() {
   const [toast, setToast] = useState('');
@@ -47,19 +47,19 @@ export default function Home() {
       }
     };
     const fetchWorldNews = async () => {
-    try {
-      const response = await getCountryStories(undefined, {
-        excludeCountry: "India",
-        limit: 20,
-      });
+      try {
+        const response = await getCountryStories(undefined, {
+          excludeCountry: "India",
+          limit: 20,
+        });
 
-      if (!cancelled) {
-        setWorldNews(response.data as PulseStory[]);
+        if (!cancelled) {
+          setWorldNews(response.data as PulseStory[]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch world news:", error);
       }
-    } catch (error) {
-      console.error("Failed to fetch world news:", error);
-    }
-  };
+    };
 
     void fetchWorldNews();
 

@@ -1,9 +1,4 @@
-
-interface RecentNewsArticles {
-  image: string;
-  title: string;
-  text: string;
-}
+import type { RecentNewsArticles } from "./types";
 
 export function Recent() {
   const articles: RecentNewsArticles[] = [

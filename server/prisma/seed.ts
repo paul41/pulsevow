@@ -50,249 +50,239 @@ async function main() {
   // ==========================================
 
   const sources = [
-    {
-      name: "Times of India",
-      siteUrl: "https://timesofindia.indiatimes.com/",
-      feeds: [
-        "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/2886704.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/913168846.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/66949542.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 98,
+  {
+    name: "Times of India",
+    siteUrl: "https://timesofindia.indiatimes.com/",
+    logoUrl: "https://timesofindia.indiatimes.com/favicon.ico",
+    feeds: [
+      "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/2886704.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/1081479906.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/913168846.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/66949542.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
+      "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+    ],
+    country: "India",
+    language: "English",
+    trustScore: 98,
+  },
+
+  // {
+  //   name: "Reuters",
+  //   siteUrl: "https://www.reuters.com",
+  //   logoUrl: "https://www.reuters.com/favicon.ico",
+  //   feeds: [
+  //     "https://feeds.reuters.com/reuters/topNews",
+  //   ],
+  //   country: "Global",
+  //   language: "English",
+  //   trustScore: 98,
+  // },
+
+  {
+    name: "BBC News",
+    siteUrl: "https://www.bbc.com",
+    logoUrl: "https://www.bbc.com/favicon.ico",
+    feeds: ["https://feeds.bbci.co.uk/news/rss.xml"],
+    country: "United Kingdom",
+    language: "English",
+    trustScore: 97,
+  },
+
+  {
+    name: "The Hindu",
+    siteUrl: "https://www.thehindu.com",
+    logoUrl: "https://www.thehindu.com/favicon.ico",
+    feeds: ["https://www.thehindu.com/news/feeder/default.rss"],
+    country: "India",
+    language: "English",
+    trustScore: 94,
+  },
+
+  {
+    name: "Indian Express",
+    siteUrl: "https://indianexpress.com",
+    logoUrl: "https://indianexpress.com/favicon.ico",
+    feeds: ["https://indianexpress.com/feed/"],
+    country: "India",
+    language: "English",
+    trustScore: 93,
+  },
+
+  {
+    name: "NDTV",
+    siteUrl: "https://www.ndtv.com/",
+    logoUrl: "https://www.ndtv.com/favicon.ico",
+    feeds: ["https://feeds.feedburner.com/NDTV-LatestNews"],
+    country: "India",
+    language: "English",
+    trustScore: 93,
+  },
+
+  {
+    name: "CNBC",
+    siteUrl: "https://www.cnbc.com",
+    logoUrl: "https://www.cnbc.com/favicon.ico",
+    feeds: ["https://www.cnbc.com/id/100003114/device/rss/rss.html"],
+    country: "United States",
+    language: "English",
+    trustScore: 95,
+  },
+
+  {
+    name: "India Today",
+    siteUrl: "https://www.indiatoday.in/",
+    logoUrl: "https://www.indiatoday.in/favicon.ico",
+    feeds: ["https://www.indiatoday.in/rss/1206578"],
+    country: "India",
+    language: "English",
+    trustScore: 93,
+  },
+
+  {
+    name: "TechCrunch",
+    siteUrl: "https://techcrunch.com",
+    logoUrl: "https://techcrunch.com/favicon.ico",
+    feeds: ["https://techcrunch.com/feed/"],
+    country: "United States",
+    language: "English",
+    trustScore: 93,
+  },
+
+  {
+    name: "Hindustan Times",
+    siteUrl: "https://www.hindustantimes.com/",
+    logoUrl: "https://www.hindustantimes.com/favicon.ico",
+    feeds: ["https://www.hindustantimes.com/feeds/rss/trending/rssfeed.xml"],
+    country: "India",
+    language: "English",
+    trustScore: 91,
+  },
+
+  {
+    name: "Economic Times",
+    siteUrl: "https://economictimes.indiatimes.com/",
+    logoUrl: "https://economictimes.indiatimes.com/favicon.ico",
+    feeds: ["https://economictimes.indiatimes.com/rssfeedsdefault.cms"],
+    country: "India",
+    language: "English",
+    trustScore: 91,
+  },
+
+  {
+    name: "Moneycontrol",
+    siteUrl: "https://www.moneycontrol.com",
+    logoUrl: "https://www.moneycontrol.com/favicon.ico",
+    feeds: ["https://www.moneycontrol.com/rss/latestnews.xml"],
+    country: "India",
+    language: "English",
+    trustScore: 90,
+  },
+
+  {
+    name: "Mint",
+    siteUrl: "https://www.livemint.com",
+    logoUrl: "https://www.livemint.com/favicon.ico",
+    feeds: ["https://www.livemint.com/rss/news"],
+    country: "India",
+    language: "English",
+    trustScore: 92,
+  },
+
+  {
+    name: "ABP News",
+    siteUrl: "https://news.abplive.com/",
+    logoUrl: "https://news.abplive.com/favicon.ico",
+    feeds: ["https://news.abplive.com/home/feed"],
+    country: "India",
+    language: "English",
+    trustScore: 92,
+  },
+
+  {
+    name: "India TV",
+    siteUrl: "https://www.indiatvnews.com/",
+    logoUrl: "https://www.indiatvnews.com/favicon.ico",
+    feeds: ["https://www.indiatvnews.com/rssnews/topstory.xml"],
+    country: "India",
+    language: "English",
+    trustScore: 92,
+  },
+
+  {
+    name: "Scroll",
+    siteUrl: "https://scroll.in/",
+    logoUrl: "https://scroll.in/favicon.ico",
+    feeds: ["https://feeds.feedburner.com/ScrollinArticles"],
+    country: "India",
+    language: "English",
+    trustScore: 92,
+  },
+];
+
+// ==========================================
+// Seed Sources
+// ==========================================
+
+for (const source of sources) {
+  const dbSource = await prisma.source.upsert({
+    where: {
+      siteUrl: source.siteUrl,
     },
 
-    // {
-    //   name: "Reuters",
-    //   siteUrl: "https://www.reuters.com",
-    //   feeds: [
-    //     "https://feeds.reuters.com/reuters/topNews",
-    //   ],
-    //   country: "Global",
-    //   language: "English",
-    //   trustScore: 98,
-    // },
-
-    {
-      name: "BBC News",
-      siteUrl: "https://www.bbc.com",
-      feeds: [
-        "https://feeds.bbci.co.uk/news/rss.xml",
-      ],
-      country: "United Kingdom",
-      language: "English",
-      trustScore: 97,
+    update: {
+      name: source.name,
+      logo: source.logoUrl,
+      country: source.country,
+      language: source.language,
+      trustScore: source.trustScore,
+      type: SourceType.RSS,
+      isActive: true,
     },
 
-    {
-      name: "The Hindu",
-      siteUrl: "https://www.thehindu.com",
-      feeds: [
-        "https://www.thehindu.com/news/feeder/default.rss",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 94,
+    create: {
+      name: source.name,
+      siteUrl: source.siteUrl,
+      logo: source.logoUrl,
+      country: source.country,
+      language: source.language,
+      trustScore: source.trustScore,
+      type: SourceType.RSS,
+      isActive: true,
     },
-
-    {
-      name: "Indian Express",
-      siteUrl: "https://indianexpress.com",
-      feeds: [
-        "https://indianexpress.com/feed/",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 93,
-    },
-
-    {
-      name: "NDTV",
-      siteUrl: "https://www.ndtv.com/",
-      feeds: [
-        "https://feeds.feedburner.com/NDTV-LatestNews",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 93,
-    },
-
-    {
-      name: "CNBC",
-      siteUrl: "https://www.cnbc.com",
-      feeds: [
-        "https://www.cnbc.com/id/100003114/device/rss/rss.html",
-      ],
-      country: "United States",
-      language: "English",
-      trustScore: 95,
-    },
-
-    {
-      name: "India Today",
-      siteUrl: "https://www.indiatoday.in/",
-      feeds: [
-        "https://www.indiatoday.in/rss/1206578",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 93,
-    },
-
-    {
-      name: "TechCrunch",
-      siteUrl: "https://techcrunch.com",
-      feeds: [
-        "https://techcrunch.com/feed/",
-      ],
-      country: "United States",
-      language: "English",
-      trustScore: 93,
-    },
-
-    {
-      name: "Hindustan Times",
-      siteUrl: "https://www.hindustantimes.com/",
-      feeds: [
-        "https://www.hindustantimes.com/feeds/rss/trending/rssfeed.xml",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 91,
-    },
-
-    {
-      name: "Economic Times",
-      siteUrl: "https://economictimes.indiatimes.com/",
-      feeds: [
-        "https://economictimes.indiatimes.com/rssfeedsdefault.cms",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 91,
-    },
-
-    {
-      name: "Moneycontrol",
-      siteUrl: "https://www.moneycontrol.com",
-      feeds: [
-        "https://www.moneycontrol.com/rss/latestnews.xml",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 90,
-    },
-
-    {
-      name: "Mint",
-      siteUrl: "https://www.livemint.com",
-      feeds: [
-        "https://www.livemint.com/rss/news",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 92,
-    },
-
-    {
-      name: "ABP News",
-      siteUrl: "https://news.abplive.com/",
-      feeds: [
-        "https://news.abplive.com/home/feed",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 92,
-    },
-
-    {
-      name: "India TV",
-      siteUrl: "https://www.indiatvnews.com/",
-      feeds: [
-        "https://www.indiatvnews.com/rssnews/topstory.xml",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 92,
-    },
-
-    {
-      name: "Scroll",
-      siteUrl: "https://scroll.in/",
-      feeds: [
-        "https://feeds.feedburner.com/ScrollinArticles",
-      ],
-      country: "India",
-      language: "English",
-      trustScore: 92,
-    },
-  ];
+  });
 
   // ==========================================
-  // Seed Sources
+  // Seed Source Feeds
   // ==========================================
 
-  for (const source of sources) {
-    const dbSource = await prisma.source.upsert({
+  for (const feedUrl of source.feeds) {
+    await prisma.sourceFeed.upsert({
       where: {
-        siteUrl: source.siteUrl,
+        url: feedUrl,
       },
 
       update: {
-        name: source.name,
-        country: source.country,
-        language: source.language,
-        trustScore: source.trustScore,
-        type: SourceType.RSS,
+        sourceId: dbSource.id,
         isActive: true,
       },
 
       create: {
-        name: source.name,
-        siteUrl: source.siteUrl,
-        country: source.country,
-        language: source.language,
-        trustScore: source.trustScore,
-        type: SourceType.RSS,
+        sourceId: dbSource.id,
+        url: feedUrl,
         isActive: true,
       },
     });
-
-    // ==========================================
-    // Seed Source Feeds
-    // ==========================================
-
-    for (const feedUrl of source.feeds) {
-      await prisma.sourceFeed.upsert({
-        where: {
-          url: feedUrl,
-        },
-
-        update: {
-          sourceId: dbSource.id,
-          isActive: true,
-        },
-
-        create: {
-          sourceId: dbSource.id,
-          url: feedUrl,
-          isActive: true,
-        },
-      });
-    }
-
-    console.log(
-      `   ✓ ${source.name} (${source.feeds.length} feed${
-        source.feeds.length > 1 ? "s" : ""
-      })`
-    );
   }
+
+  console.log(
+    `   ✓ ${source.name} (${source.feeds.length} feed${
+      source.feeds.length > 1 ? "s" : ""
+    })`
+  );
+}
 
   // ==========================================
   // Deactivate Feeds No Longer In Seed

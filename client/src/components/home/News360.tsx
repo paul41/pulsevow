@@ -1,10 +1,6 @@
 import { Block } from "../common/Block";
-import type { NewsArticle } from "../../api/type";
 import "../../styles/news360.css";
-
-interface News360Props {
-    items: NewsArticle[];
-}
+import type { News360Props } from "./types";
 
 function getTimeAgo(publishedAt: string): string {
     const publishedTime = new Date(publishedAt).getTime();

@@ -8,9 +8,7 @@ import { Newsletter } from '../home/Newsletter';
 import { FollowUs } from '../home/Social';
 //import { Recent } from '../home/Recent';
 import { RelatedArticles } from '../home/Related';
-
-
-type Props = { story: any; onToast: (message: string) => void };
+import type { Props } from './types';
 
 export function StoryDetail({ story, onToast }: Props) {
   //console.log(story)

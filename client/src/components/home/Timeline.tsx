@@ -1,10 +1,5 @@
 import { Block } from "../common/Block";
-
-type TimelineItem = [string, string];
-
-interface TimelineProps {
-  items: TimelineItem[];
-}
+import type { TimelineProps } from "./types";
 
 export function Timeline({ items }: TimelineProps) {
   console.log(items);

@@ -7,6 +7,7 @@ import compression from "compression";
 import corsMiddleware from "./config/cors.js";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/error-handler.middleware.js";
+// import "./workers/scheduler.js";
 
 const app = express();
 

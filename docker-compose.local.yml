@@ -1,38 +1,44 @@
+
 services:
-
   frontend:
-
     build:
       context: ./client
       dockerfile: Dockerfile
-
     container_name: pulsevow-frontend
-
     restart: unless-stopped
-
     networks:
       - pulsevow-network
 
-
-  backend:
-
+  seed:
     build:
       context: ./server
       dockerfile: Dockerfile
+    container_name: pulsevow-seed
+    restart: "no"
+    env_file:
+      - ./server/.env
+    command: ["npm", "run", "prisma:seed"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pulsevow-network
 
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     container_name: pulsevow-backend
-
     restart: unless-stopped
-
     env_file:
       - ./server/.env
     volumes:
-    - ./server/keys:/server/keys:ro
-    
+      - ./server/keys:/server/keys:ro
     depends_on:
-      - postgres
-      - redis
-
+      seed:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
     networks:
       - pulsevow-network
 
@@ -46,77 +52,60 @@ services:
       - ./server/.env
     volumes:
       - ./server/keys:/server/keys:ro
-    depends_on:
-      - postgres
-      - redis
     command: ["node", "dist/workers/index.js"]
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
     networks:
       - pulsevow-network
+
   postgres:
-
     image: pgvector/pgvector:pg16
-
     container_name: pulsevow-postgres
-
     restart: unless-stopped
-
     environment:
       POSTGRES_DB: pulsevow
       POSTGRES_USER: pulsevow
       POSTGRES_PASSWORD: bQhp953re
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pulsevow -d pulsevow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     networks:
       - pulsevow-network
-
 
   redis:
-
     image: redis:7-alpine
-
     container_name: pulsevow-redis
-
     restart: unless-stopped
-
     volumes:
       - redis_data:/data
-
     networks:
       - pulsevow-network
 
-
   nginx:
-
     image: nginx:alpine
-
     container_name: pulsevow-nginx
-
     restart: unless-stopped
-
     ports:
       - "80:80"
-
     volumes:
       - ./nginx/nginx-local.conf:/etc/nginx/nginx.conf:ro
-
     depends_on:
       - frontend
       - backend
-
     networks:
       - pulsevow-network
 
-
 networks:
-
   pulsevow-network:
     driver: bridge
 
-
 volumes:
-
   postgres_data:
-
   redis_data:
