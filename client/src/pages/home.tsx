@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-//import { mockNewsResponse } from '../components/event/data';
 import { PodcastDock } from '../layout/PodcastDock';
 import { Navbar } from '../layout/navbar';
 import { Footer } from '../layout/footer';
@@ -30,8 +29,6 @@ export default function Home() {
     const fetchStories = async () => {
       try {
         const response = await getTopStories();
-        //mockNewsResponse;
-        // Assumes getTopStories() returns { data: PulseStory[] }.
         const fetchedStories = response.data;
 
         if (!cancelled) {

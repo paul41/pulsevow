@@ -11,25 +11,7 @@ import { RelatedArticles } from '../home/Related';
 import type { Props } from './types';
 
 export function StoryDetail({ story, onToast }: Props) {
-  //console.log(story)
-  // requestAnimationFrame(() => {
-  //   requestAnimationFrame(() => {
-  //     const el = document.getElementById('world');
-
-  //     if (!el) return;
-
-  //     const y =
-  //       el.getBoundingClientRect().top +
-  //       window.scrollY -
-  //       80;
-
-  //     window.scrollTo({
-  //       top: y,
-  //       behavior: 'smooth',
-  //     });
-  //   });
-  // });
-  
+  console.log("Fetched NEWS-story:", story);
   return (
     <div className="storygrid" id="story">
       <article>
