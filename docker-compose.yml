@@ -8,6 +8,21 @@ services:
     networks:
       - pulsevow-network
 
+  seed:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pulsevow-seed
+    restart: "no"
+    env_file:
+      - ./server/.env
+    command: ["npm", "run", "prisma:seed"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pulsevow-network
+
   backend:
     build:
       context: ./server
@@ -19,8 +34,33 @@ services:
     volumes:
       - ./server/keys:/server/keys:ro
     depends_on:
-      - postgres
-      - redis
+      seed:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - pulsevow-network
+
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pulsevow-worker
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server/keys:/server/keys:ro
+    command: ["node", "dist/workers/index.js"]
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
     networks:
       - pulsevow-network
 
@@ -29,11 +69,19 @@ services:
     container_name: pulsevow-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: pulsevow
-      POSTGRES_USER: pulsevow
-      POSTGRES_PASSWORD: bQhp953re
+      POSTGRES_DB: ${POSTGRES_DB:-pulsevow}
+      POSTGRES_USER: ${POSTGRES_USER:-pulsevow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bQhp953re}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     networks:
       - pulsevow-network
 
@@ -70,4 +118,3 @@ networks:
 volumes:
   postgres_data:
   redis_data:
-  

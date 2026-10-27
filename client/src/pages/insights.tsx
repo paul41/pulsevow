@@ -8,7 +8,7 @@ const EventInsightPage = () => {
             <h1>Pulse Insight</h1>
 
             {storyId && (
-                <p>Loading intelligence for story: {storyId}</p>
+                <p>Loading intelligence for story: {storyId}..</p>
             )}
         </div>
     );

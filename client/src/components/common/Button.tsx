@@ -1,10 +1,5 @@
 import React from "react";
-
-interface ButtonProps {
-  label?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: "button" | "submit" | "reset";
-}
+import type { ButtonProps } from "./types";
 
 const Button: React.FC<ButtonProps> = ({
   label = "Sign Up",

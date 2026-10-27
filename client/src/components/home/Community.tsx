@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { ASK_PULSEVOW, ASK_PULSEVOW_DESC } from "../../constants/ask-text.js";
-
-interface AskPulseVowProps {
-  onToast: (message: string) => void;
-}
+import type { AskPulseVowProps } from "./types.js";
 
 export function AskPulseVow({ onToast }: AskPulseVowProps) {
   const [question, setQuestion] = useState("");

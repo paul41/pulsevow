@@ -56,7 +56,7 @@ export const embeddingWorker = new Worker<EmbeddingJobData>(
   },
 
   {
-    connection: connection,
+    connection,
 
     concurrency: 2,
   }

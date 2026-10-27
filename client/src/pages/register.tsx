@@ -76,7 +76,7 @@ export default function Register() {
 
           <span>
             <strong>PulseVow</strong>
-            <small>Indian news intelligence</small>
+            <span className="tag">Beyond News. Intel Insight.</span>
           </span>
         </Link>
 
