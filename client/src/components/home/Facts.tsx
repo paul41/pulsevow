@@ -1,10 +1,6 @@
 import { Block } from "../common/Block";
 import { VERIFIED, INTERPRETATION } from "../../constants/facts-text.js";
-
-interface FactsProps {
-  confirmed: string[];
-  interpretation: string[];
-}
+import type { FactsProps } from "./types.js";
 
 export function Facts({ confirmed, interpretation }: FactsProps) {
   return (

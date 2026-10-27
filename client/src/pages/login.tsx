@@ -45,7 +45,7 @@ export default function Login() {
 
           <span>
             <strong>PulseVow</strong>
-            <small>Indian news intelligence</small>
+            <span className="tag">Beyond News. Intel Insight.</span>
           </span>
         </Link>
 
@@ -54,10 +54,6 @@ export default function Login() {
             <span className="auth-kicker">
               WELCOME BACK
             </span>
-
-            <h1>
-              Understand the news, not just read it.
-            </h1>
 
             <p>
               Sign in to personalize your PulseVow

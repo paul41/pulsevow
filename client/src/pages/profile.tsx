@@ -149,9 +149,7 @@ export default function Profile() {
 
           <div>
             <span className="name">PulseVow</span>
-            <span className="tag">
-              Indian news intelligence
-            </span>
+            <span className="tag">Beyond News. Intel Insight.</span>
           </div>
         </Link>
 

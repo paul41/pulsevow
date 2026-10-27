@@ -1,9 +1,5 @@
 import "../../styles/loader.css";
-
-type LoaderProps = {
-  message?: string;
-  fullScreen?: boolean;
-};
+import type { LoaderProps } from "./types";
 
 export default function Loader({
   message = "Loading intelligence...",

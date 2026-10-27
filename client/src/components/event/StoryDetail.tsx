@@ -2,15 +2,13 @@ import Advertisement from '../common/Advertisement';
 import { AIBrief } from '../home/AIBrief';
 import { Timeline } from '../home/Timeline';
 import { SourceComparison } from '../home/Comparision';
-import { Facts } from '../home/Facts';
-import { Recommendations } from '../home/Recommendation';
+// import { Recommendations } from '../home/Recommendation';
 import { AskPulseVow } from '../home/Community';
 import { Newsletter } from '../home/Newsletter';
 import { FollowUs } from '../home/Social';
-import { Recent } from '../home/Recent';
-import { News360 } from '../home/News360';
-
-type Props = { story: any; onToast: (message: string) => void };
+//import { Recent } from '../home/Recent';
+import { RelatedArticles } from '../home/Related';
+import type { Props } from './types';
 
 export function StoryDetail({ story, onToast }: Props) {
   console.log("Fetched NEWS-story:", story);
@@ -18,14 +16,7 @@ export function StoryDetail({ story, onToast }: Props) {
     <div className="storygrid" id="story">
       <article>
         <header className="story-header">
-          <div className="eyebrow-row">
-            <span className="impact-badge">High impact</span>
-            <span className="meta">
-              Banking · Markets · 41 sources tracked · updated 12 min ago
-            </span>
-          </div>
           <h1 className="story-title headline-font">{story.title}</h1>
-          {/* <p className="story-dek">{story.dek}</p> */}
           <div className="story-actions">
             <a className="action primary" href="#brief">NEWS Brief</a>
             <a className="action" href="#timeline">Story so far</a>
@@ -34,36 +25,36 @@ export function StoryDetail({ story, onToast }: Props) {
         </header>
 
         <figure className="hero-figure">
-          <img src={story.heroImage} alt={story.heroAlt} />
+          <img src={story.imageUrl} alt={story.source?.name} />
           <figcaption>
-            <span>Representative image of the Reserve Bank of India.</span>
-            <a href="https://www.rbi.org.in" target="_blank" rel="noreferrer">
-              Official RBI website ↗
+            <span style={{ flex: "1 1 180px", minWidth: 0 }}>Representative image of {story.source?.name}</span>
+            <a href={story.url} target="_blank" rel="noreferrer" style={{
+              flex: "0 1 auto",
+              whiteSpace: "nowrap",
+            }}>
+              Official {story.source?.name} website ↗
             </a>
           </figcaption>
         </figure>
-
+        
         {/* <Affected items={story.affected} /> */}
-        <AIBrief items={story.brief} />
+        <AIBrief item={story.description} />
         <Timeline items={story.timeline} />
-        <SourceComparison sources={story.sources} />
-        <Facts confirmed={story.confirmed} interpretation={story.interpretation} />
+        <SourceComparison sources={story.source} />
+        {/* <Facts confirmed={story.confirmed} interpretation={story.interpretation} /> */}
         <a href="#ask" className="forum-cta"> 
           Have a question about this story? 
           <span>Discuss it in forum →</span>
         </a>
-        <section className="news360-section">
-          <News360 />
-        </section>
-        <Recommendations />
+        
       </article>
 
       <aside>
         <AskPulseVow onToast={onToast} />
-        <Recent />
+        <RelatedArticles />
+        {/* <Recent /> */}
         <Newsletter onToast={onToast} />
         <FollowUs />
-        {/* <RelatedArticles /> */}
         <Advertisement />
       </aside>
     </div>

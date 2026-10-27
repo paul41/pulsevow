@@ -46,24 +46,99 @@ const CATEGORY_MAP: Record<string, string> = {
 export class NormalizerService {
   private readonly imageExtractor = new ImageExtractorService();
 
+  // cleanHtml = (html: string): string =>
+  //   html
+  //     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+  //     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")
+  //     .replace(/<[^>]*>/g, " ")
+  //     .replace(/&nbsp;/gi, " ")
+  //     .replace(/&amp;/gi, "&")
+  //     .replace(/&lt;/gi, "<")
+  //     .replace(/&gt;/gi, ">")
+  //     .replace(/&quot;/gi, '"')
+  //     .replace(/&#39;|&apos;/gi, "'")
+  //     .replace(/\s+/g, " ")
+  //     .trim();
+
+
+  private normalizeDescription(value: unknown): string | null {
+    if (typeof value !== "string" || !value.trim()) {
+      return null;
+    }
+
+    const html = value.trim();
+
+    // Remove script and style content before extracting text.
+    const text = html
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+      // Preserve spacing between HTML elements.
+      .replace(/<br\s*\/?>/gi, " ")
+      .replace(/<\/(?:p|div|li|h[1-6])\s*>/gi, " ")
+      .replace(/<[^>]*>/g, " ")
+      // Decode common HTML entities.
+      .replace(/&nbsp;|&#160;/gi, " ")
+      .replace(/&amp;/gi, "&")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;|&apos;/gi, "'")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&#(\d+);/g, (_, code: string) =>
+        String.fromCodePoint(Number(code))
+      )
+      .replace(/&#x([0-9a-f]+);/gi, (_, code: string) =>
+        String.fromCodePoint(parseInt(code, 16))
+      )
+      .replace(/\s+/g, " ")
+      .trim();
+
+    return text || null;
+  }
+
+  private normalizeAuthor(author: unknown, dcCreator: unknown): string | null {
+    if (typeof author === "string") {
+      return author.trim() || null;
+    }
+
+    if (author && typeof author === "object") {
+      const record = author as Record<string, unknown>;
+
+      const text = record["#text"] ?? record.name;
+
+      if (typeof text === "string" && text.trim()) {
+        return text.trim();
+      }
+    }
+
+    return typeof dcCreator === "string"
+      ? dcCreator.trim() || null
+      : null;
+  }
   normalize(feed: any): NormalizedArticle {
-    
+
     const categoryName = Array.isArray(feed.raw.category)
       ? feed.raw.category[0] ?? "General"
       : typeof feed.raw.category === "string"
         ? feed.raw.category
         : "General";
-    const rssDescription = feed.raw.description?.trim() || null;
+    const rssDescription = this.normalizeDescription(
+                              feed.raw.description
+                            );
+    //const encodedContent = feed.raw["content:encoded"]?.trim() || "";
+    const description = [rssDescription, /*this.cleanHtml(encodedContent)*/]
+      .filter(Boolean)
+      .filter((value, index, arr) => arr.indexOf(value) === index)
+      .join("\n\n") || null;
+
     const rawCategorySlug = slugify(categoryName, {
       lower: true,
       strict: true,
     });
-     const categorySlug =
+    const categorySlug =
       CATEGORY_MAP[rawCategorySlug] ?? "general";
-      
+
     return {
       sourceId: feed.sourceId,
-      //channelUrl: feed.metadata.link ?? Array.isArray(feed.sourceUrl) ? (feed.sourceUrl[0])?.href() : feed.sourceUrl?.href(),
       categorySlug,
       title: feed.raw.title ?? "",
 
@@ -74,16 +149,14 @@ export class NormalizerService {
           strict: true,
         }),
 
-      description: rssDescription,
+      description: description,
 
       url: feed.raw.link ?? feed.raw.url ?? "",
 
       imageUrl: this.imageExtractor.extract(feed.raw),
 
       author:
-        feed.raw.author ??
-        feed.raw["dc:creator"] ??
-        null,
+        this.normalizeAuthor(feed.raw.author, feed.raw["dc:creator"]) ?? undefined,
 
       publishedAt: feed.raw.pubDate
         ? new Date(feed.raw.pubDate)

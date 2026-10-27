@@ -1,9 +1,4 @@
-
-interface RelatedArticle {
-  image: string;
-  title: string;
-  text: string;
-}
+import type { RelatedArticle } from "./types";
 
 export function RelatedArticles() {
   const articles: RelatedArticle[] = [

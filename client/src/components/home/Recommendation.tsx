@@ -1,16 +1,6 @@
 // components/common/Recommendations.tsx
 import { Block } from "../common/Block";
-
-interface RecommendationItem {
-  image: string;
-  tag: string;
-  cat: string;
-  time: string;
-  title: string;
-  text: string;
-  tags: string[];
-  cta: string;
-}
+import type { RecommendationItem } from "./types";
 
 export function Recommendations() {
   const items: RecommendationItem[] = [
