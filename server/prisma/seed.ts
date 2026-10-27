@@ -53,7 +53,7 @@ async function main() {
   {
     name: "Times of India",
     siteUrl: "https://timesofindia.indiatimes.com/",
-    logoUrl: "https://timesofindia.indiatimes.com/favicon.ico",
+    logoUrl: "https://timesofindia.indiatimes.com/icons/toifavicon.ico",
     feeds: [
       "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
       "https://timesofindia.indiatimes.com/rssfeeds/2886704.cms",
