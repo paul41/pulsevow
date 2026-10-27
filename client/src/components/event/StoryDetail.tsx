@@ -13,7 +13,7 @@ import { News360 } from '../home/News360';
 type Props = { story: any; onToast: (message: string) => void };
 
 export function StoryDetail({ story, onToast }: Props) {
-  console.log(story)
+  console.log("Fetched NEWS-story:", story);
   return (
     <div className="storygrid" id="story">
       <article>
