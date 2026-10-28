@@ -240,7 +240,7 @@ export const mockNewsResponse: NewsApiResponse = {
     },
     {
       "id": "da25c487-a55a-4248-ac2d-49b8d08e7f98",
-      "title": "Aviation ministry suspends ops at three Andhra airports as Cyclone Arnab intensifies",
+      "title": "Aviation ministry suspends ops at three Andhra airports as Cyclone Arnab intensifie",
       "slug": "aviation-ministry-suspends-ops-at-three-andhra-airports-as-cyclone-arnab-intensifies",
       "description": "NEW DELHI: The ministry of civil aviation on Tuesday reviewed aviation safety and operational readiness as Cyclone Arnab is expected to intensify into a",
       "url": "https://timesofindia.indiatimes.com/india/aviation-ministry-suspends-operations-at-three-andhra-airports-as-cyclone-arnab-intensifies/articleshow/135243430.cms",
