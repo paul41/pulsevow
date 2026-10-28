@@ -16,7 +16,7 @@ export function StoryDetail({ story, onToast }: Props) {
     <div className="storygrid" id="story">
       <article>
         <header className="story-header">
-          <h1 className="story-title headline-font">{story.title}</h1>
+          {/* <h1 className="story-title headline-font">{story.title}</h1> */}
           <div className="story-actions">
             <a className="action primary" href="#brief">NEWS Brief</a>
             <a className="action" href="#timeline">Story so far</a>
@@ -46,7 +46,6 @@ export function StoryDetail({ story, onToast }: Props) {
           Have a question about this story? 
           <span>Discuss it in forum →</span>
         </a>
-        
       </article>
 
       <aside>
