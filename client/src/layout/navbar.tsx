@@ -329,7 +329,7 @@ export function Navbar({
             {getUserInitials()}
           </button>
         ) : (
-          <Link to="/register" className="login-btn">
+          <Link to="/login" className="login-btn">
             Login
           </Link>
         )}

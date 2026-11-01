@@ -2412,15 +2412,54 @@ select {
   flex: 1
 }
 
+.social-login-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
 .social-login {
-  width: 100%;
+  width: 48px;
+  height: 48px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--line);
   background: var(--paper-2);
   border-radius: 8px;
-  font-size: 12px;
-  font-weight: 650;
-  cursor: pointer
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.social-login img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.social-login:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: var(--paper);
+}
+.auth-choice-icon-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.auth-choice-icon-login svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.social-login:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .auth-choices {
