@@ -27,26 +27,39 @@ export function StoryDetail({ story, onToast }: Props) {
         <figure className="hero-figure">
           <img src={story.imageUrl} alt={story.source?.name} />
           <figcaption>
-            <span style={{ flex: "1 1 180px", minWidth: 0 }}>Representative image of {story.source?.name}</span>
+            <span className='image-caption'>
+              <span>Representative image</span>
+              <span>
+                of{" "} &nbsp;
+                <strong>
+                  <a href={story.url.split('/').slice(0, 3).join('/')} target="_blank" rel="noreferrer" style={{
+                    flex: "0 1 auto",
+                    whiteSpace: "nowrap",
+                  }}>
+                    {story.source?.name}
+                  </a>
+                </strong>
+              </span>
+            </span>
             <a href={story.url} target="_blank" rel="noreferrer" style={{
               flex: "0 1 auto",
               whiteSpace: "nowrap",
             }}>
-              Official {story.source?.name} website ↗
+              Read Source ↗
             </a>
           </figcaption>
         </figure>
-        
+
         {/* <Affected items={story.affected} /> */}
         <AIBrief item={story.description} />
         <Timeline items={story.timeline} />
         <SourceComparison sources={story.source} />
         {/* <Facts confirmed={story.confirmed} interpretation={story.interpretation} /> */}
-        <a href="#ask" className="forum-cta"> 
-          Have a question about this story? 
+        <a href="#ask" className="forum-cta">
+          Have a question about this story?
           <span>Discuss it in forum →</span>
         </a>
-        
+
       </article>
 
       <aside>
