@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "হোম",
+    "india": "ভারত",
+    "world": "বিশ্ব",
+    "login": "লগ ইন",
+    "register": "নিবন্ধন করুন",
+    "logout": "লগ আউট",
+    "settings": "সেটিংস",
+    "search": "খুঁজুন",
+    "searchNews": "খবর খুঁজুন...",
+    "selectLanguage": "ভাষা নির্বাচন করুন",
+    "clearSearch": "অনুসন্ধান মুছুন",
+    "closeSearch": "অনুসন্ধান বন্ধ করুন",
+    "openSearch": "অনুসন্ধান খুলুন",
+    "viewProfile": "প্রোফাইল দেখুন"
+  },
+  "navigation": {
+    "mainNavigation": "প্রধান নেভিগেশন",
+    "forYou": "আপনার জন্য",
+    "categories": "বিভাগ",
+    "pulse5": "পালস 5",
+    "sectors": "ক্ষেত্র",
+    "categoriesList": {
+      "politics": "রাজনীতি",
+      "economy": "অর্থনীতি",
+      "technology": "প্রযুক্তি",
+      "entertainment": "বিনোদন",
+      "sports": "খেলাধুলা",
+      "health": "স্বাস্থ্য"
+    }
+  },
+  "news": {
+    "topStories": "প্রধান খবর",
+    "latestNews": "সর্বশেষ খবর",
+    "readMore": "আরও পড়ুন",
+    "whatHappened": "কী ঘটেছে",
+    "whyItMatters": "এটি কেন গুরুত্বপূর্ণ",
+    "whoIsAffected": "কারা প্রভাবিত হচ্ছেন",
+    "whatNext": "এরপর কী"
+  },
+  "pulse": {
+    "todayTitle": "আজকের গুরুত্বপূর্ণ খবর",
+    "previousStories": "আগের খবর",
+    "nextStories": "পরবর্তী খবর"
+  }
+}

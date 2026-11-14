@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "హోమ్",
+    "india": "భారతదేశం",
+    "world": "ప్రపంచం",
+    "login": "లాగిన్",
+    "register": "నమోదు",
+    "logout": "లాగ్ అవుట్",
+    "settings": "సెట్టింగ్‌లు",
+    "search": "వెతకండి",
+    "searchNews": "వార్తలను వెతకండి...",
+    "selectLanguage": "భాషను ఎంచుకోండి",
+    "clearSearch": "శోధనను తొలగించండి",
+    "closeSearch": "శోధనను మూసివేయండి",
+    "openSearch": "శోధనను తెరవండి",
+    "viewProfile": "ప్రొఫైల్ చూడండి"
+  },
+  "navigation": {
+    "mainNavigation": "ప్రధాన నావిగేషన్",
+    "forYou": "మీ కోసం",
+    "categories": "వర్గాలు",
+    "pulse5": "పల్స్ 5",
+    "sectors": "రంగాలు",
+    "categoriesList": {
+      "politics": "రాజకీయాలు",
+      "economy": "ఆర్థిక వ్యవస్థ",
+      "technology": "సాంకేతికత",
+      "entertainment": "వినోదం",
+      "sports": "క్రీడలు",
+      "health": "ఆరోగ్యం"
+    }
+  },
+  "news": {
+    "topStories": "ముఖ్య వార్తలు",
+    "latestNews": "తాజా వార్తలు",
+    "readMore": "మరింత చదవండి",
+    "whatHappened": "ఏం జరిగింది",
+    "whyItMatters": "ఇది ఎందుకు ముఖ్యం",
+    "whoIsAffected": "ఎవరిపై ప్రభావం పడుతుంది",
+    "whatNext": "తర్వాత ఏమిటి"
+  },
+   "pulse": {
+    "todayTitle": "నేటి ముఖ్యమైన వార్తలు",
+    "previousStories": "మునుపటి వార్తలు",
+    "nextStories": "తదుపరి వార్తలు"
+  }
+}

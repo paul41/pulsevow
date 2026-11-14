@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "முகப்பு",
+    "india": "இந்தியா",
+    "world": "உலகம்",
+    "login": "உள்நுழைய",
+    "register": "பதிவு செய்ய",
+    "logout": "வெளியேறு",
+    "settings": "அமைப்புகள்",
+    "search": "தேடு",
+    "searchNews": "செய்திகளைத் தேடுங்கள்...",
+    "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்",
+    "clearSearch": "தேடலை அழிக்கவும்",
+    "closeSearch": "தேடலை மூடவும்",
+    "openSearch": "தேடலைத் திறக்கவும்",
+    "viewProfile": "சுயவிவரத்தைக் காண்க"
+  },
+  "navigation": {
+    "mainNavigation": "முக்கிய வழிசெலுத்தல்",
+    "forYou": "உங்களுக்காக",
+    "categories": "பிரிவுகள்",
+    "pulse5": "பல்ஸ் 5",
+    "sectors": "துறைகள்",
+    "categoriesList": {
+      "politics": "அரசியல்",
+      "economy": "பொருளாதாரம்",
+      "technology": "தொழில்நுட்பம்",
+      "entertainment": "பொழுதுபோக்கு",
+      "sports": "விளையாட்டு",
+      "health": "சுகாதாரம்"
+    }
+  },
+  "news": {
+    "topStories": "முக்கிய செய்திகள்",
+    "latestNews": "சமீபத்திய செய்திகள்",
+    "readMore": "மேலும் படிக்க",
+    "whatHappened": "என்ன நடந்தது",
+    "whyItMatters": "இது ஏன் முக்கியம்",
+    "whoIsAffected": "யார் பாதிக்கப்படுகிறார்கள்",
+    "whatNext": "அடுத்து என்ன"
+  },
+  "pulse": {
+    "todayTitle": "இன்றைய முக்கியச் செய்திகள்",
+    "previousStories": "முந்தைய செய்திகள்",
+    "nextStories": "அடுத்த செய்திகள்"
+  }
+}

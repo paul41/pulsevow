@@ -1,0 +1,29 @@
+{
+  "common": {
+    "india": "India",
+    "world": "World",
+    "login": "Login",
+    "searchNews": "Search news...",
+    "selectLanguage": "Select language"
+  },
+  "navigation": {
+    "forYou": "For You",
+    "categories": "Categories",
+    "pulse5": "Pulse 5",
+    "sectors": "Sectors",
+    "categoriesList": {
+      "politics": "Politics",
+      "economy": "Economy",
+      "technology": "Technology",
+      "entertainment": "Entertainment",
+      "sports": "Sports",
+      "health": "Health"
+    }
+  },
+  "pulse": {
+    "todayTitle": "Today's Pulse",
+    "previousStories": "Previous stories",
+    "nextStories": "Next stories"
+  }
+
+}

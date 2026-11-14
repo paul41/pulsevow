@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "होम",
+    "india": "भारत",
+    "world": "दुनिया",
+    "login": "लॉग इन",
+    "register": "रजिस्टर करें",
+    "logout": "लॉग आउट",
+    "settings": "सेटिंग्स",
+    "search": "खोजें",
+    "searchNews": "समाचार खोजें...",
+    "selectLanguage": "भाषा चुनें",
+    "clearSearch": "खोज साफ़ करें",
+    "closeSearch": "खोज बंद करें",
+    "openSearch": "खोज खोलें",
+    "viewProfile": "प्रोफ़ाइल देखें"
+  },
+  "navigation": {
+    "mainNavigation": "मुख्य नेविगेशन",
+    "forYou": "आपके लिए",
+    "categories": "श्रेणियाँ",
+    "pulse5": "पल्स 5",
+    "sectors": "क्षेत्र",
+    "categoriesList": {
+      "politics": "राजनीति",
+      "economy": "अर्थव्यवस्था",
+      "technology": "तकनीक",
+      "entertainment": "मनोरंजन",
+      "sports": "खेल",
+      "health": "स्वास्थ्य"
+    }
+  },
+  "news": {
+    "topStories": "प्रमुख समाचार",
+    "latestNews": "ताज़ा समाचार",
+    "readMore": "और पढ़ें",
+    "whatHappened": "क्या हुआ",
+    "whyItMatters": "यह क्यों महत्वपूर्ण है",
+    "whoIsAffected": "कौन प्रभावित है",
+    "whatNext": "आगे क्या"
+  },
+  "pulse": {
+    "todayTitle": "आज की प्रमुख खबरें",
+    "previousStories": "पिछली खबरें",
+    "nextStories": "अगली खबरें"
+  }
+}

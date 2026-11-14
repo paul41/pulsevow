@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { NewsCard } from '../card/News';
 import Arrow from '../common/Arrow';
 import type { NewsArticle } from '../../api/type';
@@ -13,6 +14,8 @@ export function PulseCarousel({
   stories,
   onStorySelect,
 }: PulseCarouselProps) {
+  const { t } = useTranslation();
+  
   const ref = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -77,7 +80,7 @@ export function PulseCarousel({
     <section id="today" className="pulse-shell">
       <div className="section-head">
         <div>
-          <h2>Today's Pulse</h2>
+          <h2>{t('pulse.todayTitle')}</h2>
         </div>
 
         <div className="carousel-controls">
@@ -86,7 +89,7 @@ export function PulseCarousel({
             className="carousel-btn"
             onClick={() => move(-1)}
             disabled={!canScrollLeft}
-            aria-label="Previous stories"
+            aria-label={t('pulse.previousStories')}
           >
             <ChevronLeft size={16} strokeWidth={2.2} aria-hidden="true" />
           </button>
@@ -96,7 +99,7 @@ export function PulseCarousel({
             className="carousel-btn"
             onClick={() => move(1)}
             disabled={!canScrollRight}
-            aria-label="Next stories"
+            aria-label={t('pulse.nextStories')}
           >
             <ChevronRight size={16} strokeWidth={2.2} aria-hidden="true" />
           </button>

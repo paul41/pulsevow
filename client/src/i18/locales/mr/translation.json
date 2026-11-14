@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "मुख्यपृष्ठ",
+    "india": "भारत",
+    "world": "जग",
+    "login": "लॉग इन",
+    "register": "नोंदणी",
+    "logout": "लॉग आउट",
+    "settings": "सेटिंग्ज",
+    "search": "शोधा",
+    "searchNews": "बातम्या शोधा...",
+    "selectLanguage": "भाषा निवडा",
+    "clearSearch": "शोध साफ करा",
+    "closeSearch": "शोध बंद करा",
+    "openSearch": "शोध उघडा",
+    "viewProfile": "प्रोफाइल पहा"
+  },
+  "navigation": {
+    "mainNavigation": "मुख्य नेव्हिगेशन",
+    "forYou": "तुमच्यासाठी",
+    "categories": "विभाग",
+    "pulse5": "पल्स 5",
+    "sectors": "क्षेत्रे",
+    "categoriesList": {
+      "politics": "राजकारण",
+      "economy": "अर्थव्यवस्था",
+      "technology": "तंत्रज्ञान",
+      "entertainment": "मनोरंजन",
+      "sports": "क्रीडा",
+      "health": "आरोग्य"
+    }
+  },
+  "news": {
+    "topStories": "प्रमुख बातम्या",
+    "latestNews": "ताज्या बातम्या",
+    "readMore": "अधिक वाचा",
+    "whatHappened": "काय घडले",
+    "whyItMatters": "हे महत्त्वाचे का आहे",
+    "whoIsAffected": "कोणावर परिणाम होतो",
+    "whatNext": "पुढे काय"
+  },
+  "pulse": {
+    "todayTitle": "आजच्या महत्त्वाच्या बातम्या",
+    "previousStories": "मागील बातम्या",
+    "nextStories": "पुढील बातम्या"
+  }
+}

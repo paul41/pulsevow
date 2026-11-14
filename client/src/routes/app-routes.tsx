@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Login from "../pages/login";
 import Register from "../pages/register";
+import ForYouPage from "../pages/for-you";
 import HomePage from "../pages/home";
 import EventInsightPage from "../pages/insights";
 import  Profile  from "../pages/profile";
@@ -33,6 +34,11 @@ export default function AppRoutes() {
                 path="/register"
                 element={<Register />}
             />
+
+            <Route
+                path="/for-you"
+                element={<ForYouPage />}
+            />   
 
             {/* Individual News / Event Intelligence */}
             <Route

@@ -1,0 +1,48 @@
+
+{
+  "common": {
+    "home": "ಮುಖಪುಟ",
+    "india": "ಭಾರತ",
+    "world": "ವಿಶ್ವ",
+    "login": "ಲಾಗಿನ್",
+    "register": "ನೋಂದಣಿ",
+    "logout": "ಲಾಗ್ ಔಟ್",
+    "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+    "search": "ಹುಡುಕಿ",
+    "searchNews": "ಸುದ್ದಿಗಳನ್ನು ಹುಡುಕಿ...",
+    "selectLanguage": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "clearSearch": "ಹುಡುಕಾಟವನ್ನು ತೆರವುಗೊಳಿಸಿ",
+    "closeSearch": "ಹುಡುಕಾಟವನ್ನು ಮುಚ್ಚಿ",
+    "openSearch": "ಹುಡುಕಾಟವನ್ನು ತೆರೆಯಿರಿ",
+    "viewProfile": "ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ"
+  },
+  "navigation": {
+    "mainNavigation": "ಮುಖ್ಯ ನ್ಯಾವಿಗೇಶನ್",
+    "forYou": "ನಿಮಗಾಗಿ",
+    "categories": "ವರ್ಗಗಳು",
+    "pulse5": "ಪಲ್ಸ್ 5",
+    "sectors": "ವಲಯಗಳು",
+    "categoriesList": {
+      "politics": "ರಾಜಕೀಯ",
+      "economy": "ಆರ್ಥಿಕತೆ",
+      "technology": "ತಂತ್ರಜ್ಞಾನ",
+      "entertainment": "ಮನರಂಜನೆ",
+      "sports": "ಕ್ರೀಡೆ",
+      "health": "ಆರೋಗ್ಯ"
+    }
+  },
+  "news": {
+    "topStories": "ಪ್ರಮುಖ ಸುದ್ದಿಗಳು",
+    "latestNews": "ಇತ್ತೀಚಿನ ಸುದ್ದಿಗಳು",
+    "readMore": "ಮತ್ತಷ್ಟು ಓದಿ",
+    "whatHappened": "ಏನಾಯಿತು",
+    "whyItMatters": "ಇದು ಏಕೆ ಮುಖ್ಯ",
+    "whoIsAffected": "ಯಾರು ಪ್ರಭಾವಿತರಾಗಿದ್ದಾರೆ",
+    "whatNext": "ಮುಂದೇನು"
+  },
+  "pulse": {
+    "todayTitle": "ಇಂದಿನ ಪ್ರಮುಖ ಸುದ್ದಿಗಳು",
+    "previousStories": "ಹಿಂದಿನ ಸುದ್ದಿಗಳು",
+    "nextStories": "ಮುಂದಿನ ಸುದ್ದಿಗಳು"
+  }
+}

@@ -1,39 +1,59 @@
+
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import { useAuth } from "../context/authContext";
 import "../styles/navbar.css";
 import type { Props } from "./type";
 
 const categories = [
-  { label: "Politics", value: "politics" },
-  { label: "Economy", value: "economy" },
-  { label: "Technology", value: "tech" },
-  { label: "Entertainment", value: "entertainment" },
-  { label: "Sports", value: "sports" },
-  { label: "Health", value: "health" },
+  { key: "politics", value: "politics" },
+  { key: "economy", value: "economy" },
+  { key: "technology", value: "tech" },
+  { key: "entertainment", value: "entertainment" },
+  { key: "sports", value: "sports" },
+  { key: "health", value: "health" },
 ];
 
-export function Navbar({
-  language,
-  onLanguageChange,
-  onPodcastClick,
-}: Props) {
+const languages = [
+  { code: "en", label: "English" },
+  { code: "hi", label: "हिन्दी" },
+  { code: "bn", label: "বাংলা" },
+  { code: "ta", label: "தமிழ்" },
+  { code: "te", label: "తెలుగు" },
+  { code: "mr", label: "मराठी" },
+  { code: "kn", label: "ಕನ್ನಡ" },
+];
+
+export function Navbar({ onPodcastClick }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryOpen, setCategoryOpen] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
+
+  const language = i18n.resolvedLanguage || "en";
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
 
+  // Focus search input when opened
   useEffect(() => {
     if (searchOpen) {
       searchInputRef.current?.focus();
     }
   }, [searchOpen]);
 
+  // Update document language
+  useEffect(() => {
+    document.documentElement.lang =
+      i18n.resolvedLanguage || "en";
+  }, [i18n.resolvedLanguage]);
+
+  // Close dropdowns on Escape or outside click
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -57,16 +77,28 @@ export function Navbar({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener(
+        "pointerdown",
+        handlePointerDown
+      );
     };
   }, []);
 
+  // Close search
   const closeSearch = () => {
     setSearchOpen(false);
     setSearchQuery("");
   };
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  // Change application language
+  const handleLanguageChange = (languageCode: string) => {
+    void i18n.changeLanguage(languageCode || "en");
+  };
+
+  // Search submission
+  const handleSearch = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     const query = searchQuery.trim();
@@ -80,6 +112,7 @@ export function Navbar({
     closeSearch();
   };
 
+  // Generate user initials
   const getUserInitials = () => {
     const name = user?.name?.trim();
 
@@ -95,23 +128,28 @@ export function Navbar({
 
   return (
     <header className="topnav">
+      {/* Brand */}
       <Link
         className="brand"
         to="/"
         aria-label="PulseVow home"
       >
-        <div className="mark" aria-hidden="true">P</div>
+        <div className="mark" aria-hidden="true">
+          P
+        </div>
 
         <div className="brand-copy">
           <span className="name">PulseVow</span>
-          <span className="tag">Beyond News. Intel Insight.</span>
+          <span className="tag">
+            Beyond News. Intel Insight.
+          </span>
         </div>
       </Link>
 
-
+      {/* Main Navigation */}
       <nav
         className="sections"
-        aria-label="Main navigation"
+        aria-label={t("navigation.mainNavigation")}
         style={{
           display: "flex",
           alignItems: "center",
@@ -121,24 +159,33 @@ export function Navbar({
           position: "relative",
         }}
       >
+        {/* India */}
         <Link
           to="/?region=india"
           className="nav-item"
-          style={{ flexShrink: 0, whiteSpace: "nowrap" }}
+          style={{
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+          }}
         >
-          India
+          {t("common.india")}
         </Link>
 
+        {/* World */}
         <a
           href="#world"
           className="nav-item"
-          style={{ flexShrink: 0, whiteSpace: "nowrap" }}
+          style={{
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+          }}
         >
-          World
+          {t("common.world")}
         </a>
 
+        {/* For You */}
         <Link
-          to="/?feed=for-you"
+          to="/for-you"
           className="nav-item nav-for-you"
           style={{
             display: "inline-flex",
@@ -150,9 +197,10 @@ export function Navbar({
           }}
         >
           <span aria-hidden="true">✦</span>
-          For You
+          {t("navigation.forYou")}
         </Link>
 
+        {/* Categories Dropdown */}
         <div
           className="dropdown-category nav-item"
           ref={categoryRef}
@@ -168,7 +216,9 @@ export function Navbar({
             className="dropbtn"
             aria-expanded={categoryOpen}
             aria-haspopup="true"
-            onClick={() => setCategoryOpen((open) => !open)}
+            onClick={() =>
+              setCategoryOpen((open) => !open)
+            }
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -176,8 +226,12 @@ export function Navbar({
               whiteSpace: "nowrap",
             }}
           >
-            Categories
-            <span className="dropdown-chevron" aria-hidden="true">
+            {t("navigation.categories")}
+
+            <span
+              className="dropdown-chevron"
+              aria-hidden="true"
+            >
               ▾
             </span>
           </button>
@@ -201,13 +255,16 @@ export function Navbar({
                   )}`}
                   onClick={() => setCategoryOpen(false)}
                 >
-                  {category.label}
+                  {t(
+                    `navigation.categoriesList.${category.key}`
+                  )}
                 </Link>
               ))}
             </div>
           )}
         </div>
 
+        {/* Podcast */}
         <button
           type="button"
           className="nav-item nav-action"
@@ -220,10 +277,14 @@ export function Navbar({
             whiteSpace: "nowrap",
           }}
         >
-          <i className="fas fa-headphones" aria-hidden="true" />
-          <span>Pulse 5</span>
+          <i
+            className="fas fa-headphones"
+            aria-hidden="true"
+          />
+          <span>{t("navigation.pulse5")}</span>
         </button>
 
+        {/* Sector Intelligence */}
         <Link
           to="/sector-intelligence"
           className="nav-item nav-sectors"
@@ -235,16 +296,18 @@ export function Navbar({
             whiteSpace: "nowrap",
           }}
         >
-          Sectors
+          {t("navigation.sectors")}
           <span className="pro-badge">PRO</span>
         </Link>
       </nav>
 
-
+      {/* Right Navigation */}
       <div className="nav-right">
+        {/* Search */}
         <div
-          className={`search-wrapper ${searchOpen ? "search-open" : ""
-            }`}
+          className={`search-wrapper ${
+            searchOpen ? "search-open" : ""
+          }`}
         >
           {searchOpen && (
             <form
@@ -252,7 +315,10 @@ export function Navbar({
               role="search"
               onSubmit={handleSearch}
             >
-              <span className="search-icon" aria-hidden="true">
+              <span
+                className="search-icon"
+                aria-hidden="true"
+              >
                 ⌕
               </span>
 
@@ -262,15 +328,15 @@ export function Navbar({
                 onChange={(event) =>
                   setSearchQuery(event.target.value)
                 }
-                placeholder="Search news..."
-                aria-label="Search news"
+                placeholder={t("common.searchNews")}
+                aria-label={t("common.searchNews")}
               />
 
               {searchQuery && (
                 <button
                   type="button"
                   className="search-clear"
-                  aria-label="Clear search"
+                  aria-label={t("common.clearSearch")}
                   onClick={() => {
                     setSearchQuery("");
                     searchInputRef.current?.focus();
@@ -284,9 +350,14 @@ export function Navbar({
 
           <button
             type="button"
-            className={`searchbtn ${searchOpen ? "active" : ""
-              }`}
-            aria-label={searchOpen ? "Close search" : "Open search"}
+            className={`searchbtn ${
+              searchOpen ? "active" : ""
+            }`}
+            aria-label={
+              searchOpen
+                ? t("common.closeSearch")
+                : t("common.openSearch")
+            }
             aria-expanded={searchOpen}
             onClick={() => {
               if (searchOpen) {
@@ -300,37 +371,40 @@ export function Navbar({
           </button>
         </div>
 
+        {/* Language Selector */}
         <select
           className="lang"
           value={language}
           onChange={(event) =>
-            onLanguageChange(event.target.value)
+            handleLanguageChange(event.target.value)
           }
           name="language"
-          aria-label="Select language"
+          aria-label={t("common.selectLanguage")}
         >
-          <option value="English">English</option>
-          <option value="हिन्दी">हिन्दी</option>
-          <option value="বাংলা">বাংলা</option>
-          <option value="தமிழ்">தமிழ்</option>
-          <option value="తెలుగు">తెలుగు</option>
-          <option value="मराठी">मराठी</option>
-          <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
+          {languages.map((item) => (
+            <option
+              key={item.code}
+              value={item.code}
+            >
+              {item.label}
+            </option>
+          ))}
         </select>
 
+        {/* Authentication */}
         {user ? (
           <button
             type="button"
             className="avatar"
-            title="View profile"
-            aria-label="View profile"
+            title={t("common.viewProfile")}
+            aria-label={t("common.viewProfile")}
             onClick={() => navigate("/my-profile")}
           >
             {getUserInitials()}
           </button>
         ) : (
           <Link to="/login" className="login-btn">
-            Login
+            {t("common.login")}
           </Link>
         )}
       </div>
