@@ -31,7 +31,60 @@ Spam             0
 Factual risk    31
 Duplicate       87
 
-Add "Fact vs Opinion"
+Two articles can have a similarity of 90% and still describe different events.
+
+Example:
+- RBI cuts repo rate by 25 basis points.
+- RBI announces new banking regulations.
+Both discuss RBI and monetary policy, but they are different events.
+
+I recommend combining four signals.
+Signal	Purpose
+Semantic similarity	Understand meaning
+Entity overlap	Match people, organizations, companies
+Location overlap	Match geographical context
+Temporal relevance	Determine whether the reports concern the same occurrence
+
+Use an initial weighted score:
+\[
+S = 0.45E + 0.25N + 0.15L + 0.15T
+\]
+
+Where:
+- E = embedding similarity
+- N = entity overlap
+- L = location overlap
+- T = temporal relevance
+All components should be normalized between 0 and 1.
+
+These weights are starting hypotheses, not validated accuracy figures. You'll need to calibrate them against manually labelled PulseVow articles.
+
+
+flowchart TD
+    A["New RSS Article"] --> B["Generate Embedding"]
+    B --> C["Retrieve Top 30 Candidates"]
+    C --> D["Filter by Time, Entities and Location"]
+    D --> E["Select Top 5-10 Candidates"]
+    E --> F["LLM Event Verification"]
+    F --> G{"Decision"}
+    G -->|SAME_EVENT| H["Assign Existing NewsStory"]
+    G -->|RELATED_EVENT| I["Create New NewsStory"]
+    I --> J["Link Related NewsStory"]
+    G -->|NEW_EVENT| K["Create New NewsStory"]
+    H --> L["Update Event Intelligence"]
+    J --> L
+    K --> L
+
+
+Priority	Component	Action
+1	EmbeddingService	Improve embedding input
+2	EmbeddingRepository	Implement pgvector similarity search
+3	EventCandidateService	Retrieve and rank candidates
+4	EventMatchingService	LLM verification
+5	NewsStoryRepository	Create, update and link events
+6	BullMQ	Integrate asynchronous processing
+7	Evaluation	Test against labelled news pairs
+
 
 PulseVow 5
 
