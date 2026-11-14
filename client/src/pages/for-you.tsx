@@ -219,7 +219,7 @@ export default function ForYouPage() {
     <div className="pv-page">
       <header className="pv-top">
         <div className="pv-wrap pv-bar">
-          <a className="pv-logo" href="#">PulseVow<i /></a>
+          <a className="pv-logo" href="/">PulseVow<i /></a>
           <span className="pv-spacer" />
           <select className="pv-role-select" aria-label="Browse as" value={role} onChange={(event) => setRole(event.target.value as Role)}>
             {Object.entries(ROLE_CONFIG).map(([key, value]) => <option key={key} value={key}>{value.label}</option>)}
