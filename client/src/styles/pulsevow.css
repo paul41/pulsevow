@@ -554,6 +554,24 @@ h1.story-title {
   font-weight: 600
 }
 
+/* For Mobile and PC view of hero figure  */
+.image-caption {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .image-caption {
+    display: block;
+  }
+
+  .image-caption > span {
+    display: block;
+  }
+}
+
 section.block {
   margin-bottom: 31px
 }

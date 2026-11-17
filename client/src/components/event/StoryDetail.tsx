@@ -30,12 +30,13 @@ export function StoryDetail({ story, onToast }: Props) {
             <span className='image-caption'>
               <span>Representative image</span>
               <span>
-                of{" "} &nbsp;
+                of{" "}
                 <strong>
-                  <a href={story.url.split('/').slice(0, 3).join('/')} target="_blank" rel="noreferrer" style={{
-                    flex: "0 1 auto",
-                    whiteSpace: "nowrap",
-                  }}>
+                  <a href={story.url.split('/').slice(0, 3).join('/')} target="_blank" rel="noreferrer"
+                    style={{
+                      flex: "0 1 auto",
+                      whiteSpace: "nowrap",
+                    }}>
                     {story.source?.name}
                   </a>
                 </strong>
@@ -59,7 +60,7 @@ export function StoryDetail({ story, onToast }: Props) {
           Have a question about this story?
           <span>Discuss it in forum →</span>
         </a>
-        
+
       </article>
 
       <aside>
