@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Eye, EyeClosed } from "lucide-react";
 import { useAuthApi } from "../api/authApi";
 import { useAuth } from "../context/authContext";
 import "../styles/pulsevow.css";
@@ -16,6 +17,8 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -261,7 +264,7 @@ export default function Register() {
 
                   <div className="password-field">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) =>
                         setPassword(e.target.value)
@@ -270,6 +273,19 @@ export default function Register() {
                       autoComplete="new-password"
                       disabled={loading}
                     />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      disabled={loading}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? (
+                        <EyeClosed size={16} aria-hidden="true" />
+                      ) : (
+                        <Eye size={16} aria-hidden="true" />
+                      )}
+                    </button>
                   </div>
                 </label>
 
@@ -278,7 +294,7 @@ export default function Register() {
 
                   <div className="password-field">
                     <input
-                      type="password"
+                      type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) =>
                         setConfirmPassword(e.target.value)
@@ -287,6 +303,19 @@ export default function Register() {
                       autoComplete="new-password"
                       disabled={loading}
                     />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      disabled={loading}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeClosed size={16} aria-hidden="true" />
+                      ) : (
+                        <Eye size={16} aria-hidden="true" />
+                      )}
+                    </button>
                   </div>
                 </label>
 
