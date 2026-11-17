@@ -1,25 +1,26 @@
 // components/common/Newsletter.tsx
 import { useState } from "react";
-import { NEWSLETTER_HEADINGS, NEWSLETTER_DESCRIPTION, SIDEBAR_NOTE } from "../../constants/newsletter-text.js";
+import { useTranslation } from "react-i18next";
 import type { NewsletterProps } from "./types.js";
 
 export function Newsletter({ onToast }: NewsletterProps) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
 
   const submit = () => {
     if (!email.trim()) {
-      onToast("Enter your email address to subscribe.");
+      onToast(t("newsletter.toastEmpty"));
       return;
     }
-    onToast("Thanks. Your PulseVow Brief subscription is ready.");
+    onToast(t("newsletter.toastSuccess"));
     setEmail("");
   };
 
   return (
     <div className="sidebar-card newsletter-card">
-      <h3>{NEWSLETTER_HEADINGS}</h3>
+      <h3>{t("newsletter.heading")}</h3>
       <p className="sidebar-note">
-        {NEWSLETTER_DESCRIPTION}
+        {t("newsletter.description")}
       </p>
 
       <div className="newsletter-form">
@@ -27,13 +28,13 @@ export function Newsletter({ onToast }: NewsletterProps) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your email address"
+          placeholder={t("newsletter.placeholder")}
         />
-        <button onClick={submit}>Subscribe</button>
+        <button onClick={submit}>{t("newsletter.subscribe")}</button>
       </div>
 
       <div className="sidebar-note newsletter-note">
-        {SIDEBAR_NOTE}
+        {t("newsletter.note")}
       </div>
     </div>
   );

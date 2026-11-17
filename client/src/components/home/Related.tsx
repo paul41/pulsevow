@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import type { RelatedArticle } from "./types";
 
 export function RelatedArticles() {
+  const { t } = useTranslation();
+
   const articles: RelatedArticle[] = [
     {
       image:
@@ -24,7 +27,7 @@ export function RelatedArticles() {
 
   return (
     <div className="sidebar-card">
-      <h3>Related articles</h3>
+      <h3>{t("related.title")}</h3>
       <div className="related-list">
         {articles.map(({ image, title, text }) => (
           <a className="related-item" href="#story" key={title}>

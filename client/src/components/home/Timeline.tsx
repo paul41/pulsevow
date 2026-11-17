@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { Block } from "../common/Block";
 import type { TimelineProps } from "./types";
 
 export function Timeline({ items }: TimelineProps) {
+  const { t } = useTranslation();
   console.log(items);
   
     const timelineItems = [
@@ -11,7 +13,7 @@ export function Timeline({ items }: TimelineProps) {
       ['4 months ago', 'The central bank began the current easing cycle with its first rate reduction in nearly two years.'],
     ];
   return (
-    <Block id="timeline" title="The story so far" hint="How we got here">
+    <Block id="timeline" title={t("timeline.title")} hint={t("timeline.hint")}>
       <div className="timeline">
         {timelineItems.map(([date, text]) => (
           <div className="tl-item" key={date}>
