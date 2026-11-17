@@ -13,7 +13,10 @@
     "clearSearch": "खोज साफ़ करें",
     "closeSearch": "खोज बंद करें",
     "openSearch": "खोज खोलें",
-    "viewProfile": "प्रोफ़ाइल देखें"
+    "viewProfile": "प्रोफ़ाइल देखें",
+    "close": "बंद करें",
+    "tagline": "बियॉन्ड न्यूज़. इंटेल इनसाइट.",
+    "homeAriaLabel": "पल्सवो होम"
   },
   "navigation": {
     "mainNavigation": "मुख्य नेविगेशन",
@@ -21,6 +24,7 @@
     "categories": "श्रेणियाँ",
     "pulse5": "पल्स 5",
     "sectors": "क्षेत्र",
+    "proBadge": "प्रो",
     "categoriesList": {
       "politics": "राजनीति",
       "economy": "अर्थव्यवस्था",
@@ -42,6 +46,37 @@
   "pulse": {
     "todayTitle": "आज की प्रमुख खबरें",
     "previousStories": "पिछली खबरें",
-    "nextStories": "अगली खबरें"
+    "nextStories": "अगली खबरें",
+    "playPodcast": "पॉडकास्ट चलाएं",
+    "pausePodcast": "पॉडकास्ट रोकें",
+    "dockTitle": "आज का पल्सवो 5",
+    "dockSubtitle": "5 महत्वपूर्ण खबरें · 4:51 · आरबीआई ब्याज दर कटौती अगली खबर है"
+  },
+  "footer": {
+    "description": "पल्सवो एक एआई-फर्स्ट समाचार इंटेलिजेंस प्लेटफॉर्म है जो एआई-संचालित सारांश, प्रभाव विश्लेषण, स्रोत तुलना, समयसीमा और व्यक्तिगत अनुशंसाओं के माध्यम से ताज़ा समाचारों को व्यावहारिक अंतर्दृष्टि में बदलता है।",
+    "getInTouch": "संपर्क करें",
+    "aiMonitoring": "एआई 24×7 समाचार निगरानी",
+    "followUs": "हमें फॉलो करें",
+    "aiFeatures": "एआई सुविधाएं",
+    "featureBriefs": "एआई-संचालित समाचार सारांश और अंतर्दृष्टि",
+    "featureComparison": "स्रोत तुलना",
+    "featureTimeline": "समयसीमा और घटना ट्रैकिंग",
+    "featureCommunity": "एआई समुदाय और चर्चा",
+    "featureSector": "क्षेत्रीय इंटेलिजेंस और बाज़ार विश्लेषण",
+    "featurePersonalized": "व्यक्तिगत समाचार इंटेलिजेंस",
+    "exploreTopics": "विषय देखें",
+    "topics": {
+      "business": "व्यापार",
+      "markets": "बाज़ार",
+      "ai": "एआई",
+      "startups": "स्टार्टअप्स",
+      "science": "विज्ञान",
+      "healthcare": "स्वास्थ्य सेवा",
+      "climate": "जलवायु",
+      "crypto": "क्रिप्टो",
+      "lifestyle": "जीवनशैली"
+    },
+    "allRightsReserved": "All Rights Reserved.",
+    "platformTagline": "AI-Powered News Intelligence platform."
   }
 }

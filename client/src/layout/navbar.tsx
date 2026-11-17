@@ -26,7 +26,7 @@ const languages = [
   { code: "kn", label: "ಕನ್ನಡ" },
 ];
 
-export function Navbar({ onPodcastClick }: Props) {
+export function Navbar({ onPodcastClick, onLanguageChange }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -92,7 +92,9 @@ export function Navbar({ onPodcastClick }: Props) {
 
   // Change application language
   const handleLanguageChange = (languageCode: string) => {
-    void i18n.changeLanguage(languageCode || "en");
+    const code = languageCode || "en";
+    void i18n.changeLanguage(code);
+    onLanguageChange?.(code);
   };
 
   // Search submission
@@ -132,7 +134,7 @@ export function Navbar({ onPodcastClick }: Props) {
       <Link
         className="brand"
         to="/"
-        aria-label="PulseVow home"
+        aria-label={t("common.homeAriaLabel")}
       >
         <div className="mark" aria-hidden="true">
           P
@@ -141,7 +143,7 @@ export function Navbar({ onPodcastClick }: Props) {
         <div className="brand-copy">
           <span className="name">PulseVow</span>
           <span className="tag">
-            Beyond News. Intel Insight.
+            {t("common.tagline")}
           </span>
         </div>
       </Link>
@@ -297,7 +299,7 @@ export function Navbar({ onPodcastClick }: Props) {
           }}
         >
           {t("navigation.sectors")}
-          <span className="pro-badge">PRO</span>
+          <span className="pro-badge">{t("navigation.proBadge")}</span>
         </Link>
       </nav>
 

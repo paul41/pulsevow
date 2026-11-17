@@ -1,4 +1,3 @@
-
 {
   "common": {
     "home": "ಮುಖಪುಟ",
@@ -14,7 +13,10 @@
     "clearSearch": "ಹುಡುಕಾಟವನ್ನು ತೆರವುಗೊಳಿಸಿ",
     "closeSearch": "ಹುಡುಕಾಟವನ್ನು ಮುಚ್ಚಿ",
     "openSearch": "ಹುಡುಕಾಟವನ್ನು ತೆರೆಯಿರಿ",
-    "viewProfile": "ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ"
+    "viewProfile": "ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ",
+    "close": "ಮುಚ್ಚಿ",
+    "tagline": "ಬಿಯಾಂಡ್ ನ್ಯೂಸ್. ಇಂಟೆಲ್ ಇನ್‌ಸೈಟ್.",
+    "homeAriaLabel": "ಪಲ್ಸ್‌ವೋ ಮುಖಪುಟ"
   },
   "navigation": {
     "mainNavigation": "ಮುಖ್ಯ ನ್ಯಾವಿಗೇಶನ್",
@@ -22,6 +24,7 @@
     "categories": "ವರ್ಗಗಳು",
     "pulse5": "ಪಲ್ಸ್ 5",
     "sectors": "ವಲಯಗಳು",
+    "proBadge": "ಪ್ರೊ",
     "categoriesList": {
       "politics": "ರಾಜಕೀಯ",
       "economy": "ಆರ್ಥಿಕತೆ",
@@ -43,6 +46,37 @@
   "pulse": {
     "todayTitle": "ಇಂದಿನ ಪ್ರಮುಖ ಸುದ್ದಿಗಳು",
     "previousStories": "ಹಿಂದಿನ ಸುದ್ದಿಗಳು",
-    "nextStories": "ಮುಂದಿನ ಸುದ್ದಿಗಳು"
+    "nextStories": "ಮುಂದಿನ ಸುದ್ದಿಗಳು",
+    "playPodcast": "ಪಾಡ್‌ಕ್ಯಾಸ್ಟ್ ಪ್ಲೇ ಮಾಡಿ",
+    "pausePodcast": "ಪಾಡ್‌ಕ್ಯಾಸ್ಟ್ ವಿರಾಮಗೊಳಿಸಿ",
+    "dockTitle": "ಇಂದಿನ ಪಲ್ಸ್‌ವೋ 5",
+    "dockSubtitle": "5 ಪ್ರಮುಖ ಸುದ್ದಿಗಳು · 4:51 · ಆರ್‌ಬಿಐ ದರ ಕಡಿತ ಮುಂದಿನ ಸುದ್ದಿ"
+  },
+  "footer": {
+    "description": "ಪಲ್ಸ್‌ವೋ ಎನ್ನುವುದು ಎಐ-ಮೊದಲ ಸುದ್ದಿ ಇಂಟೆಲಿಜೆನ್ಸ್ ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ಆಗಿದ್ದು, ಇದು ಎಐ ಸಾರಾಂಶಗಳು, ಪ್ರಭಾವ ವಿಶ್ಲೇಷಣೆ, ಮೂಲ ಹೋಲಿಕೆ, ಕಾಲಮಿತಿಗಳು ಮತ್ತು ವೈಯಕ್ತೀಕರಿಸಿದ ಶಿಫಾರಸುಗಳ ಮೂಲಕ ಪ್ರಮುಖ ಸುದ್ದಿಗಳನ್ನು ಉಪಯುಕ್ತ ಒಳನೋಟಗಳಾಗಿ ಪರಿವರ್ತಿಸುತ್ತದೆ.",
+    "getInTouch": "ಸಂಪರ್ಕದಲ್ಲಿರಿ",
+    "aiMonitoring": "ಎಐ 24×7 ಸುದ್ದಿ ಮೇಲ್ವಿಚಾರಣೆ",
+    "followUs": "ನಮ್ಮನ್ನು ಅನುಸರಿಸಿ",
+    "aiFeatures": "ಎಐ ವೈಶಿಷ್ಟ್ಯಗಳು",
+    "featureBriefs": "ಎಐ ಸುದ್ದಿ ಸಂಕ್ಷಿಪ್ತ ವಿವರ ಮತ್ತು ಒಳನೋಟಗಳು",
+    "featureComparison": "ಮೂಲ ಹೋಲಿಕೆ",
+    "featureTimeline": "ಕಾಲಮಿತಿ ಮತ್ತು ಘಟನೆ ಟ್ರ್ಯಾಕಿಂಗ್",
+    "featureCommunity": "ಎಐ ಸಮುದಾಯ ಮತ್ತು ಚರ್ಚೆ",
+    "featureSector": "ವಲಯದ ಇಂಟೆಲಿಜೆನ್ಸ್ ಮತ್ತು ಮಾರುಕಟ್ಟೆ ವಿಶ್ಲೇಷಣೆ",
+    "featurePersonalized": "ವೈಯಕ್ತೀಕರಿಸಿದ ಸುದ್ದಿ ಇಂಟೆಲಿಜೆನ್ಸ್",
+    "exploreTopics": "ವಿಷಯಗಳನ್ನು ಅನ್ವೇಷಿಸಿ",
+    "topics": {
+      "business": "ವ್ಯಾಪಾರ",
+      "markets": "ಮಾರುಕಟ್ಟೆಗಳು",
+      "ai": "ಎಐ",
+      "startups": "ಸ್ಟಾರ್ಟ್‌ಅಪ್‌ಗಳು",
+      "science": "ವಿಜ್ಞಾನ",
+      "healthcare": "ಆರೋಗ್ಯ ರಕ್ಷಣೆ",
+      "climate": "ಹವಾಮಾನ",
+      "crypto": "ಕ್ರಿಪ್ಟೋ",
+      "lifestyle": "ಜೀವನಶೈಲಿ"
+    },
+    "allRightsReserved": "All Rights Reserved.",
+    "platformTagline": "AI-Powered News Intelligence platform."
   }
 }

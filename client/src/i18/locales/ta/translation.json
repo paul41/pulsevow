@@ -13,7 +13,10 @@
     "clearSearch": "தேடலை அழிக்கவும்",
     "closeSearch": "தேடலை மூடவும்",
     "openSearch": "தேடலைத் திறக்கவும்",
-    "viewProfile": "சுயவிவரத்தைக் காண்க"
+    "viewProfile": "சுயவிவரத்தைக் காண்க",
+    "close": "மூடு",
+    "tagline": "பியாண்ட் நியூஸ். இன்டெல் இன்சைட்.",
+    "homeAriaLabel": "பல்ஸ்வோ முகப்பு"
   },
   "navigation": {
     "mainNavigation": "முக்கிய வழிசெலுத்தல்",
@@ -21,6 +24,7 @@
     "categories": "பிரிவுகள்",
     "pulse5": "பல்ஸ் 5",
     "sectors": "துறைகள்",
+    "proBadge": "ப்ரோ",
     "categoriesList": {
       "politics": "அரசியல்",
       "economy": "பொருளாதாரம்",
@@ -42,6 +46,37 @@
   "pulse": {
     "todayTitle": "இன்றைய முக்கியச் செய்திகள்",
     "previousStories": "முந்தைய செய்திகள்",
-    "nextStories": "அடுத்த செய்திகள்"
+    "nextStories": "அடுத்த செய்திகள்",
+    "playPodcast": "பாட்காஸ்ட்டை இயக்கு",
+    "pausePodcast": "பாட்காஸ்ட்டை இடைநிறுத்து",
+    "dockTitle": "இன்றைய பல்ஸ்வோ 5",
+    "dockSubtitle": "5 முக்கியமான செய்திகள் · 4:51 · ரிசர்வ் வங்கி வட்டி குறைப்பு அடுத்த செய்தி"
+  },
+  "footer": {
+    "description": "பல்ஸ்வோ என்பது ஏஐ-சார்ந்த செய்தி நுண்ணறிவு தளமாகும், இது ஏஐ-இயங்கும் சுருக்கங்கள், தாக்க பகுப்பாய்வு, மூல ஒப்பீடு, காலவரிசைகள் மற்றும் தனிப்பயனாக்கப்பட்ட பரிந்துரைகள் மூலம் முக்கிய செய்திகளை செயல்படுத்தக்கூடிய நுண்ணறிவுகளாக மாற்றுகிறது.",
+    "getInTouch": "தொடர்பில் இருங்கள்",
+    "aiMonitoring": "ஏஐ 24×7 செய்தி கண்காணிப்பு",
+    "followUs": "எங்களை பின்தொடரவும்",
+    "aiFeatures": "ஏஐ அம்சங்கள்",
+    "featureBriefs": "ஏஐ-செய்தி சுருக்கங்கள் & நுண்ணறிவுகள்",
+    "featureComparison": "மூல ஒப்பீடு",
+    "featureTimeline": "காலவரிசை & நிகழ்வு கண்காணிப்பு",
+    "featureCommunity": "ஏஐ சமூகம் & கலந்துரையாடல்",
+    "featureSector": "துறை நுண்ணறிவு & சந்தை பகுப்பாய்வு",
+    "featurePersonalized": "தனிப்பயனாக்கப்பட்ட செய்தி நுண்ணறிவு",
+    "exploreTopics": "தலைப்புகளை ஆராயுங்கள்",
+    "topics": {
+      "business": "வணிகம்",
+      "markets": "சந்தைகள்",
+      "ai": "ஏஐ",
+      "startups": "தொடக்க நிறுவனங்கள்",
+      "science": "அறிவியல்",
+      "healthcare": "சுகாதாரம்",
+      "climate": "காலநிலை",
+      "crypto": "கிரிப்டோ",
+      "lifestyle": "வாழ்க்கை முறை"
+    },
+    "allRightsReserved": "All Rights Reserved.",
+    "platformTagline": "AI-Powered News Intelligence platform."
   }
 }

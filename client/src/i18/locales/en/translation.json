@@ -1,16 +1,30 @@
 {
   "common": {
+    "home": "Home",
     "india": "India",
     "world": "World",
     "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "settings": "Settings",
+    "search": "Search",
     "searchNews": "Search news...",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "clearSearch": "Clear search",
+    "closeSearch": "Close search",
+    "openSearch": "Open search",
+    "viewProfile": "View profile",
+    "close": "Close",
+    "tagline": "Beyond News. Intel Insight.",
+    "homeAriaLabel": "PulseVow home"
   },
   "navigation": {
+    "mainNavigation": "Main navigation",
     "forYou": "For You",
     "categories": "Categories",
     "pulse5": "Pulse 5",
     "sectors": "Sectors",
+    "proBadge": "PRO",
     "categoriesList": {
       "politics": "Politics",
       "economy": "Economy",
@@ -20,10 +34,49 @@
       "health": "Health"
     }
   },
+  "news": {
+    "topStories": "Top Stories",
+    "latestNews": "Latest News",
+    "readMore": "Read more",
+    "whatHappened": "What happened",
+    "whyItMatters": "Why it matters",
+    "whoIsAffected": "Who is affected",
+    "whatNext": "What next"
+  },
   "pulse": {
     "todayTitle": "Today's Pulse",
     "previousStories": "Previous stories",
-    "nextStories": "Next stories"
+    "nextStories": "Next stories",
+    "playPodcast": "Play podcast",
+    "pausePodcast": "Pause podcast",
+    "dockTitle": "Today's PulseVow 5",
+    "dockSubtitle": "5 important stories · 4:51 · RBI rate cut is playing next"
+  },
+  "footer": {
+    "description": "PulseVow is an AI-first news intelligence platform that transforms breaking news into actionable insights through AI-powered summaries, impact analysis, source comparison, timelines and personalized recommendations.",
+    "getInTouch": "Get In Touch",
+    "aiMonitoring": "AI Monitoring News 24×7",
+    "followUs": "Follow Us",
+    "aiFeatures": "AI Features",
+    "featureBriefs": "AI-Powered News Briefs & Insights",
+    "featureComparison": "Source Comparison",
+    "featureTimeline": "Timeline & Event Tracking",
+    "featureCommunity": "AI Community & Discussion",
+    "featureSector": "Sector Intelligence & Market Analysis",
+    "featurePersonalized": "Personalized News Intelligence",
+    "exploreTopics": "Explore Topics",
+    "topics": {
+      "business": "Business",
+      "markets": "Markets",
+      "ai": "AI",
+      "startups": "Startups",
+      "science": "Science",
+      "healthcare": "Healthcare",
+      "climate": "Climate",
+      "crypto": "Crypto",
+      "lifestyle": "Lifestyle"
+    },
+    "allRightsReserved": "All Rights Reserved.",
+    "platformTagline": "AI-Powered News Intelligence platform."
   }
-
 }

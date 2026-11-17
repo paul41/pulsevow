@@ -13,7 +13,10 @@
     "clearSearch": "శోధనను తొలగించండి",
     "closeSearch": "శోధనను మూసివేయండి",
     "openSearch": "శోధనను తెరవండి",
-    "viewProfile": "ప్రొఫైల్ చూడండి"
+    "viewProfile": "ప్రొఫైల్ చూడండి",
+    "close": "మూసివేయి",
+    "tagline": "బియాండ్ న్యూస్. ఇంటెల్ ఇన్‌సైట్.",
+    "homeAriaLabel": "పల్స్‌వో హోమ్"
   },
   "navigation": {
     "mainNavigation": "ప్రధాన నావిగేషన్",
@@ -21,6 +24,7 @@
     "categories": "వర్గాలు",
     "pulse5": "పల్స్ 5",
     "sectors": "రంగాలు",
+    "proBadge": "ప్రో",
     "categoriesList": {
       "politics": "రాజకీయాలు",
       "economy": "ఆర్థిక వ్యవస్థ",
@@ -39,9 +43,40 @@
     "whoIsAffected": "ఎవరిపై ప్రభావం పడుతుంది",
     "whatNext": "తర్వాత ఏమిటి"
   },
-   "pulse": {
+  "pulse": {
     "todayTitle": "నేటి ముఖ్యమైన వార్తలు",
     "previousStories": "మునుపటి వార్తలు",
-    "nextStories": "తదుపరి వార్తలు"
+    "nextStories": "తదుపరి వార్తలు",
+    "playPodcast": "పాడ్‌కాస్ట్ ప్లే చేయండి",
+    "pausePodcast": "పాడ్‌కాస్ట్ పాజ్ చేయండి",
+    "dockTitle": "నేటి పల్స్‌వో 5",
+    "dockSubtitle": "5 ముఖ్యమైన వార్తలు · 4:51 · ఆర్‌బీఐ రేట్ల తగ్గింపు తదుపరి ప్లే అవుతోంది"
+  },
+  "footer": {
+    "description": "పల్స్‌వో అనేది ఏఐ-ఆధారిత న్యూస్ ఇంటెలిజెన్స్ ప్లాట్‌ఫారమ్. ఇది ఏఐ సారాంశాలు, ప్రభావ విశ్లేషణ, మూలాల పోలిక, కాలక్రమాలు మరియు వ్యక్తిగతీకరించిన సిఫార్సుల ద్వారా బ్రేకింగ్ వార్తలను ఉపయోగకరమైన అంతర్దృష్టులుగా మారుస్తుంది.",
+    "getInTouch": "సంప్రదించండి",
+    "aiMonitoring": "ఏఐ 24×7 వార్తల పర్యవేక్షణ",
+    "followUs": "మమ్మల్ని అనుసరించండి",
+    "aiFeatures": "ఏఐ ఫీచర్లు",
+    "featureBriefs": "ఏఐ న్యూస్ బ్రీఫ్‌లు & అంతర్దృష్టులు",
+    "featureComparison": "మూలాల పోలిక",
+    "featureTimeline": "కాలక్రమం & ఈవెంట్ ట్రాకింగ్",
+    "featureCommunity": "ఏఐ కమ్యూనిటీ & చర్చలు",
+    "featureSector": "రంగాల ఇంటెలిజెన్స్ & మార్కెట్ విశ్లేషణ",
+    "featurePersonalized": "వ్యక్తిగతీకరించిన వార్తల ఇంటెలిజెన్స్",
+    "exploreTopics": "విషయాలను అన్వేషించండి",
+    "topics": {
+      "business": "వ్యాపారం",
+      "markets": "మార్కెట్లు",
+      "ai": "ఏఐ",
+      "startups": "స్టార్టప్‌లు",
+      "science": "సైన్స్",
+      "healthcare": "ఆరోగ్య సంరక్షణ",
+      "climate": "వాతావరణం",
+      "crypto": "క్రిప్టో",
+      "lifestyle": "జీవనశైలి"
+    },
+    "allRightsReserved": "All Rights Reserved.",
+    "platformTagline": "AI-Powered News Intelligence platform."
   }
 }
