@@ -49,9 +49,8 @@
     "nextStories": "తదుపరి వార్తలు",
     "playPodcast": "పాడ్‌కాస్ట్ ప్లే చేయండి",
     "pausePodcast": "పాడ్‌కాస్ట్ పాజ్ చేయండి",
-    "dockTitle": "నేటి పల్స్‌వో 5",
-    "dockSubtitle": "5 ముఖ్యమైన వార్తలు · 4:51 · ఆర్‌బీఐ రేట్ల తగ్గింపు తదుపరి ప్లే అవుతోంది"
-  },
+    "dockTitle": "నేటి పల్స్‌వో 5"
+    },
   "detail": {
     "newsBriefAnchor": "న్యూస్ బ్రీఫ్",
     "storySoFarAnchor": "ఇప్పటివరకు ఏమి జరిగింది",
@@ -121,8 +120,6 @@
       "climate": "వాతావరణం",
       "crypto": "క్రిప్టో",
       "lifestyle": "జీవనశైలి"
-    },
-    "allRightsReserved": "All Rights Reserved.",
-    "platformTagline": "AI-Powered News Intelligence platform."
+    }
   }
 }

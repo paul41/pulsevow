@@ -67,8 +67,7 @@
     "inputPlaceholder": "இந்தச் செய்தியைப் பற்றி கேளுங்கள்",
     "askButton": "கேள்",
     "moderationNote": "வெளியிடுவதற்கு முன் ஸ்பேம், தீங்கு விளைவிக்கும் உள்ளடக்கம், நகல்கள் மற்றும் நம்பகமற்ற பதில்களைக் கண்டறிய ஏஐ உதவுகிறது.",
-    "toastEmpty": "முதலில் இந்தச் செய்தியைப் பற்றி ஒரு கேள்வியை உள்ளிடுங்கள்.",
-    "toastSubmitted": "உங்கள் கேள்வி PulseVow AI-க்குத் தயாராக உள்ளது."
+    "toastEmpty": "முதலில் இந்தச் செய்தியைப் பற்றி ஒரு கேள்வியை உள்ளிடுங்கள்."
   },
   "aiBrief": {
     "title": "சுருக்கமான பகுப்பாய்வு",
@@ -121,8 +120,6 @@
       "climate": "காலநிலை",
       "crypto": "கிரிப்டோ",
       "lifestyle": "வாழ்க்கை முறை"
-    },
-    "allRightsReserved": "All Rights Reserved.",
-    "platformTagline": "AI-Powered News Intelligence platform."
+    }
   }
 }

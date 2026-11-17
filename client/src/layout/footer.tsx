@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
-import '../styles/pulsevow.css';
+import { useTranslation } from "react-i18next";
+import "../styles/pulsevow.css";
 
 export function Footer({ year }: { year: number }) {
   const { t } = useTranslation();
@@ -27,7 +27,10 @@ export function Footer({ year }: { year: number }) {
     { key: "crypto", label: t("footer.topics.crypto") },
     { key: "world", label: t("common.world") },
     { key: "sports", label: t("navigation.categoriesList.sports") },
-    { key: "entertainment", label: t("navigation.categoriesList.entertainment") },
+    {
+      key: "entertainment",
+      label: t("navigation.categoriesList.entertainment"),
+    },
     { key: "lifestyle", label: t("footer.topics.lifestyle") },
   ];
 
@@ -36,19 +39,21 @@ export function Footer({ year }: { year: number }) {
       <div className="footer-inner">
         <div className="footer-brand">PulseVow</div>
 
-        <p className="footer-description">
-          {t("footer.description")}
-        </p>
+        <p className="footer-description">{t("footer.description")}</p>
 
         <div className="footer-grid">
           {/* Contact Section */}
           <div>
-            <h5 className="footer-title"><b>{t("footer.getInTouch")}</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.getInTouch")}</b>
+            </h5>
             <p>✉ support@pulsevow.com</p>
             <p>◉ www.pulsevow.com</p>
             <p>◷ {t("footer.aiMonitoring")}</p>
 
-            <h6 className="footer-title footer-social-title"><b>{t("footer.followUs")}</b></h6>
+            <h6 className="footer-title footer-social-title">
+              <b>{t("footer.followUs")}</b>
+            </h6>
             <div className="footer-social">
               {["𝕏", "f", "in", "◎", "▶"].map((x) => (
                 <a href="#top" key={x}>
@@ -60,7 +65,9 @@ export function Footer({ year }: { year: number }) {
 
           {/* Features Section */}
           <div>
-            <h5 className="footer-title"><b>{t("footer.aiFeatures")}</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.aiFeatures")}</b>
+            </h5>
             <div className="footer-links">
               {features.map((f) => (
                 <a href="#" key={f.key} onClick={(e) => e.preventDefault()}>
@@ -72,7 +79,9 @@ export function Footer({ year }: { year: number }) {
 
           {/* Topics Section */}
           <div>
-            <h5 className="footer-title"><b>{t("footer.exploreTopics")}</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.exploreTopics")}</b>
+            </h5>
             <div className="footer-topics">
               {topics.map((tp) => (
                 <a className="footer-topic" href="#today" key={tp.key}>
@@ -85,8 +94,8 @@ export function Footer({ year }: { year: number }) {
       </div>
 
       <div className="footer-bottom">
-        © {year} <a href="#top">PulseVow</a>. {t("footer.allRightsReserved")} <span>|</span>{" "}
-        {t("footer.platformTagline")}
+        © {year} <a href="#top">PulseVow</a>. All Rights Reserved.
+        <span>|</span> AI-Powered News Intelligence platform.
       </div>
     </footer>
   );

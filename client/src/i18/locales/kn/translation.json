@@ -49,8 +49,7 @@
     "nextStories": "ಮುಂದಿನ ಸುದ್ದಿಗಳು",
     "playPodcast": "ಪಾಡ್‌ಕ್ಯಾಸ್ಟ್ ಪ್ಲೇ ಮಾಡಿ",
     "pausePodcast": "ಪಾಡ್‌ಕ್ಯಾಸ್ಟ್ ವಿರಾಮಗೊಳಿಸಿ",
-    "dockTitle": "ಇಂದಿನ ಪಲ್ಸ್‌ವೋ 5",
-    "dockSubtitle": "5 ಪ್ರಮುಖ ಸುದ್ದಿಗಳು · 4:51 · ಆರ್‌ಬಿಐ ದರ ಕಡಿತ ಮುಂದಿನ ಸುದ್ದಿ"
+    "dockTitle": "ಇಂದಿನ ಪಲ್ಸ್‌ವೋ 5"  
   },
   "detail": {
     "newsBriefAnchor": "ನ್ಯೂಸ್ ಬ್ರೀಫ್",
@@ -121,8 +120,6 @@
       "climate": "ಹವಾಮಾನ",
       "crypto": "ಕ್ರಿಪ್ಟೋ",
       "lifestyle": "ಜೀವನಶೈಲಿ"
-    },
-    "allRightsReserved": "All Rights Reserved.",
-    "platformTagline": "AI-Powered News Intelligence platform."
+    }
   }
 }

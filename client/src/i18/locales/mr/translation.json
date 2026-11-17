@@ -49,9 +49,7 @@
     "nextStories": "पुढील बातम्या",
     "playPodcast": "पॉडकास्ट सुरू करा",
     "pausePodcast": "पॉडकास्ट थांबवा",
-    "dockTitle": "आजचे पल्सव्हो 5",
-    "dockSubtitle": "5 महत्त्वाच्या बातम्या · 4:51 · आरबीआय व्याजदर कपात पुढील बातमी आहे"
-  },
+    "dockTitle": "आजचे पल्सव्हो 5"  },
   "detail": {
     "newsBriefAnchor": "न्यूज ब्रीफ",
     "storySoFarAnchor": "आतापर्यंत काय घडले",
@@ -121,8 +119,6 @@
       "climate": "हवामान",
       "crypto": "क्रिप्टो",
       "lifestyle": "जीवनशैली"
-    },
-    "allRightsReserved": "All Rights Reserved.",
-    "platformTagline": "AI-Powered News Intelligence platform."
+    }
   }
 }

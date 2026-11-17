@@ -49,8 +49,7 @@
     "nextStories": "পরবর্তী খবর",
     "playPodcast": "পডকাস্ট চালু করুন",
     "pausePodcast": "পডকাস্ট থামান",
-    "dockTitle": "আজকের পালসভো ৫",
-    "dockSubtitle": "৫টি গুরুত্বপূর্ণ খবর · ৪:৫১ · আরবিআই সুদের হার হ্রাস পরবর্তী খবর"
+    "dockTitle": "আজকের পালসভো ৫"
   },
   "detail": {
     "newsBriefAnchor": "নিউজ ব্রিফ",
@@ -121,8 +120,6 @@
       "climate": "জলবায়ু",
       "crypto": "ক্রিপ্টো",
       "lifestyle": "জীবনধারা"
-    },
-    "allRightsReserved": "All Rights Reserved.",
-    "platformTagline": "AI-Powered News Intelligence platform."
+    }
   }
 }
