@@ -53,23 +53,51 @@
     "dockSubtitle": "5 important stories · 4:51 · RBI rate cut is playing next"
   },
   "detail": {
-  "newsBriefAnchor": "NEWS Brief",
-  "storySoFarAnchor": "Story so far",
-  "compareSourcesAnchor": "Compare sources"
-},
-"forum": {
-  "title": "Pulse Forum",
-  "description": "Ask a question about this story. PulseVow and the community will help answer.",
-  "tagAi": "PULSEVOW AI",
-  "aiMeta": "AI response · Based on story context",
-  "tagCommunity": "COMMUNITY",
-  "helpfulMeta": "Helpful · 18",
-  "inputPlaceholder": "Ask about this story",
-  "askButton": "Ask",
-  "moderationNote": "AI-assisted moderation helps identify spam, toxicity, duplicates and potentially unreliable answers before wider publication.",
-  "toastEmpty": "Type a question about this story first.",
-  "toastSubmitted": "Your question is ready for PulseVow AI."
-},
+    "newsBriefAnchor": "NEWS Brief",
+    "storySoFarAnchor": "Story so far",
+    "compareSourcesAnchor": "Compare sources"
+  },
+  "forum": {
+    "title": "Pulse Forum",
+    "description": "Ask a question about this story. PulseVow and the community will help answer.",
+    "tagAi": "PULSEVOW AI",
+    "aiMeta": "AI response · Based on story context",
+    "tagCommunity": "COMMUNITY",
+    "helpfulMeta": "Helpful · 18",
+    "inputPlaceholder": "Ask about this story",
+    "askButton": "Ask",
+    "moderationNote": "AI-assisted moderation helps identify spam, toxicity, duplicates and potentially unreliable answers before wider publication.",
+    "toastEmpty": "Type a question about this story first.",
+    "toastSubmitted": "Your question is ready for PulseVow AI."
+  },
+  "aiBrief": {
+    "title": "Brief Analysis",
+    "impact": "Impact",
+    "coverage": "Coverage",
+    "sources": "Sources",
+    "updated": "Updated",
+    "comingSoon": "AI brief is coming soon!"
+  },
+  "timeline": {
+    "title": "The story so far",
+    "hint": "How we got here"
+  },
+  "related": {
+    "title": "Related articles"
+  },
+  "newsletter": {
+    "heading": "Get the important stories in your inbox",
+    "description": "A concise roundup of India's most important developments, with context and analysis.",
+    "placeholder": "Your email address",
+    "subscribe": "Subscribe",
+    "note": "No clutter. Unsubscribe anytime.",
+    "toastEmpty": "Enter your email address to subscribe.",
+    "toastSuccess": "Thanks. Your PulseVow Brief subscription is ready."
+  },
+  "social": {
+    "heading": "Follow us",
+    "description": "Stay connected with PulseVow and get the latest intelligence updates."
+  },
   "footer": {
     "description": "PulseVow is an AI-first news intelligence platform that transforms breaking news into actionable insights through AI-powered summaries, impact analysis, source comparison, timelines and personalized recommendations.",
     "getInTouch": "Get In Touch",
