@@ -2339,6 +2339,54 @@ select {
   border-color: var(--gold)
 }
 
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.password-field input {
+  margin-top: 0 !important;
+  padding-right: 38px !important;
+}
+
+.auth-form-email .password-field {
+  margin-top: 3px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink-soft);
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.password-toggle:hover {
+  color: var(--ink);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+}
+
+.password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .auth-row {
   display: flex;
   align-items: center;
