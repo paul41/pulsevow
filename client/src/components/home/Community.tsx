@@ -1,49 +1,67 @@
+
 import { useState } from "react";
-import { ASK_PULSEVOW, ASK_PULSEVOW_DESC } from "../../constants/ask-text.js";
+import { useTranslation } from "react-i18next";
 import type { AskPulseVowProps } from "./types.js";
 
 export function AskPulseVow({ onToast }: AskPulseVowProps) {
+  const { t } = useTranslation();
   const [question, setQuestion] = useState("");
 
   const ask = () => {
     if (!question.trim()) {
-      onToast("Type a question about this story first.");
+      onToast(t("forum.toastEmpty"));
       return;
     }
-    onToast("Your question is ready for PulseVow AI.");
+
+    onToast(t("forum.toastSubmitted"));
     setQuestion("");
   };
 
   return (
     <div className="sidebar-card" id="ask">
-      <h3>{ASK_PULSEVOW}</h3>
+      <h3>{t("forum.title")}</h3>
+
       <p className="sidebar-note">
-        {ASK_PULSEVOW_DESC}
+        {t("forum.description")}
       </p>
 
-      {/* Example QA items */}
+      {/* Example QA items - preserve original story content */}
       <div className="qa-item">
-        <span className="qa-tag tag-ai">PULSEVOW AI</span>
+        <span className="qa-tag tag-ai">
+          {t("forum.tagAi")}
+        </span>
+
         <div className="qa-q">
           Will this lower my existing home loan EMI automatically?
         </div>
+
         <div className="qa-a">
           Not necessarily. The effect depends on your loan type and how your
           lender passes the rate change through to customers.
         </div>
-        <span className="helpful">AI response · Based on story context</span>
+
+        <span className="helpful">
+          {t("forum.aiMeta")}
+        </span>
       </div>
 
       <div className="qa-item">
-        <span className="qa-tag tag-community">COMMUNITY</span>
+        <span className="qa-tag tag-community">
+          {t("forum.tagCommunity")}
+        </span>
+
         <div className="qa-q">
           Does this mean fixed deposit rates will fall too?
         </div>
+
         <div className="qa-a">
           They may change as banks adjust their pricing, but the timing and
           extent can vary between banks.
         </div>
-        <span className="helpful">Helpful · 18</span>
+
+        <span className="helpful">
+          {t("forum.helpfulLabel")} · 18
+        </span>
       </div>
 
       {/* Input box */}
@@ -52,14 +70,16 @@ export function AskPulseVow({ onToast }: AskPulseVowProps) {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && ask()}
-          placeholder="Ask about this story"
+          placeholder={t("forum.inputPlaceholder")}
         />
-        <button onClick={ask}>Ask</button>
+
+        <button onClick={ask}>
+          {t("forum.askButton")}
+        </button>
       </div>
 
       <div className="qa-note">
-        AI-assisted moderation helps identify spam, toxicity, duplicates and
-        potentially unreliable answers before wider publication.
+        {t("forum.moderationNote")}
       </div>
     </div>
   );

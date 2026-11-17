@@ -52,6 +52,24 @@
     "dockTitle": "Today's PulseVow 5",
     "dockSubtitle": "5 important stories · 4:51 · RBI rate cut is playing next"
   },
+  "detail": {
+  "newsBriefAnchor": "NEWS Brief",
+  "storySoFarAnchor": "Story so far",
+  "compareSourcesAnchor": "Compare sources"
+},
+"forum": {
+  "title": "Pulse Forum",
+  "description": "Ask a question about this story. PulseVow and the community will help answer.",
+  "tagAi": "PULSEVOW AI",
+  "aiMeta": "AI response · Based on story context",
+  "tagCommunity": "COMMUNITY",
+  "helpfulMeta": "Helpful · 18",
+  "inputPlaceholder": "Ask about this story",
+  "askButton": "Ask",
+  "moderationNote": "AI-assisted moderation helps identify spam, toxicity, duplicates and potentially unreliable answers before wider publication.",
+  "toastEmpty": "Type a question about this story first.",
+  "toastSubmitted": "Your question is ready for PulseVow AI."
+},
   "footer": {
     "description": "PulseVow is an AI-first news intelligence platform that transforms breaking news into actionable insights through AI-powered summaries, impact analysis, source comparison, timelines and personalized recommendations.",
     "getInTouch": "Get In Touch",
