@@ -1,6 +1,6 @@
 import {FOLLOW_TEXT} from "../../constants/follow-text.js";
 
-export function FollowUs() {
+export function Social() {
   const socials: { label: string; href: string }[] = [
     { label: "𝕏 / Twitter", href: "#top" },
     { label: "f / Facebook", href: "#top" },

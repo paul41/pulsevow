@@ -1,8 +1,9 @@
 import type { NewsArticle, NewsSource } from "../../api/type";
 
-export interface AIBriefProps {
-    item: any; // Adjust the type based on the actual structure of the items prop
-}
+export type MattersNextProps = {
+  summary: string;
+  whatNext: string[];
+};
 
 export interface AskPulseVowProps {
     onToast: (message: string) => void;
@@ -12,10 +13,12 @@ export interface SourceComparisonProps {
     sources: NewsSource[];
 }
 
-export interface FactsProps {
-    confirmed: string[];
-    interpretation: string[];
-}
+export type AffectedProps = {
+  affectedGroups: {
+    title: string;
+    description: string;
+  }[];
+};
 
 export interface News360Props {
     items: NewsArticle[];
