@@ -22,6 +22,10 @@ export default function Register() {
 
   const [error, setError] = useState("");
 
+  const isPasswordMismatch = Boolean(
+    password && confirmPassword && password !== confirmPassword,
+  );
+
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     setError("");
@@ -317,6 +321,22 @@ export default function Register() {
                       )}
                     </button>
                   </div>
+
+                  {isPasswordMismatch && (
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "11px",
+                        fontWeight: 500,
+                        color: "var(--red, #A94432)",
+                        marginTop: "4px",
+                        lineHeight: 1.3,
+                      }}
+                      role="alert"
+                    >
+                      Passwords do not match
+                    </span>
+                  )}
                 </label>
 
                 {error && (
@@ -328,7 +348,7 @@ export default function Register() {
                 <button
                   type="submit"
                   className="auth-submit"
-                  disabled={loading}
+                  disabled={loading || isPasswordMismatch}
                 >
                   {loading
                     ? "Creating account…"
