@@ -8,11 +8,13 @@ import type { NewsArticle } from '../../api/type';
 type PulseCarouselProps = {
   stories: NewsArticle[];
   onStorySelect: (story: NewsArticle) => void;
+  selectedStoryId?: string;
 };
 
 export function PulseCarousel({
   stories,
   onStorySelect,
+  selectedStoryId,
 }: PulseCarouselProps) {
   const { t } = useTranslation();
   
@@ -112,6 +114,7 @@ export function PulseCarousel({
             key={item.id}
             item={item}
             onClick={() => onStorySelect(item)}
+            isSelected={selectedStoryId === item.id}
           />
         ))}
       </div>

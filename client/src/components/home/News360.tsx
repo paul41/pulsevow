@@ -1,6 +1,7 @@
 import { Block } from "../common/Block";
 import "../../styles/news360.css";
 import type { News360Props } from "./types";
+import { Social } from "./Social";
 
 function getTimeAgo(publishedAt: string): string {
     const publishedTime = new Date(publishedAt).getTime();
@@ -27,72 +28,75 @@ function getTimeAgo(publishedAt: string): string {
 }
 
 export function News360({ items }: News360Props) {
-    console.log("News360 items:", items);
     return (
-        <Block title="Pulse 360">
-            <div className="pulse360-grid">
-                {items.map((article) => (
-                    <article className="pulse360-card" key={article.id}>
-                        <div className="pulse360-image">
-                            {article.imageUrl ? (
-                                <img
-                                    src={article.imageUrl}
-                                    alt={article.title}
-                                    loading="lazy"
-                                />
-                            )
-                                :
-                                (
-                                    <div style={{position: "relative", width: "100%", height: "100%", backgroundColor: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                        <span>No image available</span>
+        <div className="pulse360-layout">
+            <div className="pulse360-main">
+                <Block title="Pulse 360">
+                    <div className="pulse360-grid">
+                        {items.map((article) => (
+                            <article className="pulse360-card" key={article.id}>
+                                <div className="pulse360-image">
+                                    {article.imageUrl ? (
+                                        <img
+                                            src={article.imageUrl}
+                                            alt={article.title}
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <div className="pulse360-no-image">
+                                            <span>No image available</span>
+                                        </div>
+                                    )}
+
+                                    <span className="pulse360-badge">
+                                        ✦ {article.source?.name}
+                                    </span>
+                                </div>
+
+                                <div className="pulse360-content">
+                                    <div className="pulse360-meta">
+                                        <span>{article.category?.name ?? "World News"}</span>
+                                        <span>•</span>
+                                        <span>{getTimeAgo(article.publishedAt)}</span>
                                     </div>
-                                )
-                            }
-                            <span className="pulse360-badge">
-                                ✦ {article.source?.name}
-                            </span>
-                        </div>
 
-                        <div className="pulse360-content">
-                            <div className="pulse360-meta">
-                                <span>{article.category?.name ?? "World News"}</span>
-                                <span>•</span>
-                                <span>{getTimeAgo(article.publishedAt)}</span>
-                            </div>
+                                    <h3>{article.title}</h3>
 
-                            <h3>{article.title}</h3>
+                                    <p>
+                                        {article.description?.trim() ||
+                                            "Read the latest coverage and context around this developing story."}
+                                    </p>
 
-                            <p>
-                                {article.description?.trim() ||
-                                    "Read the latest coverage and context around this developing story."}
-                            </p>
+                                    <div className="pulse360-tags">
+                                        <span>{article.source.name}</span>
+                                        <span>{article.source.country}</span>
+                                    </div>
 
-                            <div className="pulse360-tags">
-                                <span>{article.source.name}</span>
-                                <span>{article.source.country}</span>
-                            </div>
+                                    <a
+                                        href={article.url || "#"}
+                                        className="pulse360-link"
+                                        aria-label={`Understand this story: ${article.title}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Understand this story →
+                                    </a>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
 
-                            <a
-                                href={article.url || "#"}
-                                className="pulse360-link"
-                                aria-label={`Understand this story: ${article.title}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Understand this story →
-                            </a>
-                        </div>
-                    </article>
-                ))}
+                    {items.length === 0 && (
+                        <p className="pulse360-empty">
+                            No world news articles are available right now.
+                        </p>
+                    )}
+                </Block>
             </div>
 
-            {items.length === 0 && (
-                <p className="pulse360-empty">
-                    No world news articles are available right now.
-                </p>
-            )}
-        </Block>
-
-
+            <aside className="pulse360-sidebar">
+                <Social />
+            </aside>
+        </div>
     );
 }

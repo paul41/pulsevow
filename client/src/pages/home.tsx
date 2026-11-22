@@ -6,7 +6,7 @@ import { PulseCarousel } from '../components/home/PulseCarousel';
 import { StoryDetail } from '../components/event/StoryDetail';
 import { Toast } from '../components/common/Toast';
 import { News360 } from '../components/home/News360';
-import { Recommendations } from '../components/home/Recommendation';
+import { MostRead } from '../components/home/MostRead';
 import { getCountryStories, getTopStories } from '../api/newsApi';
 import type { PulseStory } from '../api/type';
 import '../styles/pulsevow.css';
@@ -111,6 +111,7 @@ export default function Home() {
         <PulseCarousel
           stories={stories}
           onStorySelect={handleStorySelect}
+          selectedStoryId={selectedStory?.id}
         />
 
         <div id="story-detail">
@@ -125,7 +126,7 @@ export default function Home() {
         <section className="news360-section" id="world">
           <News360 items={worldNews} />
         </section>
-        <Recommendations />
+        <MostRead />
       </main>
 
       <Footer year={year} />
@@ -140,7 +141,6 @@ export default function Home() {
           }}
         />
       )}
-
       <Toast message={toast} />
     </div>
   );

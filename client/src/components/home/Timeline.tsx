@@ -11,7 +11,7 @@ export function Timeline({ items }: TimelineProps) {
       ['4 months ago', 'The central bank began the current easing cycle with its first rate reduction in nearly two years.'],
     ];
   return (
-    <Block id="timeline" title="The story so far" hint="How we got here">
+    <Block id="timeline" title="The story so far">
       <div className="timeline">
         {timelineItems.map(([date, text]) => (
           <div className="tl-item" key={date}>

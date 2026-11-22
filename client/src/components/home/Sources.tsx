@@ -1,5 +1,4 @@
-import { Block } from "../common/Block";
-import { SOURCE_TEXT } from "../../constants/source-text.js";
+import { Block } from "../common/Block.js";
 import type { SourceComparisonProps } from "./types.js";
 
 const defaultSources = [
@@ -35,8 +34,6 @@ export function SourceComparison({ sources }: SourceComparisonProps | any) {
 
   return (
     <Block id="sources" title="How sources are covering it">
-      <p className="compare-intro">{SOURCE_TEXT}</p>
-
       <div className="source-grid">
         {displaySources.map((s: any) => (
           <div className="sourcecard" key={s.name}>

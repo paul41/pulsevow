@@ -412,7 +412,7 @@ export const mockNewsResponse: NewsApiResponse = {
       "slug": "whats-behind-the-ai-trade-comeback-plus-our-take-on-intels-latest-deal",
       "description": "Every weekday, the Investing Club releases the Homestretch; an actionable afternoon update just in time for the last hour of trading.",
       "url": "https://www.cnbc.com/investingclub/2026/10/27/the-ai-trade-comeback-plus-our-take-on-latest-intel-deal.html",
-      "imageUrl": null,
+      "imageUrl": "https://content-media.investing.com/trkd-images/LYNXNPEMAL04S_L.jpg",
       "author": null,
       "publishedAt": "2026-10-27T18:13:51.000Z",
       "source": {
@@ -425,6 +425,91 @@ export const mockNewsResponse: NewsApiResponse = {
         "id": "ffb7a3c3-2e81-449d-b751-1ea2c0d22767",
         "name": "General",
         "slug": "general"
+      }
+    },
+
+    {
+      "id": "7ecbe262-258a-43bd-9841-0e7ad03a9a41",
+      "title": "Russian cargo ship remains on fire off Finland after drone attack",
+      "slug": "russian-cargo-ship-remains-on-fire-off-finland-after-drone-attack",
+      "description": "A Russian cargo ship, the Sparta II, continued burning in the Baltic Sea after a drone strike. Finland evacuated its 16 crew members, while authorities monitor the risk of further attacks near NATO territory.",
+      "url": "https://www.investing.com/news/world-news/russian-cargo-ship-still-on-fire-off-finland-after-attack-5043812",
+      "imageUrl":"https://www.reutersconnect.com/item/cop31-climate-summit-in-turkiyes-antalya/dGFnOnJldXRlcnMuY29tLDIwMjY6bmV3c21sX01UMUFOQURMMDAwNUdHNExF",
+      "author": "Reuters",
+      "publishedAt": "2026-11-22T03:30:00.000Z",
+      "source": {
+        "id": "6f9e25a3-3aca-46d2-b6da-1d35c41db1e5",
+        "name": "Reuters",
+        "country": "United Kingdom",
+        "logo": null
+      },
+      "category": {
+        "id": "ffb7a3c3-2e81-449d-b751-1ea2c0d22768",
+        "name": "World",
+        "slug": "world"
+      }
+    },
+    {
+      "id": "7ecbe262-258a-43bd-9841-0e7ad03a9a42",
+      "title": "COP31 climate talks move closer to a final agreement",
+      "slug": "cop31-climate-talks-move-closer-to-final-agreement",
+      "description": "Nearly 200 countries are nearing a climate agreement at COP31 in Türkiye. Negotiators are working to resolve disagreements over fossil fuel commitments and financial support for developing countries adapting to climate change.",
+      "url": "https://theprint.in/india/cop31-climate-talks-close-to-final-deal-says-summit-president/3105467/",
+      "imageUrl": "https://www.afp.com/sites/default/files/afp-stories/413ac0913e83f22c8d72f8a93f3e8312-0-hi.jpg",
+      "author": "Tuvan Gumrukcu and Ali Kucukgocmen",
+      "publishedAt": "2026-11-22T00:00:00.000Z",
+      "source": {
+        "id": "6f9e25a3-3aca-46d2-b6da-1d35c41db1e6",
+        "name": "Reuters",
+        "country": "United Kingdom",
+        "logo": null
+      },
+      "category": {
+        "id": "ffb7a3c3-2e81-449d-b751-1ea2c0d22769",
+        "name": "Environment",
+        "slug": "environment"
+      }
+    },
+    {
+      "id": "7ecbe262-258a-43bd-9841-0e7ad03a9a43",
+      "title": "South Korea's education minister resigns amid AI cheating scandal",
+      "slug": "south-korea-education-minister-resigns-amid-ai-cheating-scandal",
+      "description": "South Korea's education minister resigned after an AI-assisted cheating scandal raised concerns about exam security. Authorities introduced stricter measures, including restrictions on electronic devices, during the country's major university entrance examinations.",
+      "url": "https://www.abs-cbn.com/news/technology/2026/11/22/south-korea-education-chief-resigns-amid-ai-cheating-scandal-1505",
+      "imageUrl": "https://e3.365dm.com/26/11/768x432/skynews-nema-nigeria-boat-capsizing_7413023.jpg?20261121221031=",
+      "author": "Agence France-Presse",
+      "publishedAt": "2026-11-22T07:05:00.000Z",
+      "source": {
+        "id": "6f9e25a3-3aca-46d2-b6da-1d35c41db1e7",
+        "name": "AFP",
+        "country": "France",
+        "logo": null
+      },
+      "category": {
+        "id": "ffb7a3c3-2e81-449d-b751-1ea2c0d22770",
+        "name": "Technology",
+        "slug": "technology"
+      }
+    },
+    {
+      "id": "7ecbe262-258a-43bd-9841-0e7ad03a9a44",
+      "title": "At least 24 dead after boat carrying mourners capsizes in Nigeria",
+      "slug": "at-least-24-dead-after-boat-carrying-mourners-capsizes-in-nigeria",
+      "description": "At least 24 people died after a boat carrying mourners to a burial ceremony capsized in Nigeria's Bayelsa State. Rescue operations continued, while authorities investigated the incident and renewed warnings about unsafe vessels and inadequate safety measures.",
+      "url": "https://apnews.com/article/ba1929311805c37ede05f8496f2826c0",
+      "imageUrl": null,
+      "author": "Associated Press",
+      "publishedAt": "2026-11-22T00:00:00.000Z",
+      "source": {
+        "id": "6f9e25a3-3aca-46d2-b6da-1d35c41db1e8",
+        "name": "Associated Press",
+        "country": "United States",
+        "logo": null
+      },
+      "category": {
+        "id": "ffb7a3c3-2e81-449d-b751-1ea2c0d22771",
+        "name": "World",
+        "slug": "world"
       }
     }
   ],

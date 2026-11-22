@@ -1,8 +1,7 @@
-// components/common/Recommendations.tsx
 import { Block } from "../common/Block";
 import type { RecommendationItem } from "./types";
 
-export function Recommendations() {
+export function MostRead() {
   const items: RecommendationItem[] = [
     {
       image:
