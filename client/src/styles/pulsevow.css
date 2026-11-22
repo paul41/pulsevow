@@ -554,6 +554,24 @@ h1.story-title {
   font-weight: 600
 }
 
+/* For Mobile and PC view of hero figure  */
+.image-caption {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .image-caption {
+    display: block;
+  }
+
+  .image-caption > span {
+    display: block;
+  }
+}
+
 section.block {
   margin-bottom: 31px
 }
@@ -2867,13 +2885,34 @@ select {
   font-size: 10px;
 }
 
-.setting-on {
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--green);
-  background: var(--green-bg);
-  padding: 4px 7px;
-  border-radius: 10px
+.setting-toggle {
+  width: 34px;
+  height: 18px;
+  border: none;
+  border-radius: 20px;
+  background: var(--line);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.setting-toggle.on {
+  background: var(--green);
+}
+
+.setting-toggle span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.setting-toggle.on span {
+  transform: translateX(16px);
 }
 
 .toggle {
@@ -3073,11 +3112,11 @@ select {
     transform 0.2s ease;
 }
 
-.avatar:hover {
+/* .avatar:hover {
   background: #e5e8eb;
   border-color: #d5dae0;
   transform: translateY(-1px);
-}
+} */
 
 .avatar:active {
   transform: translateY(0);
