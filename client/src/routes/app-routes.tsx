@@ -4,11 +4,11 @@ import Login from "../pages/login";
 import Register from "../pages/register";
 import ForYouPage from "../pages/for-you";
 import HomePage from "../pages/home";
-import EventInsightPage from "../pages/insights";
 import  Profile  from "../pages/profile";
 import { ProtectedRoute } from "./protected-routes";
 import MonthlyBriefPage from "../pages/monthly-brief";
 import { NotFound } from "../components/common/NotFound";
+import Category from "../pages/category";
 
 export default function AppRoutes() {
     return (
@@ -40,15 +40,9 @@ export default function AppRoutes() {
                 element={<ForYouPage />}
             />   
 
-            {/* Individual News / Event Intelligence */}
             <Route
-                path="/pulse-insights"
-                element={<EventInsightPage />}
-            />
-
-            <Route
-                path="/pulse-insights/:storyId"
-                element={<EventInsightPage />}
+                path="/search"
+                element={<Category />}
             />
 
             {/* Sector Intelligence */}
