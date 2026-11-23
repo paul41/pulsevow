@@ -1,27 +1,59 @@
-import '../styles/pulsevow.css';
+import { useTranslation } from "react-i18next";
+import "../styles/pulsevow.css";
+
 export function Footer({ year }: { year: number }) {
+  const { t } = useTranslation();
+
+  const features = [
+    { key: "featureBriefs", label: t("footer.featureBriefs") },
+    { key: "featureComparison", label: t("footer.featureComparison") },
+    { key: "featureTimeline", label: t("footer.featureTimeline") },
+    { key: "featureCommunity", label: t("footer.featureCommunity") },
+    { key: "featureSector", label: t("footer.featureSector") },
+    { key: "featurePersonalized", label: t("footer.featurePersonalized") },
+  ];
+
+  const topics = [
+    { key: "politics", label: t("navigation.categoriesList.politics") },
+    { key: "business", label: t("footer.topics.business") },
+    { key: "markets", label: t("footer.topics.markets") },
+    { key: "technology", label: t("navigation.categoriesList.technology") },
+    { key: "ai", label: t("footer.topics.ai") },
+    { key: "startups", label: t("footer.topics.startups") },
+    { key: "economy", label: t("navigation.categoriesList.economy") },
+    { key: "science", label: t("footer.topics.science") },
+    { key: "healthcare", label: t("footer.topics.healthcare") },
+    { key: "climate", label: t("footer.topics.climate") },
+    { key: "crypto", label: t("footer.topics.crypto") },
+    { key: "world", label: t("common.world") },
+    { key: "sports", label: t("navigation.categoriesList.sports") },
+    {
+      key: "entertainment",
+      label: t("navigation.categoriesList.entertainment"),
+    },
+    { key: "lifestyle", label: t("footer.topics.lifestyle") },
+  ];
 
   return (
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">PulseVow</div>
 
-        <p className="footer-description">
-          PulseVow is an AI-first news intelligence platform that transforms
-          breaking news into actionable insights through AI-powered summaries,
-          impact analysis, source comparison, timelines
-          and personalized recommendations.
-        </p>
+        <p className="footer-description">{t("footer.description")}</p>
 
         <div className="footer-grid">
           {/* Contact Section */}
           <div>
-            <h5 className="footer-title"><b>Get In Touch</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.getInTouch")}</b>
+            </h5>
             <p>✉ support@pulsevow.com</p>
             <p>◉ www.pulsevow.com</p>
-            <p>◷ AI Monitoring News 24×7</p>
+            <p>◷ {t("footer.aiMonitoring")}</p>
 
-            <h6 className="footer-title footer-social-title"><b>Follow Us</b></h6>
+            <h6 className="footer-title footer-social-title">
+              <b>{t("footer.followUs")}</b>
+            </h6>
             <div className="footer-social">
               {["𝕏", "f", "in", "◎", "▶"].map((x) => (
                 <a href="#top" key={x}>
@@ -33,18 +65,13 @@ export function Footer({ year }: { year: number }) {
 
           {/* Features Section */}
           <div>
-            <h5 className="footer-title"><b>AI Features</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.aiFeatures")}</b>
+            </h5>
             <div className="footer-links">
-              {[
-                "AI-Powered News Briefs & Insights",
-                "Source Comparison",
-                "Timeline & Event Tracking",
-                "AI Community & Discussion",
-                "Sector Intelligence & Market Analysis",
-                "Personalized News Intelligence",
-              ].map((x) => (
-                <a href="#" key={x} onClick={(e) => e.preventDefault()}>
-                  {x}
+              {features.map((f) => (
+                <a href="#" key={f.key} onClick={(e) => e.preventDefault()}>
+                  {f.label}
                 </a>
               ))}
             </div>
@@ -52,27 +79,13 @@ export function Footer({ year }: { year: number }) {
 
           {/* Topics Section */}
           <div>
-            <h5 className="footer-title"><b>Explore Topics</b></h5>
+            <h5 className="footer-title">
+              <b>{t("footer.exploreTopics")}</b>
+            </h5>
             <div className="footer-topics">
-              {[
-                "Politics",
-                "Business",
-                "Markets",
-                "Technology",
-                "AI",
-                "Startups",
-                "Economy",
-                "Science",
-                "Healthcare",
-                "Climate",
-                "Crypto",
-                "World",
-                "Sports",
-                "Entertainment",
-                "Lifestyle",
-              ].map((x) => (
-                <a className="footer-topic" href="#today" key={x}>
-                  {x}
+              {topics.map((tp) => (
+                <a className="footer-topic" href="#today" key={tp.key}>
+                  {tp.label}
                 </a>
               ))}
             </div>
@@ -81,8 +94,8 @@ export function Footer({ year }: { year: number }) {
       </div>
 
       <div className="footer-bottom">
-        © {year} <a href="#top">PulseVow</a>. All Rights Reserved. <span>|</span>{" "}
-        AI-Powered News Intelligence platform.
+        © {year} <a href="#top">PulseVow</a>. All Rights Reserved.
+        <span>|</span> AI-Powered News Intelligence platform.
       </div>
     </footer>
   );

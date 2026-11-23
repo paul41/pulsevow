@@ -1,27 +1,25 @@
-import Advertisement from '../common/Advertisement';
-import { Timeline } from '../home/Timeline';
-import { SourceComparison } from '../home/Sources';
-// import { Recommendations } from '../home/Recommendation';
-import { AskPulseVow } from '../home/Community';
-import { Newsletter } from '../home/Newsletter';
-import { MattersNext } from '../home/Matter';
-import { RelatedArticles } from '../home/Related';
-import type { Props } from './types';
-import { Affected } from '../home/Affected';
+import Advertisement from "../common/Advertisement";
+import { Timeline } from "../home/Timeline";
+import { SourceComparison } from "../home/Sources";
+import { AskPulseVow } from "../home/Community";
+import { Newsletter } from "../home/Newsletter";
+import { MattersNext } from "../home/Matter";
+import { RelatedArticles } from "../home/Related";
+import { Affected } from "../home/Affected";
+import type { Props } from "./types";
 
 export function StoryDetail({ story, onToast }: Props) {
   console.log("Fetched NEWS-story:", story);
+
   return (
     <div className="storygrid" id="story">
       <article>
         <header className="story-header">
-          <h1 className="story-title headline-font">{story.title}</h1>
-          {/* <div className="story-actions">
-            <a className="action primary" href="#brief">NEWS Brief</a>
-            <a className="action" href="#timeline">Story so far</a>
-            <a className="action" href="#sources">Compare sources</a>
-          </div> */}
+          <h1 className="story-title headline-font">
+            {story.title}
+          </h1>
         </header>
+
         <div className="story-meta">
           <span>41 sources tracked</span>
 
@@ -37,10 +35,13 @@ export function StoryDetail({ story, onToast }: Props) {
             Event confidence: <strong>High</strong>
           </span>
         </div>
+
         <div className="hero-content">
-          {/* Left: Hero Image */}
           <figure className="hero-figure">
-            <img src={story.imageUrl} alt={story.source?.name} />
+            <img
+              src={story.imageUrl}
+              alt={story.source?.name}
+            />
 
             <figcaption>
               <span className="image-caption">
@@ -59,28 +60,33 @@ export function StoryDetail({ story, onToast }: Props) {
                 </span>
               </span>
 
-              <a href={story.url} target="_blank" rel="noreferrer">
+              <a
+                href={story.url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Read Source ↗
               </a>
             </figcaption>
           </figure>
 
-          {/* Right: Summary */}
-
           <div className="brief-card">
             <div className="lbl">30-second brief</div>
+
             <p>
-              The RBI lowered its policy rate to support growth. Banks may revise
-              loan rates, but none is confirmed to pass on the full cut. Markets
-              reacted, and inflation remains a concern.
+              The RBI lowered its policy rate to support growth. Banks may
+              revise loan rates, but none is confirmed to pass on the full
+              cut. Markets reacted, and inflation remains a concern.
               **Cheaper loans could be on the horizon!**
-              The RBI has cut interest rates to give India's economy a growth boost.
-              Home and auto loan borrowers may welcome lower EMIs if banks pass on the benefit.
-              Markets are watching closely, but the big question remains: will cheaper credit fuel growth without pushing inflation higher?
+              The RBI has cut interest rates to give India's economy a
+              growth boost. Home and auto loan borrowers may welcome
+              lower EMIs if banks pass on the benefit. Markets are
+              watching closely, but the big question remains: will
+              cheaper credit fuel growth without pushing inflation higher?
             </p>
           </div>
-
         </div>
+
         <MattersNext
           summary="The RBI's rate cut could make borrowing cheaper, influence investment decisions and give businesses more room to expand. However, the actual impact depends on how banks and markets respond."
           whatNext={[
@@ -89,14 +95,15 @@ export function StoryDetail({ story, onToast }: Props) {
             "Upcoming inflation data will indicate whether the RBI has room for further rate cuts."
           ]}
         />
-        <Timeline items={story.timeline} />
-        <SourceComparison sources={story.source} />
-        {/* <Facts confirmed={story.confirmed} interpretation={story.interpretation} /> */}
+
+        <Timeline items={story.timeline ?? []} />
+
+        <SourceComparison sources={story.sources ?? []} />
+
         <a href="#ask" className="forum-cta">
           Have a question about this story?
           <span>Discuss it in forum →</span>
         </a>
-
       </article>
 
       <aside>
@@ -119,11 +126,13 @@ export function StoryDetail({ story, onToast }: Props) {
             },
           ]}
         />
+
         <AskPulseVow onToast={onToast} />
+
         <RelatedArticles />
-        {/* <Recent /> */}
+
         <Newsletter onToast={onToast} />
-        {/* <FollowUs /> */}
+
         <Advertisement />
       </aside>
     </div>

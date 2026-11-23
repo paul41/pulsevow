@@ -1,6 +1,8 @@
-import {FOLLOW_TEXT} from "../../constants/follow-text.js";
+import { useTranslation } from "react-i18next";
 
 export function Social() {
+  const { t } = useTranslation();
+
   const socials: { label: string; href: string }[] = [
     { label: "𝕏 / Twitter", href: "#top" },
     { label: "f / Facebook", href: "#top" },
@@ -11,9 +13,9 @@ export function Social() {
 
   return (
     <div className="sidebar-card follow-card">
-      <h3>Follow us</h3>
+      <h3>{t("social.heading")}</h3>
       <p className="sidebar-note">
-        {FOLLOW_TEXT}
+        {t("social.description")}
       </p>
       <div className="social-stack">
         {socials.map((s) => (

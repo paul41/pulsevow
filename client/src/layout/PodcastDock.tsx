@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function PodcastDock({
     isPlaying,
@@ -9,8 +10,10 @@ export function PodcastDock({
     onToggle: () => void;
     onClose: () => void;
 }) {
+    const { t } = useTranslation();
     const [seconds, setSeconds] = useState(0);
     const audioRef = useRef<HTMLAudioElement>(null);
+
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -42,18 +45,28 @@ export function PodcastDock({
                 src="/pulse-5.mp3"
                 preload="metadata"
             />
-            <button className="closebtn" aria-label="Close" onClick={onClose}>
+            <button
+                className="closebtn"
+                aria-label={t("common.close")}
+                onClick={onClose}
+            >
                 ✕
             </button>
-            <button className="playbtn" onClick={onToggle} aria-label={isPlaying ? "Pause podcast" : "Play podcast"}>
+            <button
+                className="playbtn"
+                onClick={onToggle}
+                aria-label={
+                    isPlaying
+                        ? t("pulse.pausePodcast")
+                        : t("pulse.playPodcast")
+                }
+            >
                 {isPlaying && !done ? "❚❚" : "▶"}
             </button>
 
             <div className="podcast-info">
-                <div className="t1">Today's PulseVow 5</div>
-                <div className="t2">
-                    5 important stories · 4:51 · RBI rate cut is playing next
-                </div>
+                <div className="t1">{t("pulse.dockTitle")}</div>
+                <div className="t2">{t("pulse.dockSubtitle")}</div>
             </div>
 
             <div className="progress">
