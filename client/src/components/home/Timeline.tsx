@@ -1,22 +1,20 @@
+
 import { useTranslation } from "react-i18next";
 import { Block } from "../common/Block";
 import type { TimelineProps } from "./types";
 
 export function Timeline({ items }: TimelineProps) {
   const { t } = useTranslation();
-  console.log(items);
-  
-    const timelineItems = [
-      ['Today', 'RBI announces a 25 basis point reduction and outlines its policy stance.'],
-      ['3 weeks ago', "Retail inflation eased further, remaining within the RBI's comfort range."],
-      ['6 weeks ago', 'RBI held rates steady while indicating that further easing could depend on inflation and growth.'],
-      ['4 months ago', 'The central bank began the current easing cycle with its first rate reduction in nearly two years.'],
-    ];
+
   return (
-    <Block id="timeline" title={t("timeline.title")} hint={t("timeline.hint")}>
+    <Block
+      id="timeline"
+      title={t("timeline.title")}
+      hint={t("timeline.hint")}
+    >
       <div className="timeline">
-        {timelineItems.map(([date, text]) => (
-          <div className="tl-item" key={date}>
+        {items.map(([date, text], index) => (
+          <div className="tl-item" key={`${date}-${index}`}>
             <div className="tl-date">{date}</div>
             <div className="tl-text">{text}</div>
           </div>

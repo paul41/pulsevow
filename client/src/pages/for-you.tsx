@@ -1,5 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-import '../styles/for-you-page.css';
+import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../context/authContext";
+
+
+import "../styles/for-you-page.css";
 
 type CityInfo = {
   lat: number;
@@ -93,15 +98,25 @@ const STORIES: Story[] = [
   ['Local', 'Kolkata', 'Riverfront walkway reopens after a year of repairs', 'The new stretch includes shaded seating and cycle lanes.', '6 h ago'],
 ];
 
-const ROLE_CONFIG: Record<Role, { label: string; topics: string[] }> = {
-  All: { label: 'All roles', topics: [] },
-  Student: { label: 'Student hub', topics: ['Education', 'Science'] },
-  Lawyer: { label: 'Lawyer desk', topics: ['Law'] },
-  'Software engineer': { label: 'Developer desk', topics: ['Technology', 'Science'] },
-  Doctor: { label: 'Health desk', topics: ['Health', 'Science'] },
-  Teacher: { label: 'Classroom corner', topics: ['Education'] },
-  'Business professional': { label: 'Business brief', topics: ['Business'] },
-};
+// const ROLE_CONFIG: Record<Role, { label: string; topics: string[] }> = {
+//   All: { label: 'All roles', topics: [] },
+//   Student: { label: 'Student hub', topics: ['Education', 'Science'] },
+//   Lawyer: { label: 'Lawyer desk', topics: ['Law'] },
+//   'Software engineer': { label: 'Developer desk', topics: ['Technology', 'Science'] },
+//   Doctor: { label: 'Health desk', topics: ['Health', 'Science'] },
+//   Teacher: { label: 'Classroom corner', topics: ['Education'] },
+//   'Business professional': { label: 'Business brief', topics: ['Business'] },
+// };
+
+const languages = [
+  { code: "en", label: "English" },
+  { code: "hi", label: "हिन्दी" },
+  { code: "bn", label: "বাংলা" },
+  { code: "ta", label: "தமிழ்" },
+  { code: "te", label: "తెలుగు" },
+  { code: "mr", label: "मराठी" },
+  { code: "kn", label: "ಕನ್ನಡ" },
+];
 
 type RankedStory = { story: Story; score: number; index: number; reason: string };
 
@@ -112,71 +127,173 @@ function StoryThumb({ category }: { category: string }) {
   return <div className="pv-thumb" style={{ '--pv-c1': start, '--pv-c2': end } as React.CSSProperties}><b>{category}</b></div>;
 }
 
-export default function ForYouPage() {
-  const [city, setCity] = useState('New Delhi');
-  const [topics, setTopics] = useState<string[]>(['Technology', 'Business', 'Law']);
-  const [role, setRole] = useState<Role>('All');
+type ForYouPreferences = {
+  city?: string;
+  role?: Role;
+  interests?: string[];
+  sectors?: string[];
+  followedSources?: string[];
+};
+
+type ForYouPageProps = {
+  isAuthenticated?: boolean;
+  preferences?: ForYouPreferences;
+};
+
+export default function ForYouPage({
+  isAuthenticated = false,
+  preferences,
+}: ForYouPageProps) {
+  const [city, setCity] = useState(preferences?.city || 'New Delhi');
+  const [topics, setTopics] = useState<string[]>(
+    preferences?.interests?.length
+      ? preferences.interests
+      : ['Technology', 'Business', 'Law']
+  );
+  // const [role, setRole] = useState<Role>(
+  //   preferences?.role || 'All'
+  // );
+  const { t, i18n } = useTranslation();
+  const language = i18n.resolvedLanguage || "en";
   const [locationMessage, setLocationMessage] = useState('');
   const [email, setEmail] = useState('');
   const [subscribeMessage, setSubscribeMessage] = useState('');
-
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  // Apply profile preferences when they become available.
   useEffect(() => {
+    if (!preferences) return;
+
+    if (preferences.city && CITIES[preferences.city]) {
+      setCity(preferences.city);
+    }
+
+    // if (preferences.role && preferences.role in ROLE_CONFIG) {
+    //   setRole(preferences.role);
+    // }
+
+    if (preferences.interests?.length) {
+      setTopics(preferences.interests);
+    }
+  }, [preferences]);
+
+  // Guest preferences are stored locally.
+  useEffect(() => {
+    if (isAuthenticated) return;
+
     try {
-      const saved = JSON.parse(localStorage.getItem('pv') || 'null') as { city?: string; topics?: string[] } | null;
-      if (saved && saved.city && CITIES[saved.city] && Array.isArray(saved.topics)) {
-        setCity(saved.city);
+      const saved = JSON.parse(
+        localStorage.getItem('pv') || 'null'
+      ) as { city?: string; topics?: string[] } | null;
+
+      if (saved?.city && CITIES[saved.city]) {
+        setCity(preferences?.city || saved.city);
+      }
+
+      if (Array.isArray(saved?.topics) && !preferences?.interests?.length) {
         setTopics(saved.topics);
       }
     } catch {
       // Ignore invalid or unavailable local preferences.
     }
-  }, []);
+  }, [isAuthenticated, preferences]);
 
   useEffect(() => {
+    if (isAuthenticated) return;
+
     try {
       localStorage.setItem('pv', JSON.stringify({ city, topics }));
     } catch {
-      // Storage may be unavailable in private browsing.
+      // Storage may be unavailable.all 
     }
-  }, [city, topics]);
+  }, [city, topics, isAuthenticated]);
+
+  // const roleTopics = ROLE_CONFIG[role].topics;
+  //const roleActive = role !== 'All';
+
+  // Change application language
+  const handleLanguageChange = (languageCode: string) => {
+    void i18n.changeLanguage(languageCode || "en");
+  };
 
   const ranked = useMemo<RankedStory[]>(() => {
-    const roleActive = role !== 'All';
-    const roleTopics = ROLE_CONFIG[role].topics;
     return STORIES.reduce<RankedStory[]>((result, story, index) => {
       const [category, storyCity] = story;
+
       if (storyCity && storyCity !== city) return result;
 
       let score = 0;
       const reasons: string[] = [];
+
       if (storyCity === city) {
         score += 3;
         reasons.push(`near ${city}`);
       }
 
-      if (roleActive) {
-        if (!roleTopics.includes(category)) return result;
+      // if (roleActive) {
+      //   if (!roleTopics.includes(category)) return result;
+
+      //   score += 2;
+      //   reasons.push(ROLE_CONFIG[role].label);
+      // } 
+      if (topics.includes(category)) {
         score += 2;
-        reasons.push(ROLE_CONFIG[role].label);
-      } else if (topics.includes(category)) {
-        score += 2;
-        reasons.push(`you follow ${category}`);
+        reasons.push(`your interest: ${category}`);
       } else if (category !== 'Local') {
         return result;
       }
 
-      result.push({ story, score, index, reason: cap(reasons.join(' · ')) });
+      result.push({
+        story,
+        score,
+        index,
+        reason: cap(reasons.join(' · ')),
+      });
+
       return result;
     }, []).sort((a, b) => b.score - a.score || a.index - b.index);
-  }, [city, role, topics]);
+  }, [city, topics/*role, , roleActive, roleTopics*/]);
 
-  const cityInfo = CITIES[city];
-  const roleActive = role !== 'All';
-  const remaining = ranked.slice(4);
-  const lead = remaining[0];
+  const cityInfo = CITIES[city] || CITIES['New Delhi'];
+
+  // Stories relevant to the selected city.
+  const localStories = ranked.filter(
+    (item) => item.story[1] === city
+  );
+
+  // Stories matching the selected profession.
+  // const professionStories = roleActive
+  //   ? ranked.filter((item) => roleTopics.includes(item.story[0]))
+  //   : [];
+
+  // Stories matching selected interests.
+  const topicStories = ranked.filter(
+    (item) => topics.includes(item.story[0])
+  );
+
+  // Broad stories not tied to a specific city.
+  // These remain visible to guests and logged-in users.
+  const majorDevelopments = STORIES
+    .map((story, index) => ({ story, index }))
+    .filter(({ story }) => story[1] === null)
+    .slice(0, 5)
+    .map(({ story, index }) => ({
+      story,
+      index,
+      score: 1,
+      reason: 'National & global coverage',
+    }));
+
+  // The current mock data has no publisher or sector metadata.
+  const followedSources = preferences?.followedSources || [];
+  const followedSectors = preferences?.sectors || [];
 
   const toggleTopic = (topic: string) => {
-    setTopics((current) => current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]);
+    setTopics((current) =>
+      current.includes(topic)
+        ? current.filter((item) => item !== topic)
+        : [...current, topic]
+    );
   };
 
   const detectLocation = () => {
@@ -184,110 +301,520 @@ export default function ForYouPage() {
       setLocationMessage('Location is not supported by this browser.');
       return;
     }
+
     setLocationMessage('Locating…');
+
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        const nearest = Object.entries(CITIES).reduce((best, [name, info]) => {
-          const distance = (info.lat - coords.latitude) ** 2 + (info.lon - coords.longitude) ** 2;
-          return distance < best.distance ? { name, distance } : best;
-        }, { name: city, distance: Number.POSITIVE_INFINITY });
+        const nearest = Object.entries(CITIES).reduce(
+          (best, [name, info]) => {
+            const distance =
+              (info.lat - coords.latitude) ** 2 +
+              (info.lon - coords.longitude) ** 2;
+
+            return distance < best.distance
+              ? { name, distance }
+              : best;
+          },
+          { name: city, distance: Number.POSITIVE_INFINITY }
+        );
+
         setCity(nearest.name);
         setLocationMessage(`Nearest: ${nearest.name}`);
       },
       () => setLocationMessage('Location access was blocked.'),
-      { timeout: 8000 },
+      { timeout: 8000 }
     );
   };
 
   const subscribe = () => {
-    setSubscribeMessage(/^\S+@\S+\.\S+$/.test(email.trim())
-      ? 'Subscribed. Check your inbox to confirm.'
-      : 'Enter a valid email address.');
+    setSubscribeMessage(
+      /^\S+@\S+\.\S+$/.test(email.trim())
+        ? 'Subscribed. Check your inbox to confirm.'
+        : 'Enter a valid email address.'
+    );
   };
 
-  const renderStoryLink = (item: RankedStory, className: string) => (
-    <a className={className} href="#" key={`${item.index}-${className}`}>
+  const renderStoryLink = (
+    item: RankedStory,
+    className: string
+  ) => (
+    <a
+      className={className}
+      href="#"
+      key={`${item.index}-${className}`}
+    >
       <StoryThumb category={item.story[0]} />
+
       <div>
-        {className === 'pv-pick' ? <h3>{item.story[2]}</h3> : className === 'pv-lead' ? <><div className="pv-meta"><span className="pv-why">{item.reason}</span></div><h2>{item.story[2]}</h2><p>{item.story[3]}</p><div className="pv-meta">{item.story[4]}</div></> : <><h3>{item.story[2]}</h3><p>{item.story[3]}</p><div className="pv-meta"><span className="pv-why">{item.reason}</span> · {item.story[4]}</div></>}
-        {className === 'pv-pick' && <div className="pv-meta"><span className="pv-why">{item.reason}</span> · {item.story[4]}</div>}
+        {className === 'pv-pick' ? (
+          <h3>{item.story[2]}</h3>
+        ) : className === 'pv-lead' ? (
+          <>
+            <div className="pv-meta">
+              <span className="pv-why">{item.reason}</span>
+            </div>
+            <h2>{item.story[2]}</h2>
+            <p>{item.story[3]}</p>
+            <div className="pv-meta">{item.story[4]}</div>
+          </>
+        ) : (
+          <>
+            <h3>{item.story[2]}</h3>
+            <p>{item.story[3]}</p>
+            <div className="pv-meta">
+              <span className="pv-why">{item.reason}</span>
+              {' · '}
+              {item.story[4]}
+            </div>
+          </>
+        )}
+
+        {className === 'pv-pick' && (
+          <div className="pv-meta">
+            <span className="pv-why">{item.reason}</span>
+            {' · '}
+            {item.story[4]}
+          </div>
+        )}
       </div>
     </a>
   );
 
+  const renderSection = (
+    title: string,
+    items: RankedStory[],
+    subtitle?: string
+  ) => (
+    <section className="pv-content-section">
+      <div className="pv-section">
+        <h2>{title}</h2>
+        <span>{subtitle || `${items.length} stories`}</span>
+      </div>
+
+      <div className="pv-picks">
+        {items.slice(0, 4).map((item) =>
+          renderStoryLink(item, 'pv-pick')
+        )}
+
+        {items.length === 0 && (
+          <p className="pv-empty">
+            No matching stories available yet.
+          </p>
+        )}
+      </div>
+    </section>
+  );
+
+   const getUserInitials = () => {
+    const name = user?.name?.trim();
+
+    if (!name) return "PV";
+
+    return name
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase();
+  };
+
   return (
     <div className="pv-page">
-      <header className="pv-top">
+      <header className="topnav">
         <div className="pv-wrap pv-bar">
-          <a className="pv-logo" href="/">PulseVow<i /></a>
+          {/* Brand */}
+          <Link
+            className="brand"
+            to="/"
+            aria-label="PulseVow home"
+          >
+            <div className="mark" aria-hidden="true">
+              P
+            </div>
+
+            <div className="brand-copy">
+              <span className="name">PulseVow</span>
+              <span className="tag">
+                Beyond News. Intel Insight.
+              </span>
+            </div>
+          </Link>
+
           <span className="pv-spacer" />
-          <select className="pv-role-select" aria-label="Browse as" value={role} onChange={(event) => setRole(event.target.value as Role)}>
-            {Object.entries(ROLE_CONFIG).map(([key, value]) => <option key={key} value={key}>{value.label}</option>)}
+
+          {/* Language Selector */}
+          <select
+            className="lang"
+            value={language}
+            onChange={(event) =>
+              handleLanguageChange(event.target.value)
+            }
+            name="language"
+            aria-label={t("common.selectLanguage")}
+          >
+            {languages.map((item) => (
+              <option key={item.code} value={item.code}>
+                {item.label}
+              </option>
+            ))}
           </select>
-          <button className="pv-button" type="button">Search</button>
-          <button className="pv-button pv-primary" type="button">Sign in</button>
+
+          {/* Authentication */}
+          {isAuthenticated ? (
+            <button
+              type="button"
+              className="avatar"
+              title={t("common.viewProfile")}
+              aria-label={t("common.viewProfile")}
+              onClick={() => navigate("/my-profile")}
+            >
+              {getUserInitials()}
+            </button>
+          ) : (
+            <Link to="/login" className="login-btn">
+              {t("common.login")}
+            </Link>
+          )}
         </div>
       </header>
 
       <main className="pv-wrap">
         <section className="pv-intro">
-          <div><h1>For you</h1><p>{roleActive ? `${ROLE_CONFIG[role].label}: ${role.toLowerCase()} news for ${city}. Choose All roles to use your interests.` : `News for ${city}, filtered by the interests you chose at registration.`}</p></div>
+          <div>
+            <h1>For you</h1>
+            <p>
+              {isAuthenticated
+                ? `Your news briefing based on your interests, profession and location.`
+                : `A news briefing covering the stories that matter across India, with local relevance.`}
+            </p>
+          </div>
+
           <div className="pv-location">
-            <select aria-label="Your city" value={city} onChange={(event) => { setCity(event.target.value); setLocationMessage(''); }}>
-              {Object.keys(CITIES).map((name) => <option key={name} value={name}>{name}</option>)}
+            <select
+              aria-label="Your city"
+              value={city}
+              onChange={(event) => {
+                setCity(event.target.value);
+                setLocationMessage('');
+              }}
+            >
+              {Object.keys(CITIES).map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
             </select>
-            <button className="pv-button" id="detect" type="button" onClick={detectLocation}>Use my location</button>
-            {locationMessage && <span className="pv-location-message" role="status">{locationMessage}</span>}
+
+            <button
+              className="pv-button"
+              type="button"
+              onClick={detectLocation}
+            >
+              Use my location
+            </button>
+
+            {locationMessage && (
+              <span className="pv-location-message" role="status">
+                {locationMessage}
+              </span>
+            )}
           </div>
         </section>
 
-        <div className={`pv-chips${roleActive ? ' off' : ''}`} role="group" aria-label="Your interests">
-          {TOPICS.map((topic) => <button className="pv-chip" type="button" key={topic} disabled={roleActive} aria-pressed={topics.includes(topic)} onClick={() => toggleTopic(topic)}>{topic}</button>)}
-        </div>
+        {/* 1. DAILY BRIEFING */}
+        <section className="pv-content-section">
+          <div className="pv-section">
+            <h2>Your Daily Briefing</h2>
+            <span>Start with what matters</span>
+          </div>
 
-        <section className="pv-section">
-          <h2>Top picks for you</h2><span>{ranked.length} stories</span>
+          {ranked[0] ? (
+            <div className="pv-picks">
+              {renderStoryLink(ranked[0], 'pv-lead')}
+              {ranked.slice(1, 4).map((item) =>
+                renderStoryLink(item, 'pv-story-row')
+              )}
+            </div>
+          ) : (
+            <p className="pv-empty">
+              Your briefing is being prepared.
+            </p>
+          )}
         </section>
-        <div className="pv-picks">
-          {ranked.slice(0, 4).map((item) => renderStoryLink(item, 'pv-pick'))}
-          {ranked.length === 0 && <p className="pv-empty">No stories match yet. Add an interest or pick another role.</p>}
-        </div>
+
+        {/* 2. AROUND YOUR LOCATION */}
+        {renderSection(
+          `Around ${city}`,
+          localStories,
+          'Local developments'
+        )}
+
+        {/* 3. PROFESSION */}
+        {/* <section className="pv-content-section">
+          <div className="pv-section">
+            <h2>
+              {roleActive
+                ? `Relevant to your profession`
+                : 'Professional relevance'}
+            </h2>
+            <span>
+              {roleActive ? ROLE_CONFIG[role].label : 'Choose a role'}
+            </span>
+          </div>
+
+          {roleActive ? (
+            <div className="pv-picks">
+              {professionStories.slice(0, 4).map((item) =>
+                renderStoryLink(item, 'pv-pick')
+              )}
+
+              {professionStories.length === 0 && (
+                <p className="pv-empty">
+                  No profession-related stories available yet.
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="pv-empty">
+              Select your profession above to see news relevant to
+              your work and industry.
+            </p>
+          )}
+        </section> */}
+
+        {/* 4. TOPICS */}
+        <section className="pv-content-section">
+          <div className="pv-section">
+            <h2>Your Topics</h2>
+            <span>Choose what you want to follow</span>
+          </div>
+
+          <div className="pv-chips" role="group" aria-label="Your interests">
+            {TOPICS.map((topic) => (
+              <button
+                className="pv-chip"
+                type="button"
+                key={topic}
+                aria-pressed={topics.includes(topic)}
+                onClick={() => toggleTopic(topic)}
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
+
+          <div className="pv-picks">
+            {topicStories.slice(0, 4).map((item) =>
+              renderStoryLink(item, 'pv-pick')
+            )}
+
+            {topicStories.length === 0 && (
+              <p className="pv-empty">
+                Select a topic to build your news feed.
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* 5. FOLLOWED FEEDS */}
+        <section className="pv-content-section">
+          <div className="pv-section">
+            <h2>Feeds You Follow</h2>
+            <span>
+              {followedSources.length
+                ? `${followedSources.length} sources`
+                : 'Your selected publishers'}
+            </span>
+          </div>
+
+          {followedSources.length > 0 ? (
+            <div className="pv-box">
+              <p>
+                Your followed publishers will appear here when
+                publisher-specific stories are connected to this feed.
+              </p>
+            </div>
+          ) : (
+            <div className="pv-box">
+              <h3>Build your own news mix</h3>
+              <p>
+                Follow trusted publishers to see their latest coverage
+                together in one place.
+              </p>
+              {!isAuthenticated && (
+                <p>
+                  Sign in to save the publishers you follow.
+                </p>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* 6. INDUSTRY & SECTOR WATCH */}
+        <section className="pv-content-section">
+          <div className="pv-section">
+            <h2>Industry &amp; Sector Watch</h2>
+            <span>Your professional landscape</span>
+          </div>
+
+          {followedSectors.length > 0 ? (
+            <div className="pv-chips">
+              {followedSectors.map((sector) => (
+                <span className="pv-chip" key={sector}>
+                  {sector}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="pv-empty">
+              {isAuthenticated
+                ? 'Add sectors to your profile to follow developments affecting your industry.'
+                : 'Sign in to select the industries and sectors you want to track.'}
+            </p>
+          )}
+        </section>
+
+        {/* 7. MAJOR DEVELOPMENTS */}
+        {renderSection(
+          'Major Developments',
+          majorDevelopments,
+          'Important stories beyond your interests'
+        )}
 
         <div className="pv-layout">
           <section>
-            <div className="pv-section"><h2>Your feed</h2><span>Newest first</span></div>
-            {lead ? renderStoryLink(lead, 'pv-lead') : null}
-            {remaining.slice(1).map((item) => renderStoryLink(item, 'pv-story-row'))}
+            <div className="pv-section">
+              <h2>More for you</h2>
+              <span>Based on your preferences</span>
+            </div>
+
+            {ranked.slice(4).map((item) =>
+              renderStoryLink(item, 'pv-story-row')
+            )}
+
+            {ranked.length <= 4 && (
+              <p className="pv-empty">
+                More relevant stories will appear as new coverage arrives.
+              </p>
+            )}
           </section>
 
           <aside>
             <div className="pv-box" aria-live="polite">
               <h2>Weather in {city}</h2>
-              <div className="pv-weather"><div className="pv-temperature">{cityInfo.temp}°C</div><div><b>{cityInfo.description}</b><small>{cityInfo.details}</small></div></div>
-              <div className="pv-days">{cityInfo.forecast.map(([day, temp]) => <div key={day}>{day}<br /><b>{temp}°</b></div>)}</div>
+
+              <div className="pv-weather">
+                <div className="pv-temperature">
+                  {cityInfo.temp}°C
+                </div>
+                <div>
+                  <b>{cityInfo.description}</b>
+                  <small>{cityInfo.details}</small>
+                </div>
+              </div>
+
+              <div className="pv-days">
+                {cityInfo.forecast.map(([day, temp]) => (
+                  <div key={day}>
+                    {day}
+                    <br />
+                    <b>{temp}°</b>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="pv-box"><h2>Near you</h2>{cityInfo.alerts.map(([headline, detail]) => <div className="pv-alert" key={headline}>{headline}<small>{detail}</small></div>)}</div>
-            <div className="pv-box"><h2>Trending in your topics</h2><ol className="pv-trend">{ranked.slice(0, 5).map((item, index) => <li key={item.index}><b>{index + 1}</b><span>{item.story[2]}</span></li>)}</ol></div>
+
+            <div className="pv-box">
+              <h2>Near you</h2>
+              {cityInfo.alerts.map(([headline, detail]) => (
+                <div className="pv-alert" key={headline}>
+                  {headline}
+                  <small>{detail}</small>
+                </div>
+              ))}
+            </div>
+
+            <div className="pv-box">
+              <h2>Trending in your topics</h2>
+              <ol className="pv-trend">
+                {topicStories.slice(0, 5).map((item, index) => (
+                  <li key={item.index}>
+                    <b>{index + 1}</b>
+                    <span>{item.story[2]}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
             <div className="pv-box pv-newsletter">
               <h2>Daily briefing</h2>
-              <label htmlFor="pv-email">Get your top five stories each morning.</label>
-              <input id="pv-email" type="email" placeholder="you@example.com" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-              <button className="pv-button pv-primary" type="button" onClick={subscribe}>Subscribe</button>
-              <p className="pv-success" role="status">{subscribeMessage}</p>
+              <label htmlFor="pv-email">
+                Get your top five stories each morning.
+              </label>
+              <input
+                id="pv-email"
+                type="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button
+                className="pv-button pv-primary"
+                type="button"
+                onClick={subscribe}
+              >
+                Subscribe
+              </button>
+              <p className="pv-success" role="status">
+                {subscribeMessage}
+              </p>
             </div>
           </aside>
         </div>
       </main>
 
-      <footer className="pv-footer"><div className="pv-wrap">
-        <div className="pv-footer-grid">
-          <div><div className="pv-logo">PulseVow</div><p>Reporting that follows the places and topics you care about.</p></div>
-          <div><h4>Sections</h4><a href="#">Local</a><a href="#">World</a><a href="#">Business</a><a href="#">Tech</a></div>
-          <div><h4>Company</h4><a href="#">About us</a><a href="#">Careers</a><a href="#">Contact</a></div>
-          <div><h4>Your account</h4><a href="#">Manage interests</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+      <footer className="pv-footer">
+        <div className="pv-wrap">
+          <div className="pv-footer-grid">
+            <div>
+              <div className="pv-logo">PulseVow</div>
+              <p>
+                Reporting that helps you understand the stories
+                shaping your world.
+              </p>
+            </div>
+
+            <div>
+              <h4>Sections</h4>
+              <a href="#">India</a>
+              <a href="#">World</a>
+              <a href="#">Business</a>
+              <a href="#">Technology</a>
+            </div>
+
+            <div>
+              <h4>Company</h4>
+              <a href="#">About us</a>
+              <a href="#">Careers</a>
+              <a href="#">Contact</a>
+            </div>
+
+            <div>
+              <h4>Your account</h4>
+              <a href="#">Manage interests</a>
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+            </div>
+          </div>
+
+          <div className="pv-copyright">
+            © 2026 PulseVow. All rights reserved.
+          </div>
         </div>
-        <div className="pv-copyright">© 2026 PulseVow. All rights reserved.</div>
-      </div></footer>
+      </footer>
     </div>
   );
 }
+

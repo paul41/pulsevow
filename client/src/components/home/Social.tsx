@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export function FollowUs() {
+export function Social() {
   const { t } = useTranslation();
 
   const socials: { label: string; href: string }[] = [

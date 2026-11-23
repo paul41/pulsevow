@@ -44,6 +44,7 @@ export default function Profile() {
   const [newsletter, setNewsletter] = useState(true);
   const [saved, setSaved] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [personalizedStories, setPersonalizedStories] = useState(true);
 
   /*
    * Populate profile fields from AuthProvider.
@@ -97,6 +98,7 @@ export default function Profile() {
       language,
       interests: selected,
       newsletter,
+      personalizedStories
     });
     setSaved(true);
 
@@ -298,9 +300,14 @@ export default function Profile() {
                 </span>
               </div>
 
-              <span className="setting-on">
-                ON
-              </span>
+              <button
+                type="button"
+                className={`setting-toggle ${personalizedStories?'on':''}`}
+                onClick={()=>setPersonalizedStories(!personalizedStories)}
+                aria-label="Toggle personalized stories"
+              >
+                <span />
+              </button>
             </div>
 
             <div className="setting-row">

@@ -1,0 +1,83 @@
+.who-it-affects {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: inherit;
+}
+
+.who-it-affects .affected-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.who-it-affects .affected-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.who-it-affects .affected-heading h3 {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.who-it-affects .affected-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.who-it-affects .affected-card {
+  padding: 13px 15px;
+  border: 1px solid rgba(120, 120, 120, 0.18);
+  border-radius: 10px;
+  min-width: 0;
+  background: transparent;
+}
+
+.who-it-affects .affected-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0 0 5px;
+}
+
+.who-it-affects .affected-card p {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+}
+
+.who-it-affects .public-badge {
+  font-size: 10px;
+  font-weight: 650;
+  color: var(--gold-deep);
+  background: rgba(200, 149, 42, 0.12);
+  padding: 5px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .who-it-affects .affected-card {
+    padding: 12px;
+  }
+
+  .who-it-affects .affected-card h4 {
+    font-size: 13px;
+  }
+
+  .who-it-affects .affected-card p {
+    font-size: 12px;
+  }
+}
