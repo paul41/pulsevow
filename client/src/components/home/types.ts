@@ -52,7 +52,10 @@ export interface RelatedArticle {
 }
 
 // Timeline Types
-type TimelineItem = [string, string];
+export interface TimelineItem {
+  date: Date;
+  content: string;
+}
 
 // Used by TimelineProps
 export interface TimelineProps {
