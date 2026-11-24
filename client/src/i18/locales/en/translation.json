@@ -98,6 +98,37 @@
     "heading": "Follow us",
     "description": "Stay connected with PulseVow and get the latest intelligence updates."
   },
+  "affected": {
+    "title": "Who should pay attention"
+  },
+  "sources": {
+    "sourceComparison": "How sources are covering it",
+    "readSource": "Read source"
+  },
+  "matter": {
+    "impactAndOutlook": "Impact & Outlook",
+    "whyItMatters": "Why this matters",
+    "whatNext": "What happens next?",
+    "publicInsight": "Public insight"
+  },
+  "storyDetail": {
+    "briefTitle": "30-second brief",
+    "readSource": "Read Source ↗",
+    "forumQuestion": "Have a question about this story?",
+    "discussInForum": "Discuss it in forum →",
+    "lastUpdated": "Updated:",
+    "eventConfidence": "Event confidence:",
+    "representativeImageOf": "Representative image of"
+  },
+  "news360": {
+  "title": "Pulse 360",
+  "noImage": "No image available",
+  "readMore": "Understand this story →",
+  "noArticles": "No world news articles are available right now."
+},
+"MostRead": {
+  "title": "Most Read"
+},
   "footer": {
     "description": "PulseVow is an AI-first news intelligence platform that transforms breaking news into actionable insights through AI-powered summaries, impact analysis, source comparison, timelines and personalized recommendations.",
     "getInTouch": "Get In Touch",

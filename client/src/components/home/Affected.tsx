@@ -1,14 +1,16 @@
 import { Block } from "../common/Block.js";
 import type { AffectedProps } from "./types.js";
 import "../../styles/affect.css";
+import { useTranslation } from "react-i18next";
 
 export function Affected({ affectedGroups }: AffectedProps) {
+  const { t } = useTranslation();
   return (
     <Block title={""}>
       <div className="who-it-affects">
         <div className="affected-section">
           <div className="affected-heading">
-            <h3>Who should pay attention</h3>
+            <h3>{t("affected.title")}</h3>{" "}
           </div>
 
           <div className="affected-grid">

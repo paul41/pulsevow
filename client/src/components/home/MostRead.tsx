@@ -1,7 +1,8 @@
 import { Block } from "../common/Block";
 import type { RecommendationItem } from "./types";
-
+import { useTranslation } from "react-i18next";
 export function MostRead() {
+  const { t } = useTranslation();
   const items: RecommendationItem[] = [
     {
       image:
@@ -45,7 +46,7 @@ export function MostRead() {
 
   return (
     <Block
-      title="Most Read"
+      title={t("MostRead.title")}
     >
       <div className="recommended-grid">
         {items.map((x) => (
