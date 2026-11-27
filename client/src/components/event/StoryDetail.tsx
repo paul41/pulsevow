@@ -22,7 +22,7 @@ export function StoryDetail({ story, onToast }: Props) {
         </header>
 
         <div className="story-meta">
-          <span>41 sources tracked</span>
+          <span>41 {t("storyDetail.sources")}</span>
 
           <span className="meta-updated">
             {t("storyDetail.lastUpdated")}

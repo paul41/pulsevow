@@ -112,6 +112,7 @@
     "publicInsight": "Public insight"
   },
   "storyDetail": {
+    "sources": "Sources Tracked",
     "briefTitle": "30-second brief",
     "readSource": "Read Source ↗",
     "forumQuestion": "Have a question about this story?",
