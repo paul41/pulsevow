@@ -5,6 +5,7 @@ import { useAuth } from "../context/authContext";
 
 
 import "../styles/for-you-page.css";
+import "../styles/navbar.css";
 
 type CityInfo = {
   lat: number;
@@ -420,29 +421,28 @@ export default function ForYouPage({
   };
 
   return (
-    <div className="pv-page">
+    <>
       <header className="topnav">
-        <div className="pv-wrap pv-bar">
-          {/* Brand */}
-          <Link
-            className="brand"
-            to="/"
-            aria-label="PulseVow home"
-          >
-            <div className="mark" aria-hidden="true">
-              P
-            </div>
+        {/* Brand */}
+        <Link
+          className="brand"
+          to="/"
+          aria-label={t("common.homeAriaLabel")}
+        >
+          <div className="mark" aria-hidden="true">
+            P
+          </div>
 
-            <div className="brand-copy">
-              <span className="name">PulseVow</span>
-              <span className="tag">
-                Beyond News. Intel Insight.
-              </span>
-            </div>
-          </Link>
+          <div className="brand-copy">
+            <span className="name">PulseVow</span>
+            <span className="tag">
+              {t("common.tagline")}
+            </span>
+          </div>
+        </Link>
 
-          <span className="pv-spacer" />
-
+        {/* Right Navigation */}
+        <div className="nav-right">
           {/* Language Selector */}
           <select
             className="lang"
@@ -461,7 +461,7 @@ export default function ForYouPage({
           </select>
 
           {/* Authentication */}
-          {isAuthenticated ? (
+          {isAuthenticated || user ? (
             <button
               type="button"
               className="avatar"
@@ -479,7 +479,8 @@ export default function ForYouPage({
         </div>
       </header>
 
-      <main className="pv-wrap">
+      <div className="pv-page">
+        <main className="pv-wrap">
         <section className="pv-intro">
           <div>
             <h1>For you</h1>
@@ -522,7 +523,9 @@ export default function ForYouPage({
           </div>
         </section>
 
-        {/* 1. DAILY BRIEFING */}
+        <div className="pv-layout">
+          <section className="pv-main-content">
+            {/* 1. DAILY BRIEFING */}
         <section className="pv-content-section">
           <div className="pv-section">
             <h2>Your Daily Briefing</h2>
@@ -682,25 +685,26 @@ export default function ForYouPage({
           'Important stories beyond your interests'
         )}
 
-        <div className="pv-layout">
-          <section>
-            <div className="pv-section">
-              <h2>More for you</h2>
-              <span>Based on your preferences</span>
-            </div>
+        {/* 8. MORE FOR YOU */}
+        <div className="pv-content-section">
+          <div className="pv-section">
+            <h2>More for you</h2>
+            <span>Based on your preferences</span>
+          </div>
 
-            {ranked.slice(4).map((item) =>
-              renderStoryLink(item, 'pv-story-row')
-            )}
+          {ranked.slice(4).map((item) =>
+            renderStoryLink(item, 'pv-story-row')
+          )}
 
-            {ranked.length <= 4 && (
-              <p className="pv-empty">
-                More relevant stories will appear as new coverage arrives.
-              </p>
-            )}
-          </section>
+          {ranked.length <= 4 && (
+            <p className="pv-empty">
+              More relevant stories will appear as new coverage arrives.
+            </p>
+          )}
+        </div>
+      </section>
 
-          <aside>
+      <aside>
             <div className="pv-box" aria-live="polite">
               <h2>Weather in {city}</h2>
 
@@ -815,6 +819,7 @@ export default function ForYouPage({
         </div>
       </footer>
     </div>
+    </>
   );
 }
 

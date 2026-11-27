@@ -7,24 +7,25 @@ import { MattersNext } from "../home/Matter";
 import { RelatedArticles } from "../home/Related";
 import { Affected } from "../home/Affected";
 import type { Props } from "./types";
+import { useTranslation } from "react-i18next";
 
 export function StoryDetail({ story, onToast }: Props) {
+  const { t } = useTranslation();
+
   console.log("Fetched NEWS-story:", story);
 
   return (
     <div className="storygrid" id="story">
       <article>
         <header className="story-header">
-          <h1 className="story-title headline-font">
-            {story.title}
-          </h1>
+          <h1 className="story-title headline-font">{story.title}</h1>
         </header>
 
         <div className="story-meta">
-          <span>41 sources tracked</span>
+          <span>41 {t("storyDetail.sources")}</span>
 
           <span className="meta-updated">
-            Updated:
+            {t("storyDetail.lastUpdated")}
             <span className="cell-value">
               <span className="live-dot" />
               12 min ago
@@ -32,22 +33,19 @@ export function StoryDetail({ story, onToast }: Props) {
           </span>
 
           <span>
-            Event confidence: <strong>High</strong>
+            {t("storyDetail.eventConfidence")}
+            <strong>High</strong>
           </span>
         </div>
 
         <div className="hero-content">
           <figure className="hero-figure">
-            <img
-              src={story.imageUrl}
-              alt={story.source?.name}
-            />
+            <img src={story.imageUrl} alt={story.source?.name} />
 
             <figcaption>
               <span className="image-caption">
-                <span>Representative image</span>
                 <span>
-                  of{" "}
+                  {t("storyDetail.representativeImageOf")}{" "}
                   <strong>
                     <a
                       href={story.url.split("/").slice(0, 3).join("/")}
@@ -60,29 +58,23 @@ export function StoryDetail({ story, onToast }: Props) {
                 </span>
               </span>
 
-              <a
-                href={story.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Read Source ↗
+              <a href={story.url} target="_blank" rel="noreferrer">
+                {t("storyDetail.readSource")}
               </a>
             </figcaption>
           </figure>
 
           <div className="brief-card">
-            <div className="lbl">30-second brief</div>
-
+            <div className="lbl">{t("storyDetail.briefTitle")}</div>
             <p>
               The RBI lowered its policy rate to support growth. Banks may
-              revise loan rates, but none is confirmed to pass on the full
-              cut. Markets reacted, and inflation remains a concern.
-              **Cheaper loans could be on the horizon!**
-              The RBI has cut interest rates to give India's economy a
-              growth boost. Home and auto loan borrowers may welcome
-              lower EMIs if banks pass on the benefit. Markets are
-              watching closely, but the big question remains: will
-              cheaper credit fuel growth without pushing inflation higher?
+              revise loan rates, but none is confirmed to pass on the full cut.
+              Markets reacted, and inflation remains a concern. **Cheaper loans
+              could be on the horizon!** The RBI has cut interest rates to give
+              India's economy a growth boost. Home and auto loan borrowers may
+              welcome lower EMIs if banks pass on the benefit. Markets are
+              watching closely, but the big question remains: will cheaper
+              credit fuel growth without pushing inflation higher?
             </p>
           </div>
         </div>
@@ -92,7 +84,7 @@ export function StoryDetail({ story, onToast }: Props) {
           whatNext={[
             "Banks may review lending rates, potentially reducing EMIs for borrowers.",
             "Investors will monitor bond yields and interest-sensitive stocks.",
-            "Upcoming inflation data will indicate whether the RBI has room for further rate cuts."
+            "Upcoming inflation data will indicate whether the RBI has room for further rate cuts.",
           ]}
         />
 
@@ -101,8 +93,8 @@ export function StoryDetail({ story, onToast }: Props) {
         <SourceComparison sources={story.sources ?? []} />
 
         <a href="#ask" className="forum-cta">
-          Have a question about this story?
-          <span>Discuss it in forum →</span>
+          {t("storyDetail.forumQuestion")}
+          <span>{t("storyDetail.discussInForum")}</span>
         </a>
       </article>
 
