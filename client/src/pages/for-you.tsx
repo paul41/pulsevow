@@ -523,7 +523,9 @@ export default function ForYouPage({
           </div>
         </section>
 
-        {/* 1. DAILY BRIEFING */}
+        <div className="pv-layout">
+          <section className="pv-main-content">
+            {/* 1. DAILY BRIEFING */}
         <section className="pv-content-section">
           <div className="pv-section">
             <h2>Your Daily Briefing</h2>
@@ -683,25 +685,26 @@ export default function ForYouPage({
           'Important stories beyond your interests'
         )}
 
-        <div className="pv-layout">
-          <section>
-            <div className="pv-section">
-              <h2>More for you</h2>
-              <span>Based on your preferences</span>
-            </div>
+        {/* 8. MORE FOR YOU */}
+        <div className="pv-content-section">
+          <div className="pv-section">
+            <h2>More for you</h2>
+            <span>Based on your preferences</span>
+          </div>
 
-            {ranked.slice(4).map((item) =>
-              renderStoryLink(item, 'pv-story-row')
-            )}
+          {ranked.slice(4).map((item) =>
+            renderStoryLink(item, 'pv-story-row')
+          )}
 
-            {ranked.length <= 4 && (
-              <p className="pv-empty">
-                More relevant stories will appear as new coverage arrives.
-              </p>
-            )}
-          </section>
+          {ranked.length <= 4 && (
+            <p className="pv-empty">
+              More relevant stories will appear as new coverage arrives.
+            </p>
+          )}
+        </div>
+      </section>
 
-          <aside>
+      <aside>
             <div className="pv-box" aria-live="polite">
               <h2>Weather in {city}</h2>
 
