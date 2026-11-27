@@ -1,5 +1,6 @@
 import { Block } from "../common/Block.js";
 import type { SourceComparisonProps } from "./types.js";
+import {useTranslation} from "react-i18next";
 
 const defaultSources = [
   {
@@ -31,9 +32,9 @@ const defaultSources = [
 
 export function SourceComparison({ sources }: SourceComparisonProps | any) {
   const displaySources = sources.length > 0 ? sources : defaultSources;
-
+  const { t } = useTranslation();
   return (
-    <Block id="sources" title="How sources are covering it">
+    <Block id="sources" title={t("sources.sourceComparison")}>
       <div className="source-grid">
         {displaySources.map((s: any) => (
           <div className="sourcecard" key={s.name}>
@@ -72,7 +73,7 @@ export function SourceComparison({ sources }: SourceComparisonProps | any) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Read source ↗
+                {t("sources.readSource")}
               </a>
             ) : (
               <span className="src-link">Link unavailable</span>
